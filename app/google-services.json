@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "483452790272",
+    "firebase_url": "https://smartservices-437f6.firebaseio.com",
+    "project_id": "smartservices-437f6",
+    "storage_bucket": "smartservices-437f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:483452790272:android:17cf96f3dc5d8e3e",
+        "android_client_info": {
+          "package_name": "innovatech.smartservices"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "483452790272-rb03ta5i860fjpukfqo92u9obk6d4u49.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "innovatech.smartservices",
+            "certificate_hash": "efad2a944c3d3decc2f5372d4ee5e8cb435e77ed"
+          }
+        },
+        {
+          "client_id": "483452790272-408mg11hukuov0r5dstc5ko52f9416er.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCB7IbT_555_rT6RX-V5u2ezuSGhjIw7mA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "483452790272-408mg11hukuov0r5dstc5ko52f9416er.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
