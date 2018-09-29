@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+<group android:checkableBehavior="single">
+    <item android:id="@+id/nav_inicio"
+        android:icon="@drawable/ic_home"
+        android:title="Inicio"></item>
+    <item android:id="@+id/nav_notificaciones"
+        android:icon="@drawable/ic_notifications"
+        android:title="Notificaciones"></item>
+    <item android:id="@+id/nav_favoritos"
+        android:icon="@drawable/ic_favorito"
+        android:title="Favoritos"></item>
+    <item android:id="@+id/nav_account"
+        android:icon="@drawable/ic_account_circle"
+        android:title="Cuenta"></item>
+    <item android:id="@+id/nav_exit"
+        android:icon="@drawable/ic_exit"
+        android:title="Cerrar sesion"></item>
+</group>
+<item android:title="Communicate">
+    <menu>
+        <item android:id="@+id/nav_share"
+            android:icon="@drawable/ic_share"
+            android:title="Compartir"></item>
+    </menu>
+</item>
+</menu>
