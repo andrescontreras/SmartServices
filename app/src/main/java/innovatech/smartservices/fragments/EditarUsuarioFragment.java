@@ -19,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import innovatech.smartservices.R;
-import innovatech.smartservices.Usuario;
+import innovatech.smartservices.models.Usuario;
 
 public class EditarUsuarioFragment extends Fragment {
     EditText nombre;

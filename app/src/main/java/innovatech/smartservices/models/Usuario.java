@@ -1,4 +1,4 @@
-package innovatech.smartservices;
+package innovatech.smartservices.models;
 
 public class Usuario {
 

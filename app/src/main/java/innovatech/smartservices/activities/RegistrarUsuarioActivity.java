@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import innovatech.smartservices.R;
-import innovatech.smartservices.Usuario;
+import innovatech.smartservices.models.Usuario;
 
 public class RegistrarUsuarioActivity extends AppCompatActivity {
 
