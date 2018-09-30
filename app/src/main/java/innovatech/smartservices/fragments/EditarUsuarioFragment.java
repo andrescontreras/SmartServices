@@ -90,11 +90,27 @@ public class EditarUsuarioFragment extends Fragment {
         });
     }
     private void cambiarInformacion(){
+        boolean vacio = verificarInformacionVacia();
+        if(vacio){
+            Toast.makeText(getActivity(), "Ningun campo puede estar vacio, rellene todos los campos", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Usuario usu  = new Usuario(nombre.getText().toString().trim(),Integer.parseInt(cedula.getText().toString().trim()),
+                    ciudad.getText().toString().trim(), direccion.getText().toString().trim(),barrio.getText().toString().trim(),
+                    Integer.parseInt(telefono.getText().toString().trim()), email.getText().toString().trim());
+            mDataBase.child(mAuth.getCurrentUser().getUid()).setValue(usu);
+            Toast.makeText(getActivity(), "Se realizaron los cambios", Toast.LENGTH_SHORT).show();
+        }
 
-        Usuario usu  = new Usuario(nombre.getText().toString(),Integer.parseInt(cedula.getText().toString()),ciudad.getText().toString(),
-                direccion.getText().toString(),barrio.getText().toString(),Integer.parseInt(telefono.getText().toString()),
-                email.getText().toString());
-        mDataBase.child(mAuth.getCurrentUser().getUid()).setValue(usu);
-        Toast.makeText(getActivity(), "Se realizaron los cambios", Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean verificarInformacionVacia(){
+        if(nombre.getText().toString().trim().equals("") || cedula.getText().toString().trim().equals("") ||
+                ciudad.getText().toString().trim().equals("") || direccion.getText().toString().trim().equals("") ||
+                barrio.getText().toString().trim().equals("") || telefono.getText().toString().trim().equals("") ||
+                email.getText().toString().trim().equals("")){
+            return true;
+        }
+        return false;
     }
 }

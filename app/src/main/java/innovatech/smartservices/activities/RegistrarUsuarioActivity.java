@@ -53,14 +53,14 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
         });
     }
     private void registrarUsuario(){
-        final String emailTxt = email.getText().toString();
-        String passwordTxt = password.getText().toString();
-        final String nombreTxt = nombre.getText().toString();
-        final String cedulaTxt = cedula.getText().toString();
-        final String telefonoTxt = telefono.getText().toString();
-        final String direccionTxt = direccion.getText().toString();
-        final String ciudadTxt = ciudad.getText().toString();
-        final String barrioTxt = barrio.getText().toString();
+        final String emailTxt = email.getText().toString().trim();
+        String passwordTxt = password.getText().toString().trim();
+        final String nombreTxt = nombre.getText().toString().trim();
+        final String cedulaTxt = cedula.getText().toString().trim();
+        final String telefonoTxt = telefono.getText().toString().trim();
+        final String direccionTxt = direccion.getText().toString().trim();
+        final String ciudadTxt = ciudad.getText().toString().trim();
+        final String barrioTxt = barrio.getText().toString().trim();
         if(TextUtils.isEmpty(emailTxt) || TextUtils.isEmpty(passwordTxt) || TextUtils.isEmpty(nombreTxt) || TextUtils.isEmpty(cedulaTxt)
                 || TextUtils.isEmpty(telefonoTxt) || TextUtils.isEmpty(direccionTxt) || TextUtils.isEmpty(ciudadTxt) || TextUtils.isEmpty(barrioTxt)){
             Toast.makeText(this, "Tiene que ingresar todos los datos para registrarse !", Toast.LENGTH_SHORT).show();
@@ -99,7 +99,7 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
                                 //updateUI(null);
                             }
 
-                            // ...
+
                         }
                     });
         }

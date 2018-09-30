@@ -77,8 +77,8 @@ public class InicioSesionActivity extends AppCompatActivity {
 
 
     private void ingresar(){
-        String emailTxt = email.getText().toString();
-        String passwordTxt = password.getText().toString();
+        String emailTxt = email.getText().toString().trim();
+        String passwordTxt = password.getText().toString().trim();
         if(TextUtils.isEmpty(emailTxt) && TextUtils.isEmpty(passwordTxt)){
             Toast.makeText(this, "Ingrese un email y contraseña", Toast.LENGTH_SHORT).show();
         }
