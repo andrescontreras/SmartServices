@@ -81,7 +81,11 @@ public class Usuario {
         /*Sensei es cagá*/
         //linea de conflicto
         // conflicto
+<<<<<<< HEAD
         //Comentario Carlos Chupon
+=======
+        //Comentariogama es cagá
+>>>>>>> 3c46bbcf71a691bbd9461d8e4406acc9509513c6
     }
 }
 
