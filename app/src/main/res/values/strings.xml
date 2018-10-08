@@ -17,9 +17,15 @@
     <string name="cambios_info_personal">Cambiar datos personales</string>
     <string name="cambios">Realizar cambios</string>
     <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="nueva_publicacion">Nueva publicación</string>
+    <string name="admin_servicios">Administrar servicios</string>
+    <string name="edit_datos_usu">Editar datos personales</string>
+    <string name="servicios_solic">Servicios solicitados</string>
+    <string name="buzon_preguntas">Buzón de preguntas</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="info_basica">Información basica</string>
+    <string name="precio">Precio</string>
+    <string name="agregar_imagen">Agregar imagenes</string>
 
     <string-array name="tipoIdentificacion">
         <item>C.C</item>

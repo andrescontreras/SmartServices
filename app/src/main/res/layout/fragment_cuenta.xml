@@ -8,63 +8,53 @@
     android:background="#ff82"
     android:id="@+id/fragment_cuenta">
 
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="315dp"
-        android:layout_marginEnd="176dp"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="315dp"
-        android:text="Cuenta"
-        android:textSize="30sp"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textoPrueba1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="163dp"
-        android:layout_marginTop="118dp"
-        android:text="TextView"
-        android:freezesText="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
-        android:id="@+id/boton_prueba1"
+        android:id="@+id/btn_admin_servicio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="133dp"
-        android:layout_marginStart="148dp"
-        android:text="Prueba"
+        android:layout_marginBottom="364dp"
+        android:layout_marginStart="84dp"
+        android:text="@string/admin_servicios"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/selec_imagen"
+        android:id="@+id/btn_nueva_publicacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
-        android:layout_marginStart="112dp"
-        android:text="Seleccionar imagen"
+        android:layout_marginBottom="440dp"
+        android:layout_marginStart="84dp"
+        android:text="@string/nueva_publicacion"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/change_usu"
+        android:id="@+id/btn_edit_usu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="79dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="172dp"
-        android:text="@string/cambios_info_personal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="232dp"
+        android:text="@string/edit_datos_usu"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_histo_servicios"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/servicios_solic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_edit_usu" />
+
+    <Button
+        android:id="@+id/btn_buzon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/buzon_preguntas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_histo_servicios" />
 </android.support.constraint.ConstraintLayout>
