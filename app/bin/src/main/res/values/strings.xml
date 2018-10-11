@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">SmartServices</string>
+    <string name="nombre">Nombre</string>
+    <string name="cedula">Cedula</string>
+    <string name="num_identi">Numero de identificación</string>
+    <string name="registrar">Registrar persona</string>
+    <string name="autenticacion">Prueba de autenticacion</string>
+    <string name="email">Email</string>
+    <string name="password">Contraseña</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="registrar_usuario">Registrar usuario</string>
+    <string name="ciudad">Ciudad</string>
+    <string name="barrio">Barrio</string>
+    <string name="direccion">Dirección</string>
+    <string name="telefono">Telefono</string>
+    <string name="usuario">Usuario</string>
+    <string name="cambios_info_personal">Cambiar datos personales</string>
+    <string name="cambios">Realizar cambios</string>
+    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
+    <string name="nueva_publicacion">Nueva publicación</string>
+    <string name="admin_servicios">Administrar servicios</string>
+    <string name="edit_datos_usu">Editar datos personales</string>
+    <string name="servicios_solic">Servicios solicitados</string>
+    <string name="buzon_preguntas">Buzón de preguntas</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="info_basica">Información basica</string>
+    <string name="precio">Precio</string>
+    <string name="agregar_imagen">Agregar imagenes</string>
+
+    <string-array name="tipoIdentificacion">
+        <item>C.C</item>
+        <item>C.E</item>
+        <item>Pasaporte</item>
+    </string-array>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+
+    <string name="action_settings">Settings</string>
+</resources>
