@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.InicioSesionActivity" />
-        <activity android:name=".activities.RegistrarUsuarioActivity"></activity>
+        <activity android:name=".activities.RegistrarUsuarioActivity" />
+        <activity android:name=".fragments.PubUbicacionFragment"></activity>
     </application>
 
 </manifest>
