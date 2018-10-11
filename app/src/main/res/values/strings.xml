@@ -26,11 +26,28 @@
     <string name="info_basica">Información basica</string>
     <string name="precio">Precio</string>
     <string name="agregar_imagen">Agregar imagenes</string>
-
-    <string-array name="tipoIdentificacion">
-        <item>C.C</item>
-        <item>C.E</item>
-        <item>Pasaporte</item>
+    <string-array name="tipoServicio_nv1">
+        <item>Seleccionar categoria</item>
+        <item>Belleza</item>
+        <item>Higiene personal</item>
+        <item>Clases</item>
+        <item>Fiestas y eventos</item>
+        <item>Hogar</item>
+        <item>Mantenimiento</item>
+        <item>Salud</item>
+        <item>Profesionales</item>
+        <item>Reparaciones e instalaciones</item>
+        <item>Ropa</item>
+        <item>Mascotas</item>
+        <item>Transporte</item>
+        <item>Viajes</item>
+        <item>Otros</item>
+    </string-array>
+    <string-array name="tipoServicio_nv2_1">
+        <item>Centros esteticos</item>
+        <item>Piercing y Tatuajes</item>
+        <item>Cosmetologia</item>
+        <item>Peluqueria</item>
     </string-array>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
