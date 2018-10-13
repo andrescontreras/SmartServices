@@ -46,14 +46,14 @@ public class PubCrearServicioFragment extends Fragment {
         sig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(){
+
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     PubInfoBasicaFragment infoBasica = new PubInfoBasicaFragment();
                     ft.replace(R.id.fragment_container, infoBasica);
                     ft.addToBackStack(null);
                     //notificacion.setArguments(bundle);
                     ft.commit();
-                }
+
 
             }
         });
