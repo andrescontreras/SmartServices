@@ -13,13 +13,12 @@ import android.widget.CalendarView;
 import innovatech.smartservices.R;
 
 public class CalendarioFragment extends Fragment {
-    CalendarView calendar ;
+    //CalendarView calendar ;
     Button botoncito;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_calendario_servicio_cs, container, false);
-        calendar = (CalendarView)view.findViewById(R.id.calendario_cs);
         botoncito = (Button)view.findViewById(R.id.button_calendario);
         botoncito.setOnClickListener(new View.OnClickListener(){
             @Override
