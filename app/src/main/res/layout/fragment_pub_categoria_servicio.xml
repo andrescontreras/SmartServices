@@ -64,5 +64,10 @@
         android:textAllCaps="false"
         android:textColor="@color/cardview_light_background"
         app:layout_constraintEnd_toEndOf="parent"
+<<<<<<< HEAD
         app:layout_constraintTop_toTopOf="parent" />
+=======
+        app:layout_constraintTop_toTopOf="parent"
+        tools:textColor="@color/cardview_light_background" />
+>>>>>>> a1b261e044055bdf6d0d34dcabb6b0ff0573bea6
 </android.support.constraint.ConstraintLayout>

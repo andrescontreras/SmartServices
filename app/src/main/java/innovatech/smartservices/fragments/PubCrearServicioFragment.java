@@ -46,12 +46,15 @@ public class PubCrearServicioFragment extends Fragment {
         sig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                PubInfoBasicaFragment infoBasica = new PubInfoBasicaFragment();
-                ft.replace(R.id.fragment_container, infoBasica);
-                ft.addToBackStack(null);
-                //notificacion.setArguments(bundle);
-                ft.commit();
+
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    PubInfoBasicaFragment infoBasica = new PubInfoBasicaFragment();
+                    ft.replace(R.id.fragment_container, infoBasica);
+                    ft.addToBackStack(null);
+                    //notificacion.setArguments(bundle);
+                    ft.commit();
+
+
             }
         });
         spinner_nv1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -62,13 +65,16 @@ public class PubCrearServicioFragment extends Fragment {
                     Toast.makeText(getActivity(), "Se selecciono el item "+nivel, Toast.LENGTH_SHORT).show();
 
                     ArrayList<String> elementos = spinnerNv2(nivel);
+                    if(elementos.size()<=2){
+                        elementos.clear();
+                        elementos.add("No hay más subcategorias");
+                    }
                     ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,elementos);
                     spinner_nv2.setAdapter(adapterElem);
                     //Opcion -> Colocar los spinner que necesite en el XML y colocar la propiedad Visible = invisible y cuando los necesite los hago visibles
                     spinner_nv2.setVisibility(View.VISIBLE);
                     spinner_nv3.setVisibility(View.INVISIBLE);
                     spinner_nv4.setVisibility(View.INVISIBLE);
-                    //c_layout.addView(spinner_nv2);
                 }else{
                     spinner_nv2.setVisibility(View.INVISIBLE);
                     spinner_nv3.setVisibility(View.INVISIBLE);
@@ -89,6 +95,10 @@ public class PubCrearServicioFragment extends Fragment {
                     spinner_nv4.setVisibility(View.INVISIBLE);
                     String nivel = (String)spinner_nv2.getSelectedItem();
                     ArrayList<String> elementos = spinnerNv3(nivel);
+                    if(elementos.size()<=2){
+                        elementos.clear();
+                        elementos.add("No hay más subcategorias");
+                    }
                     ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,elementos);
                     spinner_nv3.setAdapter(adapterElem);
                 }
@@ -110,6 +120,10 @@ public class PubCrearServicioFragment extends Fragment {
                     spinner_nv4.setVisibility(View.VISIBLE);
                     String nivel = (String)spinner_nv3.getSelectedItem();
                     ArrayList<String> elementos = spinnerNv4(nivel);
+                    if(elementos.size()<=2){
+                        elementos.clear();
+                        elementos.add("No hay más subcategorias");
+                    }
                     ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,elementos);
                     spinner_nv4.setAdapter(adapterElem);
                 }
