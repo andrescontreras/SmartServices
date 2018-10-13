@@ -99,6 +99,16 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <CheckBox
+        android:id="@+id/checkBox_c_lunes"
+        android:layout_width="110dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/checkBox_c_lunes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_" />
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_"
         android:layout_width="394dp"
@@ -109,16 +119,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <CheckBox
-        android:id="@+id/checkBox_c_lunes"
-        android:layout_width="110dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="45dp"
-        android:layout_marginTop="50dp"
-        android:text="@string/checkBox_c_lunes"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_" />
 
     <CheckBox
         android:id="@+id/checkBox_c_martes"
