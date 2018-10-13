@@ -1,15 +1,21 @@
 package innovatech.smartservices.fragments;
 
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import innovatech.smartservices.R;
 
-public class PubUbicacionFragment extends AppCompatActivity {
+public class PubUbicacionFragment extends Fragment {
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_pub_ubicacion);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_pub_ubicacion, container, false);
+        return view;
     }
 }
