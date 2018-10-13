@@ -105,7 +105,7 @@
         android:layout_width="110dp"
         android:layout_height="32dp"
         android:layout_marginStart="45dp"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="36dp"
         android:text="@string/checkBox_c_lunes"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Text_c_disponibilidad" />
@@ -144,7 +144,7 @@
         android:id="@+id/checkBox_c_7a9"
         android:layout_width="160dp"
         android:layout_height="40dp"
-        android:layout_marginTop="31dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="25dp"
         android:text="@string/checkBox_c_7a9"
         app:layout_constraintEnd_toEndOf="parent"
@@ -175,11 +175,11 @@
 
     <TextView
         android:id="@+id/textView_c_disponibilidad"
-        android:layout_width="138dp"
-        android:layout_height="17dp"
+        android:layout_width="220dp"
+        android:layout_height="20dp"
         android:layout_marginStart="45dp"
         android:layout_marginBottom="7dp"
-        android:text="TextView"
+        android:text="@string/textView_c_disponibilidad"
         app:layout_constraintBottom_toTopOf="@+id/checkBox_c_lunes"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Text_c_disponibilidad" />

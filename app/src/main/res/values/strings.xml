@@ -78,4 +78,5 @@
     <string name="no_finalizar_publicaci_n">No, finalizar publicación</string>
     <string name="todo">TODO</string>
 
+    <string name="textView_c_disponibilidad">Calendario de disponibilidad</string>
 </resources>
