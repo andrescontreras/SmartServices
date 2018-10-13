@@ -11,60 +11,72 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="76dp"
         android:text="Posicionamiento"
         android:textAllCaps="false"
         android:textColor="@color/cardview_dark_background"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="60dp"
-        tools:layout_editor_absoluteY="75dp" />
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="12dp"
         android:text="Ya estás a punto de acabar!"
         android:textColor="@color/cardview_dark_background"
-        tools:layout_editor_absoluteX="36dp"
-        tools:layout_editor_absoluteY="122dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
         android:id="@+id/textView17"
         android:layout_width="323dp"
         android:layout_height="125dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="20dp"
         android:text="Con la opción de posicionamiento puedes hacer que tus publicaciones salgan como destacadas cuando es buscado un servicio como el tuyo, es decir, tu servicio se mostrará entre los primeros. Deseas activarlo?(Este servicio se cobrará mensualmente a través de tu tarjeta de crédito por un monto de $2 dólares)"
         android:textColor="@color/cardview_dark_background"
-        tools:layout_editor_absoluteX="36dp"
-        tools:layout_editor_absoluteY="175dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_trending_up_black_24dp"
-        tools:layout_editor_absoluteX="36dp"
-        tools:layout_editor_absoluteY="76dp" />
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="76dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_trending_up_black_24dp" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="297dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="140dp"
         android:background="@color/colorPrimary"
         android:text="Si, deseo activar el posicionamiento"
         android:textAllCaps="false"
         android:textColor="@color/cardview_light_background"
-        tools:layout_editor_absoluteX="44dp"
-        tools:layout_editor_absoluteY="355dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="298dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="32dp"
         android:text="No, finalizar publicación"
         android:textAllCaps="false"
         android:textColor="@color/cardview_light_background"
-        tools:background="@color/colorPrimary"
-        tools:layout_editor_absoluteX="44dp"
-        tools:layout_editor_absoluteY="426dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2"
+        tools:background="@color/colorPrimary" />
 
 
 </android.support.constraint.ConstraintLayout>
