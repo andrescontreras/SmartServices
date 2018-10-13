@@ -65,10 +65,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="156dp"
+        android:background="@color/colorPrimary"
         android:text="@string/agregar_imagen"
+        android:textColor="@color/cardview_light_background"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/colorPrimary"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -84,10 +85,11 @@
         android:id="@+id/btn_sig_detalles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
         android:layout_marginTop="156dp"
+        android:layout_marginEnd="32dp"
+        android:background="@color/colorPrimary"
         android:text="@string/siguiente"
+        android:textColor="@color/cardview_light_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/colorPrimary"/>
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

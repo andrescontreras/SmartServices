@@ -105,13 +105,18 @@
 
     <Button
         android:id="@+id/cambiar_usuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="237dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="48dp"
-        android:layout_marginStart="88dp"
+        android:background="@color/colorPrimary"
         android:text="@string/cambios"
+        android:textAllCaps="false"
+        android:textColor="@color/cardview_light_background"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
