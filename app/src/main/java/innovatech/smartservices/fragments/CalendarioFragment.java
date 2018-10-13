@@ -24,7 +24,7 @@ public class CalendarioFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                InfoBasicaCSFragment infoBasica = new InfoBasicaCSFragment();
+                PubPosicionamientoFragment infoBasica = new PubPosicionamientoFragment();
                 ft.replace(R.id.fragment_container, infoBasica);
                 ft.addToBackStack(null);
                 //notificacion.setArguments(bundle);
