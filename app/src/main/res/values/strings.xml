@@ -70,4 +70,6 @@
     <string name= "checkBox_c_2a4">2:00 pm - 4:00 pm</string>
     <string name= "checkBox_c_4a6">4:00 pm - 6:00 pm</string>
     <string name= "checkBox_c_6a8">6:00 pm - 8:00 pm</string>
+    <string name= "Text_c_disponibilidad">Ubicación y disponibilidad</string>
+
 </resources>

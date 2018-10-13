@@ -143,7 +143,7 @@ public class InfoBasicaCSFragment extends Fragment {
                 }
                 else{
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    DetallesServicioCSFragment detallesServ = new DetallesServicioCSFragment();
+                    CalendarioFragment detallesServ = new CalendarioFragment();
                     ft.replace(R.id.fragment_container, detallesServ);
                     ft.addToBackStack(null);
                     Bundle bundle= new Bundle();
