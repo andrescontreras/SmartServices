@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import innovatech.smartservices.R;
 
-public class DetallesServicioCSFragment extends Fragment {
+public class PubDetallesServicioFragment extends Fragment {
 
     @Nullable
     @Override

@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CalendarView;
 
 import innovatech.smartservices.R;
 
@@ -24,7 +23,7 @@ public class CalendarioFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                InfoBasicaCSFragment infoBasica = new InfoBasicaCSFragment();
+                PubInfoBasicaFragment infoBasica = new PubInfoBasicaFragment();
                 ft.replace(R.id.fragment_container, infoBasica);
                 ft.addToBackStack(null);
                 //notificacion.setArguments(bundle);

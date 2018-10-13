@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 import innovatech.smartservices.R;
 
-public class CrearServicioFragment extends Fragment {
+public class PubCrearServicioFragment extends Fragment {
     Button sig;
     Spinner spinner_nv1;
     Spinner spinner_nv2;
@@ -47,7 +47,7 @@ public class CrearServicioFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                InfoBasicaCSFragment infoBasica = new InfoBasicaCSFragment();
+                PubInfoBasicaFragment infoBasica = new PubInfoBasicaFragment();
                 ft.replace(R.id.fragment_container, infoBasica);
                 ft.addToBackStack(null);
                 //notificacion.setArguments(bundle);
@@ -70,7 +70,9 @@ public class CrearServicioFragment extends Fragment {
                     spinner_nv4.setVisibility(View.INVISIBLE);
                     //c_layout.addView(spinner_nv2);
                 }else{
-                    spinner_nv2.setVisibility(View.VISIBLE);
+                    spinner_nv2.setVisibility(View.INVISIBLE);
+                    spinner_nv3.setVisibility(View.INVISIBLE);
+                    spinner_nv4.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -85,10 +87,10 @@ public class CrearServicioFragment extends Fragment {
                 if(!adapterView.getItemAtPosition(i).equals("Seleccionar categoria")){
                     spinner_nv3.setVisibility(View.VISIBLE);
                     spinner_nv4.setVisibility(View.INVISIBLE);
-                    String nivel = (String)spinner_nv1.getSelectedItem();
-                    ArrayList<String> elementos = spinnerNv2(nivel);
+                    String nivel = (String)spinner_nv2.getSelectedItem();
+                    ArrayList<String> elementos = spinnerNv3(nivel);
                     ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,elementos);
-                    spinner_nv2.setAdapter(adapterElem);
+                    spinner_nv3.setAdapter(adapterElem);
                 }
                 else{
                     spinner_nv3.setVisibility(View.INVISIBLE);
@@ -106,10 +108,10 @@ public class CrearServicioFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(!adapterView.getItemAtPosition(i).equals("Seleccionar categoria")){
                     spinner_nv4.setVisibility(View.VISIBLE);
-                    String nivel = (String)spinner_nv2.getSelectedItem();
-                    ArrayList<String> elementos = spinnerNv3(nivel);
+                    String nivel = (String)spinner_nv3.getSelectedItem();
+                    ArrayList<String> elementos = spinnerNv4(nivel);
                     ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,elementos);
-                    spinner_nv3.setAdapter(adapterElem);
+                    spinner_nv4.setAdapter(adapterElem);
                 }
                 else{
                     spinner_nv4.setVisibility(View.INVISIBLE);
