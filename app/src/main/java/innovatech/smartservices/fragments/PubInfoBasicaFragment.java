@@ -139,11 +139,7 @@ public class PubInfoBasicaFragment extends Fragment {
                 }
                 else{
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-<<<<<<< HEAD:app/src/main/java/innovatech/smartservices/fragments/PubInfoBasicaFragment.java
-                    PubDetallesServicioFragment detallesServ = new PubDetallesServicioFragment();
-=======
                     CalendarioFragment detallesServ = new CalendarioFragment();
->>>>>>> 39dd96918db2dfd81362aa55b3971bec051fbcdc:app/src/main/java/innovatech/smartservices/fragments/InfoBasicaCSFragment.java
                     ft.replace(R.id.fragment_container, detallesServ);
                     ft.addToBackStack(null);
                     Bundle bundle= new Bundle();
