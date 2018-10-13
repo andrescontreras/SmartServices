@@ -61,5 +61,6 @@
         android:layout_marginTop="348dp"
         android:text="@string/siguiente"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/colorPrimary"/>
 </android.support.constraint.ConstraintLayout>

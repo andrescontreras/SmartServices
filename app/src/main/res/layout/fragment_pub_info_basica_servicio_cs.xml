@@ -67,7 +67,8 @@
         android:layout_marginTop="156dp"
         android:text="@string/agregar_imagen"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/colorPrimary"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -87,5 +88,6 @@
         android:layout_marginTop="156dp"
         android:text="@string/siguiente"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/colorPrimary"/>
 </android.support.constraint.ConstraintLayout>
