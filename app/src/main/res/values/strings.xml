@@ -76,4 +76,13 @@
     <string name= "checkBox_c_2a4">2:00 pm - 4:00 pm</string>
     <string name= "checkBox_c_4a6">4:00 pm - 6:00 pm</string>
     <string name= "checkBox_c_6a8">6:00 pm - 8:00 pm</string>
+    <string name= "Text_c_disponibilidad">Ubicación y disponibilidad</string>
+    <string name="posicionamiento">Posicionamiento</string>
+    <string name="ya_est_s_a_punto_de_acabar">Ya estás a punto de acabar!</string>
+    <string name="con_la_opci_n_de_posicionamiento_puedes_hacer_que_tus_publicaciones_salgan_como_destacadas_cuando_es_buscado_un_servicio_como_el_tuyo_es_decir_tu_servicio_se_mostrar_entre_los_primeros_deseas_activarlo_este_servicio_se_cobrar_mensualmente_a_trav_s_de_tu_tarjeta_de_cr_dito_por_un_monto_de_2_d_lares">Con la opción de posicionamiento puedes hacer que tus publicaciones salgan como destacadas cuando es buscado un servicio como el tuyo, es decir, tu servicio se mostrará entre los primeros. Deseas activarlo?(Este servicio se cobrará mensualmente a través de tu tarjeta de crédito por un monto de $2 dólares)</string>
+    <string name="si_deseo_activar_el_posicionamiento">Si, deseo activar el posicionamiento</string>
+    <string name="no_finalizar_publicaci_n">No, finalizar publicación</string>
+    <string name="todo">TODO</string>
+
+    <string name="textView_c_disponibilidad">Calendario de disponibilidad</string>
 </resources>

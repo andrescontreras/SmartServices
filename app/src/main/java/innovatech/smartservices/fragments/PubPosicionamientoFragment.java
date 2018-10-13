@@ -9,13 +9,12 @@ import android.view.ViewGroup;
 
 import innovatech.smartservices.R;
 
-public class DetallesServicioCSFragment extends Fragment {
-
+public class PubPosicionamientoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_detalles_servicio_cs, container, false);
+        final View view = inflater.inflate(R.layout.fragment_pub_posicionamiento, container, false);
 
-        return view;
+        return  view;
     }
 }
