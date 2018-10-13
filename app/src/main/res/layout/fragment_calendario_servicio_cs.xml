@@ -6,25 +6,157 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <CalendarView
-        android:id="@+id/calendario_cs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="92dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+    <CheckBox
+        android:id="@+id/checkBox_c_domingo"
+        android:layout_width="110dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/checkBox_c_domingo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_c_sabado" />
+
+    <CheckBox
+        android:id="@+id/checkBox_c_6a8"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="25dp"
+        android:text="@string/checkBox_c_6a8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_c_4a6" />
+
+    <CheckBox
+        android:id="@+id/checkBox_c_4a6"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="25dp"
+        android:text="@string/checkBox_c_4a6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_c_2a4" />
+
+    <CheckBox
+        android:id="@+id/checkBox_c_2a4"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="25dp"
+        android:text="@string/checkBox_c_2a4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_c_11a1" />
+
+    <CheckBox
+        android:id="@+id/checkBox_c_11a1"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="25dp"
+        android:text="@string/checkBox_c_11a1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_c_9a11" />
+
+    <CheckBox
+        android:id="@+id/checkBox_c_9a11"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="25dp"
+        android:text="@string/checkBox_c_9a11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_c_7a9" />
+
+    <CheckBox
+        android:id="@+id/checkBox_c_sabado"
+        android:layout_width="110dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/checkBox_c_sabado"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_c_viernes" />
+
+    <CheckBox
+        android:id="@+id/checkBox_c_viernes"
+        android:layout_width="110dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/checkBox_c_viernes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_c_jueves" />
 
     <Button
         android:id="@+id/button_calendario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginBottom="47dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginEnd="140dp"
+        android:layout_marginBottom="42dp"
         android:text="@string/button_calendario"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_"
+        android:layout_width="394dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/checkBox_c_lunes"
+        android:layout_width="110dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/checkBox_c_lunes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_" />
+
+    <CheckBox
+        android:id="@+id/checkBox_c_martes"
+        android:layout_width="110dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/checkBox_c_martes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_c_lunes" />
+
+    <CheckBox
+        android:id="@+id/checkBox_c_miercoles"
+        android:layout_width="110dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/checkBox_c_miercoles"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_c_martes" />
+
+    <CheckBox
+        android:id="@+id/checkBox_c_jueves"
+        android:layout_width="110dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="16dp"
+        android:text="\@string/checkBox_c_jueves"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_c_miercoles" />
+
+    <CheckBox
+        android:id="@+id/checkBox_c_7a9"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="25dp"
+        android:text="@string/checkBox_c_7a9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_" />
 </android.support.constraint.ConstraintLayout>
