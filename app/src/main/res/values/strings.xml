@@ -26,6 +26,12 @@
     <string name="info_basica">Información basica</string>
     <string name="precio">Precio</string>
     <string name="agregar_imagen">Agregar imagenes</string>
+    <string name="servicios_destacados">Servicios Destacados</string>
+    <string name="detalles">Detalles</string>
+    <string name="que_incluye">¿Qué incluye?</string>
+    <string name="que_no_incluye">¿Qué no incluye?</string>
+    <string name="informacion_adicional">Información adicional</string>
+    <string name="coloque_texto">Coloque aquí su texto...</string>
     <string-array name="tipoServicio_nv1">
         <item>Seleccionar categoria</item>
         <item>Belleza</item>
