@@ -14,7 +14,7 @@ public class DetallesServicioCSFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_detalles_servicio_cs, container, false);
+        final View view = inflater.inflate(R.layout.fragment_pub_detalles_servicio, container, false);
 
         return view;
     }
