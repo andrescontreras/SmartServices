@@ -46,15 +46,19 @@ public class PubCrearServicioFragment extends Fragment {
         sig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String nivel1 = (String)spinner_nv1.getSelectedItem();
+                String nivel2 = (String)spinner_nv2.getSelectedItem();
+                String nivel3 = (String)spinner_nv3.getSelectedItem();
+                String nivel4 = (String)spinner_nv4.getSelectedItem();
 
+                if(nivel1.equals("Seleccionar categoria") || nivel2 == null ){
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     PubInfoBasicaFragment infoBasica = new PubInfoBasicaFragment();
                     ft.replace(R.id.fragment_container, infoBasica);
                     ft.addToBackStack(null);
                     //notificacion.setArguments(bundle);
                     ft.commit();
-
-
+                }
             }
         });
         spinner_nv1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -62,7 +66,7 @@ public class PubCrearServicioFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(!adapterView.getItemAtPosition(i).equals("Seleccionar categoria")){
                     String nivel = (String)spinner_nv1.getSelectedItem();
-                    Toast.makeText(getActivity(), "Se selecciono el item "+nivel, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Se selecciono el item "+nivel, Toast.LENGTH_SHORT).show();
 
                     ArrayList<String> elementos = spinnerNv2(nivel);
                     if(elementos.size()<=2){
@@ -94,6 +98,7 @@ public class PubCrearServicioFragment extends Fragment {
                     spinner_nv3.setVisibility(View.VISIBLE);
                     spinner_nv4.setVisibility(View.INVISIBLE);
                     String nivel = (String)spinner_nv2.getSelectedItem();
+                    Toast.makeText(getActivity(), "Se selecciono el item "+nivel, Toast.LENGTH_SHORT).show();
                     ArrayList<String> elementos = spinnerNv3(nivel);
                     if(elementos.size()<=2){
                         elementos.clear();
