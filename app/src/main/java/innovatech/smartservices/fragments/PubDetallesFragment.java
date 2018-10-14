@@ -22,7 +22,7 @@ public class PubDetallesFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                PubUbicacionFragment ubicacionfragm = new PubUbicacionFragment();
+                CalendarioFragment ubicacionfragm = new CalendarioFragment();
                 ft.replace(R.id.fragment_container, ubicacionfragm);
                 ft.addToBackStack(null);
                 //notificacion.setArguments(bundle);

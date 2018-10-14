@@ -139,7 +139,7 @@ public class PubInfoBasicaFragment extends Fragment {
                 }
                 else{
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    CalendarioFragment detallesServ = new CalendarioFragment();
+                    PubDetallesFragment detallesServ = new PubDetallesFragment();
                     ft.replace(R.id.fragment_container, detallesServ);
                     ft.addToBackStack(null);
                     Bundle bundle= new Bundle();
