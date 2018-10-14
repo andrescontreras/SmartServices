@@ -61,7 +61,11 @@
         android:layout_marginEnd="56dp"
         android:background="@color/colorPrimary"
         android:text="@string/siguiente"
+        android:textAllCaps="false"
+        android:textColor="@color/cardview_light_background"
         app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintTop_toTopOf="parent"
         tools:textColor="@color/cardview_light_background" />
+
 </android.support.constraint.ConstraintLayout>
