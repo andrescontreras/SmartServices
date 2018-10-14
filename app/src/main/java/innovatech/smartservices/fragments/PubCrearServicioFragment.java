@@ -24,7 +24,7 @@ public class PubCrearServicioFragment extends Fragment {
     Spinner spinner_nv2;
     Spinner spinner_nv3;
     Spinner spinner_nv4;
-
+    Boolean spinnerCompleto = false;
     ConstraintLayout c_layout;
     @Nullable
     @Override
@@ -50,35 +50,57 @@ public class PubCrearServicioFragment extends Fragment {
                 String nivel2 = (String)spinner_nv2.getSelectedItem();
                 String nivel3 = (String)spinner_nv3.getSelectedItem();
                 String nivel4 = (String)spinner_nv4.getSelectedItem();
+                /*
+                System.out.println("Elemento nivel 1 ------------------------> " + nivel1);
+                System.out.println("Elemento nivel 2 --------------------------------------------> " + nivel2);
+                System.out.println("Elemento nivel 3 -------------------------------------------------------------> " + nivel3);
+                System.out.println("Elemento nivel 4 ------------------------------------------------------------------------------> "+ nivel4);
+                */
 
-                if(nivel1.equals("Seleccionar categoria") || nivel2 == null ){
+                if((nivel2.equals("") || nivel3.equals("") || nivel4.equals("")) ||
+                        (spinnerCompleto && !nivel4.equals("Seleccionar categoria"))){
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     PubInfoBasicaFragment infoBasica = new PubInfoBasicaFragment();
                     ft.replace(R.id.fragment_container, infoBasica);
                     ft.addToBackStack(null);
-                    //notificacion.setArguments(bundle);
+                    //Tal vez tenga que guardar en otras variables locales lo que me llega de fragmentos anteriores para mandarlos al siguiente
+                    Bundle bundle = new Bundle();
+                    bundle.putString("categorias",nivel1+nivel2+nivel3+nivel4);
+                    infoBasica.setArguments(bundle);
                     ft.commit();
+                }else{
+                    Toast.makeText(getActivity(), "Tiene que seleccionar hasta la ultima subcategoria", Toast.LENGTH_SHORT).show();
                 }
             }
         });
         spinner_nv1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                spinnerCompleto=false;
                 if(!adapterView.getItemAtPosition(i).equals("Seleccionar categoria")){
                     String nivel = (String)spinner_nv1.getSelectedItem();
                     //Toast.makeText(getActivity(), "Se selecciono el item "+nivel, Toast.LENGTH_SHORT).show();
-
+                    spinner_nv3.setVisibility(View.INVISIBLE);
+                    spinner_nv4.setVisibility(View.INVISIBLE);
                     ArrayList<String> elementos = spinnerNv2(nivel);
                     if(elementos.size()<=2){
                         elementos.clear();
-                        elementos.add("No hay más subcategorias");
+                        elementos.add("");
+                        ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,elementos);
+                        spinner_nv2.setAdapter(adapterElem);
+                        spinner_nv3.setAdapter(adapterElem);
+                        spinner_nv4.setAdapter(adapterElem);
+                        spinner_nv2.setVisibility(View.INVISIBLE);
+                    }else{
+                        ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,elementos);
+                        spinner_nv2.setAdapter(adapterElem); //Este es por funcionalidad
+                        spinner_nv3.setAdapter(adapterElem);// Lo coloco para que sirva de filtro para no permitir pasar a la siguiente pantalla
+                        spinner_nv4.setAdapter(adapterElem);// Lo coloco para que sirva de filtro para no permitir pasar a la siguiente pantalla
+                        //Opcion -> Colocar los spinner que necesite en el XML y colocar la propiedad Visible = invisible y cuando los necesite los hago visibles
+                        spinner_nv2.setVisibility(View.VISIBLE);
+
                     }
-                    ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,elementos);
-                    spinner_nv2.setAdapter(adapterElem);
-                    //Opcion -> Colocar los spinner que necesite en el XML y colocar la propiedad Visible = invisible y cuando los necesite los hago visibles
-                    spinner_nv2.setVisibility(View.VISIBLE);
-                    spinner_nv3.setVisibility(View.INVISIBLE);
-                    spinner_nv4.setVisibility(View.INVISIBLE);
+
                 }else{
                     spinner_nv2.setVisibility(View.INVISIBLE);
                     spinner_nv3.setVisibility(View.INVISIBLE);
@@ -94,18 +116,26 @@ public class PubCrearServicioFragment extends Fragment {
         spinner_nv2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                spinnerCompleto=false;
                 if(!adapterView.getItemAtPosition(i).equals("Seleccionar categoria")){
                     spinner_nv3.setVisibility(View.VISIBLE);
                     spinner_nv4.setVisibility(View.INVISIBLE);
                     String nivel = (String)spinner_nv2.getSelectedItem();
-                    Toast.makeText(getActivity(), "Se selecciono el item "+nivel, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Se selecciono el item "+nivel, Toast.LENGTH_SHORT).show();
                     ArrayList<String> elementos = spinnerNv3(nivel);
                     if(elementos.size()<=2){
                         elementos.clear();
-                        elementos.add("No hay más subcategorias");
+                        elementos.add("");
+                        ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,elementos);
+                        spinner_nv3.setAdapter(adapterElem);
+                        spinner_nv4.setAdapter(adapterElem);
+                        spinner_nv3.setVisibility(View.INVISIBLE);
+                    }else{
+                        ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,elementos);
+                        spinner_nv3.setAdapter(adapterElem);// Este es por funcionalidad
+                        spinner_nv4.setAdapter(adapterElem);// Lo coloco para que sirva de filtro para no permitir pasar a la siguiente pantalla
                     }
-                    ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,elementos);
-                    spinner_nv3.setAdapter(adapterElem);
+
                 }
                 else{
                     spinner_nv3.setVisibility(View.INVISIBLE);
@@ -121,16 +151,22 @@ public class PubCrearServicioFragment extends Fragment {
         spinner_nv3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                spinnerCompleto=false;
                 if(!adapterView.getItemAtPosition(i).equals("Seleccionar categoria")){
                     spinner_nv4.setVisibility(View.VISIBLE);
                     String nivel = (String)spinner_nv3.getSelectedItem();
                     ArrayList<String> elementos = spinnerNv4(nivel);
                     if(elementos.size()<=2){
                         elementos.clear();
-                        elementos.add("No hay más subcategorias");
+                        elementos.add("");
+                        ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,elementos);
+                        spinner_nv4.setAdapter(adapterElem);
+                        spinner_nv4.setVisibility(View.INVISIBLE);
+                    }else{
+                        ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,elementos);
+                        spinner_nv4.setAdapter(adapterElem);
+                        spinnerCompleto=true;
                     }
-                    ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,elementos);
-                    spinner_nv4.setAdapter(adapterElem);
                 }
                 else{
                     spinner_nv4.setVisibility(View.INVISIBLE);

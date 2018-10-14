@@ -138,16 +138,21 @@ public class PubInfoBasicaFragment extends Fragment {
                     Toast.makeText(getActivity(), "Rellene los campos: Nombre, Precio. Además, agregue por lo menos una imagen", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    PubDetallesFragment detallesServ = new PubDetallesFragment();
-                    ft.replace(R.id.fragment_container, detallesServ);
-                    ft.addToBackStack(null);
-                    Bundle bundle= new Bundle();
-                    bundle.putString("nombre",nombre.getText().toString());
-                    bundle.putInt("precio",Integer.parseInt(precio.getText().toString()));
+                    try{
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        PubDetallesFragment detallesServ = new PubDetallesFragment();
+                        ft.replace(R.id.fragment_container, detallesServ);
+                        ft.addToBackStack(null);
+                        Bundle bundle= new Bundle();
+                        bundle.putString("nombre",nombre.getText().toString());
+                        int precioInt = Integer.parseInt(precio.getText().toString());
+                        bundle.putInt("precio",precioInt);
+                        detallesServ.setArguments(bundle);
+                        ft.commit();
+                    }catch(NumberFormatException excepcion){
+                        Toast.makeText(getActivity(), "Debe ingresar un numero en la casilla de precio", Toast.LENGTH_SHORT).show();
+                    }
 
-                    detallesServ.setArguments(bundle);
-                    ft.commit();
                 }
             }
         });
