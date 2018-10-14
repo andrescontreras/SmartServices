@@ -12,9 +12,10 @@
         android:id="@+id/btn_admin_servicio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="364dp"
         android:layout_marginStart="84dp"
+        android:layout_marginBottom="364dp"
         android:text="@string/admin_servicios"
+        android:textColor="@color/cardview_light_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -22,9 +23,10 @@
         android:id="@+id/btn_nueva_publicacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="440dp"
         android:layout_marginStart="84dp"
+        android:layout_marginBottom="440dp"
         android:text="@string/nueva_publicacion"
+        android:textColor="@color/cardview_light_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -35,6 +37,7 @@
         android:layout_marginStart="84dp"
         android:layout_marginTop="232dp"
         android:text="@string/edit_datos_usu"
+        android:textColor="@color/cardview_light_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,6 +48,7 @@
         android:layout_marginStart="84dp"
         android:layout_marginTop="28dp"
         android:text="@string/servicios_solic"
+        android:textColor="@color/cardview_light_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_edit_usu" />
 
@@ -55,6 +59,7 @@
         android:layout_marginStart="84dp"
         android:layout_marginTop="28dp"
         android:text="@string/buzon_preguntas"
+        android:textColor="@color/cardview_light_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_histo_servicios" />
 </android.support.constraint.ConstraintLayout>
