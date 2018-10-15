@@ -62,4 +62,13 @@
         android:textColor="@color/cardview_light_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_histo_servicios" />
+
+    <Button
+        android:id="@+id/ubicacion"
+        android:layout_width="69dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="20dp"
+        android:text="Ubi"
+        app:layout_constraintStart_toEndOf="@+id/btn_nueva_publicacion"
+        app:layout_constraintTop_toTopOf="@+id/btn_nueva_publicacion" />
 </android.support.constraint.ConstraintLayout>

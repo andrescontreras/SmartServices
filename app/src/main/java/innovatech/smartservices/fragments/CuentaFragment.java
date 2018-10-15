@@ -17,6 +17,8 @@ public class CuentaFragment extends Fragment {
     Button edit_usu;
     Button serv_solic;
     Button buzon_p;
+    // boton de prueba
+    Button ubicacion;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class CuentaFragment extends Fragment {
         edit_usu = (Button)view.findViewById(R.id.btn_edit_usu);
         serv_solic = (Button)view.findViewById(R.id.btn_histo_servicios);
         buzon_p = (Button)view.findViewById(R.id.btn_buzon);
+        ubicacion =  view.findViewById(R.id.ubicacion);
     }
     //METODO QUE CONTIENE TODAS LAS ACCIONES DE LOS BOTONES
     private  void accionBotones(View view){
@@ -69,6 +72,20 @@ public class CuentaFragment extends Fragment {
                 ft.commit();
             }
         });
+
+
+        ubicacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                PubUbicacionFragment ubi = new PubUbicacionFragment();
+                ft.replace(R.id.fragment_container,ubi);
+                ft.addToBackStack(null);
+                //notificacion.setArguments(bundle);
+                ft.commit();
+            }
+        });
+
         admin_serv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
