@@ -35,6 +35,11 @@ public class PubUbicacionAdapter  extends RecyclerView.Adapter<PubUbicacionAdapt
         return listDatos.size();
     }
 
+    public void addItem(Ubicacion u) {
+        listDatos.add(0, u);
+        notifyItemInserted(0);
+    }
+
     public class ViewHolderDatos  extends RecyclerView.ViewHolder{
 
         TextView ubicacion;
@@ -49,6 +54,8 @@ public class PubUbicacionAdapter  extends RecyclerView.Adapter<PubUbicacionAdapt
             ubicacion.setText(s.getUbicacion());
             direccion.setText(s.getDireccion());
         }
+
+
     }
 
     public class itemUbicacion{

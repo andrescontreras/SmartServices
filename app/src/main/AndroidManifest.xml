@@ -3,6 +3,7 @@
     package="innovatech.smartservices">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -21,7 +22,9 @@
         </activity>
         <activity android:name=".activities.InicioSesionActivity" />
         <activity android:name=".activities.RegistrarUsuarioActivity" />
-        <activity android:name=".fragments.PubUbicacionFragment"></activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDsUNpD2CYDbU8zHPd-zcHjzrg7pE5MW94"/>
     </application>
 
 </manifest>
