@@ -47,12 +47,12 @@ public class PubUbicacionAdapter  extends RecyclerView.Adapter<PubUbicacionAdapt
         public ViewHolderDatos(View itemView) {
             super(itemView);
             ubicacion = itemView.findViewById(R.id.TV_Ubicacion);
-            direccion = itemView.findViewById(R.id.TV_Direccion);
+
         }
 
         public void asignarDatos(Ubicacion s) {
             ubicacion.setText(s.getUbicacion());
-            direccion.setText(s.getDireccion());
+
         }
 
 

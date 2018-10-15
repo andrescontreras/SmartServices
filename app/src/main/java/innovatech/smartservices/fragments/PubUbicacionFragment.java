@@ -33,7 +33,7 @@ public class PubUbicacionFragment extends Fragment {
     ArrayList<Ubicacion> listDatos;
     RecyclerView recycler;
     public Button agregar1;
-    TextView TV_direccion;
+
     PubUbicacionAdapter adapter;
 
     @Nullable
@@ -41,7 +41,7 @@ public class PubUbicacionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_pub_ubicacion, container, false);
 
-        TV_direccion = view.findViewById(R.id.direccion);
+
         agregar1 = view.findViewById(R.id.agregar);
         recycler =  view.findViewById(R.id.recyclerUbicaciones);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -65,8 +65,7 @@ public class PubUbicacionFragment extends Fragment {
         agregar1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TV_direccion.setText("ENTROOOOO");
-                TV_direccion.setText("ENTROOOOOOOOOOOOOOOOOOOOOOOOO");
+
                 PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
                 try {
                     Intent intent = builder.build(getActivity());
@@ -82,14 +81,15 @@ public class PubUbicacionFragment extends Fragment {
 
 
     public void onActivityResult(int requestCode, int ResultCode, Intent data){
-        TV_direccion.setText("Result1111111111111111111111");
+
         if (requestCode == PLACE_PICKER_REQUEST)
         {
             if(ResultCode == RESULT_OK){
                Place place = PlacePicker.getPlace(data,getActivity());
                String direccion = String.format("Place: %s",place.getAddress());
-                TV_direccion.setText(direccion);
-                Ubicacion u = new Ubicacion("NUEVO", direccion, "NUEVO" );
+               String ubi = place.getName().toString();
+                Ubicacion u = new Ubicacion("NUEVO", direccion, "DIR-"+ubi );
+                //listDatos.add(u);
                 adapter.addItem(u);
 
             }
