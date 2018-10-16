@@ -93,7 +93,7 @@
         android:layout_marginStart="148dp"
         android:layout_marginEnd="148dp"
         android:layout_marginBottom="42dp"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/rounded_button"
         android:text="@string/button_calendario"
         android:textColor="@color/cardview_light_background"
         app:layout_constraintBottom_toBottomOf="parent"
