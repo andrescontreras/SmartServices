@@ -33,14 +33,25 @@ public class PubUbicacionFragment extends Fragment {
     ArrayList<Ubicacion> listDatos;
     RecyclerView recycler;
     public Button agregar1;
-
+    Button boton;
     PubUbicacionAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_pub_ubicacion, container, false);
-
+        boton = (Button)view.findViewById(R.id.button4);
+        boton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                CalendarioFragment ubicacionfragm = new CalendarioFragment();
+                ft.replace(R.id.fragment_container, ubicacionfragm);
+                ft.addToBackStack(null);
+                //notificacion.setArguments(bundle);
+                ft.commit();
+            }
+        });
 
         agregar1 = view.findViewById(R.id.agregar);
         recycler =  view.findViewById(R.id.recyclerUbicaciones);

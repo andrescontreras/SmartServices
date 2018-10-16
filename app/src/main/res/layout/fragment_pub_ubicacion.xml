@@ -16,6 +16,7 @@
         android:layout_marginEnd="12dp"
         android:background="@drawable/rounded_button"
         android:text="Agregar Ubicacion"
+        android:textAllCaps="false"
         android:textColor="@color/cardview_light_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -54,40 +55,27 @@
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="wrap_content"
+        android:layout_width="219dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginEnd="96dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/rounded_button"
         android:text="Siguiente"
+        android:textAllCaps="false"
         android:textColor="@color/cardview_light_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerUbicaciones" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/rounded_button"
-        android:text="Atras"
-        android:textColor="@color/cardview_light_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerUbicaciones" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView21"
-        android:layout_width="308dp"
-        android:layout_height="36dp"
+        android:layout_width="305dp"
+        android:layout_height="41dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
-        android:text="ubicación del servicio"
-        android:textColor="@color/place_autocomplete_prediction_primary_text"
+        android:text="Ubicación del servicio"
+        android:textColor="@color/cardview_dark_background"
         android:textSize="25sp"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="parent" />
@@ -109,7 +97,7 @@
         android:layout_marginStart="64dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="30dp"
-        android:background="@color/place_autocomplete_search_text"
+        android:background="@color/cardview_dark_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.166"
         app:layout_constraintStart_toStartOf="parent"
