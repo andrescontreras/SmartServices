@@ -85,4 +85,5 @@
     <string name="todo">TODO</string>
 
     <string name="textView_c_disponibilidad">Calendario de disponibilidad</string>
+    <string name="correo">Correo</string>
 </resources>
