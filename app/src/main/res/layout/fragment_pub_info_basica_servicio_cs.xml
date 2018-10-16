@@ -13,7 +13,7 @@
         android:layout_marginStart="44dp"
         android:layout_marginTop="16dp"
         android:text="@string/info_basica"
-        android:textSize="15sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -61,15 +61,18 @@
 
     <Button
         android:id="@+id/btn_agregarImagenes"
-        android:layout_width="wrap_content"
+        android:layout_width="298dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="156dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="57dp"
         android:background="@drawable/rounded_button"
         android:text="@string/agregar_imagen"
+        android:textAllCaps="false"
         android:textColor="@color/cardview_light_background"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPrecio" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -83,15 +86,18 @@
 
     <Button
         android:id="@+id/btn_sig_detalles"
-        android:layout_width="wrap_content"
+        android:layout_width="298dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="156dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="28dp"
         android:background="@drawable/rounded_button"
         android:text="@string/siguiente"
+        android:textAllCaps="false"
         android:textColor="@color/cardview_light_background"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView2"

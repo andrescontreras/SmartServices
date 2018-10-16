@@ -10,7 +10,7 @@
         android:id="@+id/checkBox_c_domingo"
         android:layout_width="110dp"
         android:layout_height="32dp"
-        android:layout_marginStart="45dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="16dp"
         android:text="@string/checkBox_c_domingo"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +70,7 @@
         android:id="@+id/checkBox_c_sabado"
         android:layout_width="110dp"
         android:layout_height="32dp"
-        android:layout_marginStart="45dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="16dp"
         android:text="@string/checkBox_c_sabado"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +80,7 @@
         android:id="@+id/checkBox_c_viernes"
         android:layout_width="110dp"
         android:layout_height="32dp"
-        android:layout_marginStart="45dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="16dp"
         android:text="@string/checkBox_c_viernes"
         app:layout_constraintStart_toStartOf="parent"
@@ -105,7 +105,7 @@
         android:id="@+id/checkBox_c_lunes"
         android:layout_width="110dp"
         android:layout_height="32dp"
-        android:layout_marginStart="45dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="12dp"
         android:text="@string/checkBox_c_lunes"
         app:layout_constraintStart_toStartOf="parent"
@@ -115,7 +115,7 @@
         android:id="@+id/checkBox_c_martes"
         android:layout_width="110dp"
         android:layout_height="32dp"
-        android:layout_marginStart="45dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="16dp"
         android:text="@string/checkBox_c_martes"
         app:layout_constraintStart_toStartOf="parent"
@@ -125,7 +125,7 @@
         android:id="@+id/checkBox_c_miercoles"
         android:layout_width="110dp"
         android:layout_height="32dp"
-        android:layout_marginStart="45dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="16dp"
         android:text="@string/checkBox_c_miercoles"
         app:layout_constraintStart_toStartOf="parent"
@@ -135,7 +135,7 @@
         android:id="@+id/checkBox_c_jueves"
         android:layout_width="110dp"
         android:layout_height="32dp"
-        android:layout_marginStart="45dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="16dp"
         android:text="@string/checkBox_c_jueves"
         app:layout_constraintStart_toStartOf="parent"
@@ -151,21 +151,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_c_disponibilidad" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="45dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_public_black_24dp" />
-
     <TextView
         android:id="@+id/textView_c_disponibilidad"
         android:layout_width="220dp"
         android:layout_height="20dp"
-        android:layout_marginStart="45dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="7dp"
         android:text="@string/textView_c_disponibilidad"
@@ -175,22 +165,14 @@
 
     <TextView
         android:id="@+id/textView_c_Posición"
-        android:layout_width="241dp"
+        android:layout_width="266dp"
         android:layout_height="32dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="25dp"
+        android:drawableLeft="@drawable/ic_public_black_24dp"
         android:text="@string/Text_c_disponibilidad"
         android:textSize="20dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="124dp"
-        android:layout_marginBottom="2dp"
-        android:text="____________________________________"
-        app:layout_constraintBottom_toTopOf="@+id/textView_c_disponibilidad"
-        app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>

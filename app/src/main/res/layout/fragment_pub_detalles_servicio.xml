@@ -8,14 +8,16 @@
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="wrap_content"
+        android:layout_width="171dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="204dp"
         android:drawableLeft="@drawable/ic_list_black_24dp"
         android:text="@string/detalles"
         android:textColor="@color/cardview_dark_background"
-        android:textSize="25dp"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,22 +27,26 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="28dp"
+        android:layout_marginEnd="282dp"
         android:text="@string/que_incluye"
         android:textColor="@color/cardview_dark_background"
         android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <EditText
         android:id="@+id/texto_incluye"
         android:layout_width="310dp"
-        android:layout_height="81dp"
+        android:layout_height="67dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="65dp"
         android:ems="10"
         android:hint="@string/coloque_texto"
         android:inputType="textPersonName"
         android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
@@ -50,9 +56,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="261dp"
         android:text="@string/que_no_incluye"
         android:textColor="@color/cardview_dark_background"
         android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/texto_incluye" />
 
@@ -61,11 +69,13 @@
         android:layout_width="310dp"
         android:layout_height="72dp"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="65dp"
         android:ems="10"
         android:hint="@string/coloque_texto"
         android:inputType="textPersonName"
         android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
@@ -74,10 +84,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="226dp"
         android:text="@string/informacion_adicional"
         android:textColor="@color/cardview_dark_background"
         android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/texto_no_incluye" />
 
@@ -86,24 +98,28 @@
         android:layout_width="308dp"
         android:layout_height="64dp"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="392dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="67dp"
         android:ems="10"
         android:hint="@string/coloque_texto"
         android:inputType="textPersonName"
         android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
     <Button
         android:id="@+id/boton_detalles"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="256dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="25dp"
         android:background="@drawable/rounded_button"
         android:text="@string/siguiente"
         android:textAllCaps="false"
         android:textColor="@color/cardview_light_background"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/texto_adicional" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>
