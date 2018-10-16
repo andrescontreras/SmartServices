@@ -15,11 +15,11 @@
         android:layout_marginStart="16dp"
         android:background="@color/cardview_light_background"
         android:drawableLeft="@drawable/ic_assignment_black_24dp"
-        android:text="@string/admin_servicios"
+        android:text="   Administrar servicios"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textColor="@color/cardview_dark_background"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_nueva_publicacion" />
 
@@ -31,11 +31,11 @@
         android:layout_marginStart="16dp"
         android:background="@color/cardview_light_background"
         android:drawableLeft="@drawable/ic_add_box_black_24dp"
-        android:text="@string/nueva_publicacion"
+        android:text="   Nueva publicación"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textColor="@color/cardview_dark_background"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,11 +47,11 @@
         android:layout_marginStart="16dp"
         android:background="@color/cardview_light_background"
         android:drawableLeft="@drawable/ic_edit_black_24dp"
-        android:text="@string/edit_datos_usu"
+        android:text="   Editar datos personales"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textColor="@color/cardview_dark_background"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_admin_servicio" />
 
@@ -63,11 +63,11 @@
         android:layout_marginStart="16dp"
         android:background="@color/cardview_light_background"
         android:drawableLeft="@drawable/ic_history_black_24dp"
-        android:text="@string/servicios_solic"
+        android:text="   Servicios solicitados"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textColor="@color/cardview_dark_background"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_edit_usu" />
 
@@ -80,11 +80,11 @@
         android:layout_marginTop="4dp"
         android:background="@color/cardview_light_background"
         android:drawableLeft="@drawable/ic_email_black_24dp"
-        android:text="@string/buzon_preguntas"
+        android:text="   Buzón de preguntas"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textColor="@color/cardview_dark_background"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_histo_servicios" />
 
@@ -96,11 +96,11 @@
         android:layout_marginStart="16dp"
         android:background="@color/cardview_light_background"
         android:drawableLeft="@drawable/ic_trending_up_black_24dp"
-        android:text="Ranking de servicios"
+        android:text="   Ranking de servicios"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textColor="@color/cardview_dark_background"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_buzon" />
 
