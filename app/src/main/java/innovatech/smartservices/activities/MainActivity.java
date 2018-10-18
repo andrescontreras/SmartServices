@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import innovatech.smartservices.R;
+import innovatech.smartservices.fragments.ServiciosDestacadosFragment;
 import innovatech.smartservices.models.Usuario;
 import innovatech.smartservices.fragments.CuentaFragment;
 import innovatech.smartservices.fragments.NotificacionesFragment;
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new ServiciosDestacadosFragment()).commit();
     }
 
     //Metodo se activa cuando se selecciona un item del drawer
@@ -67,7 +70,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
             case R.id.nav_inicio:
-                Intent intent = new Intent(this,MainActivity.class);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ServiciosDestacadosFragment()).commit();
                 break;
             case R.id.nav_account:
                 if(verificarSesion()){

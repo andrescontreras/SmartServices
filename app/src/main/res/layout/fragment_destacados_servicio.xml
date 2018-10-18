@@ -15,5 +15,5 @@
         android:text="@string/servicios_destacados"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textSize="18dp"/>
+        android:textSize="24dp"/>
 </android.support.constraint.ConstraintLayout>
