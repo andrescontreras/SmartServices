@@ -42,7 +42,7 @@ public class PubUbicacionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_pub_ubicacion, container, false);
         boton = (Button)view.findViewById(R.id.button4);
-        //listDatos=(ArrayList<Ubicacion>) view.findViewById(R.id.recyclerUbicaciones);
+        //listDatos= view.findViewById(R.id.recyclerUbicaciones);
 
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
