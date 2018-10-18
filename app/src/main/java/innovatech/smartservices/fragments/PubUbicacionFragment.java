@@ -47,20 +47,20 @@ public class PubUbicacionFragment extends Fragment {
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*if(listDatos.isEmpty()){
+                if(listDatos.isEmpty()){
                     Toast.makeText(getActivity(), "Debe ingresar almenos una ubicación", Toast.LENGTH_SHORT).show();
                 }
-                else {*/
+                else {
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     CalendarioFragment ubicacionfragm = new CalendarioFragment();
                     ft.replace(R.id.fragment_container, ubicacionfragm);
                     ft.addToBackStack(null);
-                    /*Bundle bundle = getArguments();
+                    Bundle bundle = getArguments();
                     bundle.putString("ubicacion", listDatos.toString());
                     ubicacionfragm.setArguments(bundle);
-                    notificacion.setArguments(bundle);*/
+                    //notificacion.setArguments(bundle);
                     ft.commit();
-                //}
+                }
             }
         });
 
