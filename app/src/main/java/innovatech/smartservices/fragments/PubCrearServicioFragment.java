@@ -66,6 +66,7 @@ public class PubCrearServicioFragment extends Fragment {
                     PubInfoBasicaFragment infoBasica = new PubInfoBasicaFragment();
                     ft.replace(R.id.fragment_container, infoBasica);
                     ft.addToBackStack(null);
+
                     //Tal vez tenga que guardar en otras variables locales lo que me llega de fragmentos anteriores para mandarlos al siguiente
                     Bundle bundle = new Bundle();
                     bundle.putString("categorias",nivel1+nivel2+nivel3+nivel4);

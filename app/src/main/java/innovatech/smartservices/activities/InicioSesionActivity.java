@@ -1,5 +1,6 @@
 package innovatech.smartservices.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
@@ -29,7 +30,7 @@ import innovatech.smartservices.R;
 
 public class InicioSesionActivity extends AppCompatActivity {
 
-    private ProgressBar progressbar;
+    private ProgressDialog nProgressDialog;
 
     Button registrar;
     EditText nombre;
@@ -45,6 +46,7 @@ public class InicioSesionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio_sesion);
+        nProgressDialog = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
         registrar_usuario = (Button)findViewById(R.id.botonRUsuario);
         ingresar = (Button)findViewById(R.id.botonIngresar);
@@ -87,6 +89,8 @@ public class InicioSesionActivity extends AppCompatActivity {
         }else if(TextUtils.isEmpty(passwordTxt)){
             Toast.makeText(this, "Ingrese una contraseña", Toast.LENGTH_SHORT).show();
         }else{
+            nProgressDialog.setMessage("Iniciando sesión...");
+            nProgressDialog.show();
             mAuth.signInWithEmailAndPassword(emailTxt, passwordTxt)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -94,12 +98,14 @@ public class InicioSesionActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 //FirebaseUser user = mAuth.getCurrentUser();
+                                nProgressDialog.dismiss();
                                 Toast.makeText(InicioSesionActivity.this, "Inicio sesion exitosamente", Toast.LENGTH_SHORT).show();
                                 //updateUI(user);
                                 //Intent intent = new Intent(MainActivity.this,DrawerActivity.class);
                                 //startActivity(intent);
                             } else {
                                 // If sign in fails, display a message to the user.
+                                nProgressDialog.dismiss();
                                 Toast.makeText(InicioSesionActivity.this, "Ingreso mal sus datos o no tiene existe una cuenta con los datos ingresados",
                                         Toast.LENGTH_SHORT).show();
                                 //updateUI(null);
