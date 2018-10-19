@@ -58,6 +58,7 @@ public class PubUbicacionFragment extends Fragment {
                     Bundle bundle = getArguments();
                     System.out.println("los datos son "+listDatos.get(0).getUbicacion());
                     bundle.putString("ubicacion", listDatos.toString());
+                    System.out.println("lo que se guarda es XXXXXXXXXX-X-X-X-X-X-X-X  "+listDatos.toString());
                     ubicacionfragm.setArguments(bundle);
                     //notificacion.setArguments(bundle);
                     ft.commit();

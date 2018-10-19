@@ -2,6 +2,7 @@ package innovatech.smartservices.fragments;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -9,18 +10,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import innovatech.smartservices.R;
 import innovatech.smartservices.models.Servicio;
+import innovatech.smartservices.models.Ubicacion;
 
 public class PubPosicionamientoFragment extends Fragment {
+    private FirebaseAuth mAuth;
     @Nullable
     @Override
+
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_pub_posicionamiento, container, false);
+        mAuth = FirebaseAuth.getInstance();
         Button botonSI = (Button)view.findViewById(R.id.buttonSIPosicion);
         Button botonNO= (Button)view.findViewById(R.id.buttonNOPosicion);
         botonSI.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +127,7 @@ public class PubPosicionamientoFragment extends Fragment {
         }
         //---------------------------------------------------------
             servicio.setPosicionamiento(posicion);
-
+/*
         ArrayList<String> listaImagenes= new ArrayList<String>();
         listaImagenes=bundle.getStringArrayList("imagenes");
 
@@ -123,23 +135,41 @@ public class PubPosicionamientoFragment extends Fragment {
         for(int i=0;i<listaImagenes.size();i++){
             servicio.addImagen(Uri.parse(listaImagenes.get(i)));
         }
+        */
 
         servicio.setFechaActivacion(Calendar.getInstance().getTime().toString());
 
         servicio.setPromedioCalificacion(1000);
-/*
-        FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).setValue(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+        String auxUbicaciones;
+        auxUbicaciones=bundle.getString("ubicacion");
+        System.out.println("Las ubicaciones son");
+
+        System.out.println(auxUbicaciones);
+
+        /*
+        System.out.println("Las direcicones son ");
+        for(int i=0;i<bundle.getString("ubicacion")){
+
+        }*/
+        FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseDatabase.getInstance().getReference("servicios").child(user.getUid()).setValue(servicio).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 //progressbar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
-                    Toast.makeText(RegistrarUsuarioActivity.this, "Se ha registrado correctamente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Se ha registrado correctamente", Toast.LENGTH_SHORT).show();
                     //updateUI(user);
 
                 }
                 else{
-                    Toast.makeText(RegistrarUsuarioActivity.this, "Hubo un error al crear el usuario", Toast.LENGTH_SHORT).show();
+                    Toast.makeText( getActivity(),"Hubo un error al crear el usuario", Toast.LENGTH_SHORT).show();
                 }
-*/
+
+            }
+
+            });
     }
 }
+
+
