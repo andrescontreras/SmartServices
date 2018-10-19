@@ -56,6 +56,7 @@ public class PubUbicacionFragment extends Fragment {
                     ft.replace(R.id.fragment_container, ubicacionfragm);
                     ft.addToBackStack(null);
                     Bundle bundle = getArguments();
+                    System.out.println("los datos son "+listDatos.get(0).getUbicacion());
                     bundle.putString("ubicacion", listDatos.toString());
                     ubicacionfragm.setArguments(bundle);
                     //notificacion.setArguments(bundle);

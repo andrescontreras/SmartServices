@@ -1,28 +1,34 @@
 package innovatech.smartservices.models;
 
-import java.io.File;
+import android.net.Uri;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Servicio {
 
-    String descripcion;
+    String incluye;
+    String noIncluye;
+    String adicional;
     String nombre;
     int precio;
     int promedioCalificacion;
-    List<File> fotos= new ArrayList<File>();
-    int fechaActivacion;
+    List<Uri> fotos= new ArrayList<Uri>();
+    String fechaActivacion;
     Boolean posicionamiento;
     String tipo;
     List<Ubicacion> ubicacion;
-    List<Disponiblidad>calendario;
+    List<Integer> disponibilidadDias=new ArrayList<>();
+    List<Integer> disponibilidadHoras=new ArrayList<>();
 
     public Servicio(){
 
     }
 
-    public Servicio(String descripcion, String nombre, int precio, int promedioCalificacion, List<File> fotos, int fechaActivacion, Boolean posicionamiento, String tipo, List<Ubicacion> ubicacion, List<Disponiblidad> calendario) {
-        this.descripcion = descripcion;
+    public Servicio(String incluye, String noIncluye, String adicional, String nombre, int precio, int promedioCalificacion, List<Uri> fotos, String fechaActivacion, Boolean posicionamiento, String tipo, List<Ubicacion> ubicacion, List<Integer> disponibilidadDias, List<Integer> disponibilidadHoras) {
+        this.incluye = incluye;
+        this.noIncluye = noIncluye;
+        this.adicional = adicional;
         this.nombre = nombre;
         this.precio = precio;
         this.promedioCalificacion = promedioCalificacion;
@@ -31,16 +37,32 @@ public class Servicio {
         this.posicionamiento = posicionamiento;
         this.tipo = tipo;
         this.ubicacion = ubicacion;
-        this.calendario = calendario;
+        this.disponibilidadDias = disponibilidadDias;
+        this.disponibilidadHoras = disponibilidadHoras;
     }
 
-
-    public String getDescripcion() {
-        return descripcion;
+    public String getIncluye() {
+        return incluye;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setIncluye(String incluye) {
+        this.incluye = incluye;
+    }
+
+    public String getNoIncluye() {
+        return noIncluye;
+    }
+
+    public void setNoIncluye(String noIncluye) {
+        this.noIncluye = noIncluye;
+    }
+
+    public String getAdicional() {
+        return adicional;
+    }
+
+    public void setAdicional(String adicional) {
+        this.adicional = adicional;
     }
 
     public String getNombre() {
@@ -67,19 +89,19 @@ public class Servicio {
         this.promedioCalificacion = promedioCalificacion;
     }
 
-    public List<File> getFotos() {
+    public List<Uri> getFotos() {
         return fotos;
     }
 
-    public void setFotos(List<File> fotos) {
+    public void setFotos(List<Uri> fotos) {
         this.fotos = fotos;
     }
 
-    public int getFechaActivacion() {
+    public String getFechaActivacion() {
         return fechaActivacion;
     }
 
-    public void setFechaActivacion(int fechaActivacion) {
+    public void setFechaActivacion(String fechaActivacion) {
         this.fechaActivacion = fechaActivacion;
     }
 
@@ -107,12 +129,33 @@ public class Servicio {
         this.ubicacion = ubicacion;
     }
 
-    public List<Disponiblidad> getCalendario() {
-        return calendario;
+    public List<Integer> getDisponibilidadDias() {
+        return disponibilidadDias;
     }
 
-    public void setCalendario(List<Disponiblidad> calendario) {
-        this.calendario = calendario;
+    public void setDisponibilidadDias(List<Integer> disponibilidadDias) {
+        this.disponibilidadDias = disponibilidadDias;
+    }
+
+    public List<Integer> getDisponibilidadHoras() {
+        return disponibilidadHoras;
+    }
+
+    public void setDisponibilidadHoras(List<Integer> disponibilidadHoras) {
+        this.disponibilidadHoras = disponibilidadHoras;
+    }
+
+    public void addDias(int dia){
+        this.disponibilidadDias.add(dia);
+    }
+    public void addHoras(int hora){
+        this.disponibilidadHoras.add(hora);
+    }
+    public void addImagen(Uri imagen){
+        fotos.add(imagen);
     }
 }
+
+
+
 

@@ -60,7 +60,7 @@ public class CalendarioFragment extends Fragment {
                     PubPosicionamientoFragment pubPosicionamiento = new PubPosicionamientoFragment();
                     ft.replace(R.id.fragment_container, pubPosicionamiento);
                     ft.addToBackStack(null);
-                    Bundle bundle = new Bundle();
+                    Bundle bundle = getArguments();
                     bundle.putBoolean("lunes",lunes.isChecked());
                     bundle.putBoolean("martes",martes.isChecked());
                     bundle.putBoolean("miercoles",miercoles.isChecked());
@@ -68,7 +68,7 @@ public class CalendarioFragment extends Fragment {
                     bundle.putBoolean("viernes",viernes.isChecked());
                     bundle.putBoolean("sabado",sabado.isChecked());
                     bundle.putBoolean("domingo",domingo.isChecked());
-                    
+
                     bundle.putBoolean("7a9",sietenueveam.isChecked());
                     bundle.putBoolean("9a11",nueveonceam.isChecked());
                     bundle.putBoolean("11a1",onceunapm.isChecked());
