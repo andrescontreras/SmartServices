@@ -27,9 +27,9 @@ import innovatech.smartservices.models.Ubicacion;
 
 public class PubPosicionamientoFragment extends Fragment {
     private FirebaseAuth mAuth;
+    Bundle bundle ;
     @Nullable
     @Override
-
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_pub_posicionamiento, container, false);
         mAuth = FirebaseAuth.getInstance();
@@ -61,7 +61,7 @@ public class PubPosicionamientoFragment extends Fragment {
 
     public void guardarEnFirebase(Boolean posicion){
         Servicio servicio=new Servicio();
-        Bundle bundle=getArguments();
+        bundle=getArguments();
 
         servicio.setIncluye(bundle.getString("incluye"));
         servicio.setNoIncluye(bundle.getString("noIncluye"));
@@ -127,6 +127,7 @@ public class PubPosicionamientoFragment extends Fragment {
         }
         //---------------------------------------------------------
             servicio.setPosicionamiento(posicion);
+        servicio.setFotos(bundle.getStringArrayList("imagenes"));
 /*
         ArrayList<String> listaImagenes= new ArrayList<String>();
         listaImagenes=bundle.getStringArrayList("imagenes");
@@ -153,12 +154,21 @@ public class PubPosicionamientoFragment extends Fragment {
 
         }*/
         FirebaseUser user = mAuth.getCurrentUser();
-        FirebaseDatabase.getInstance().getReference("servicios").child(user.getUid()).setValue(servicio).addOnCompleteListener(new OnCompleteListener<Void>() {
+        int random = (int)(Math.random()*10000)+1;
+        FirebaseDatabase.getInstance().getReference("servicios").child(user.getUid()+String.valueOf(random)).setValue(servicio).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 //progressbar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
-                    Toast.makeText(getActivity(), "Se ha registrado correctamente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Se ha publicado el servicio", Toast.LENGTH_SHORT).show();
+                    /*
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    PruebaImagenFragment detallesServ = new PruebaImagenFragment();
+                    ft.replace(R.id.fragment_container, detallesServ);
+                    ft.addToBackStack(null);
+                    detallesServ.setArguments(bundle);
+                    ft.commit();
+                    */
                     //updateUI(user);
 
                 }

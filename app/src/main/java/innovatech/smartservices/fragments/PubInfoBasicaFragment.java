@@ -149,16 +149,14 @@ public class PubInfoBasicaFragment extends Fragment {
                         //String categor = bundle.getString("categorias");
                         //System.out.println("nombre despues de inicializado------ "+nombre.getText().toString());
 
-                        /*
                         ArrayList<String>listaImagenesStr= new ArrayList<String>();
                         for(int i=0;i<listaImagenes.size();i++){
                             listaImagenesStr.add(listaImagenes.get(i).toString());
                         }
-                        */
                         bundle.putString("nombre",nombre.getText().toString());
                         int precioInt = Integer.parseInt(precio.getText().toString());
                         bundle.putInt("precio",precioInt);
-                        //bundle.putStringArrayList("imagenes",listaImagenesStr);
+                        bundle.putStringArrayList("imagenes",listaImagenesStr);
                         detallesServ.setArguments(bundle);
                         ft.commit();
                     }catch(NumberFormatException excepcion){
