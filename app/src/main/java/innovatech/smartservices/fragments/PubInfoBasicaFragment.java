@@ -67,8 +67,6 @@ public class PubInfoBasicaFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == RESULT_LOAD_IMAGE && resultCode== RESULT_OK){ // TODO Probar si funciona sin verificar el GALLERY INTENT
             if(data.getClipData()!=null){
-                nProgressDialog.setMessage("Subiendo los archivos...");
-                nProgressDialog.show();
                 ClipData imagenes = data.getClipData();
                 int totalItemsSelected = data.getClipData().getItemCount();
 
@@ -91,7 +89,6 @@ public class PubInfoBasicaFragment extends Fragment {
                     });
                     */
                 }
-                nProgressDialog.dismiss();
                 mAdapter = new ImageAdapter(getActivity(),listaImagenes);
                 mRecyclerView.setAdapter(mAdapter);
                 Toast.makeText(getActivity(), "Se subieron los archivos", Toast.LENGTH_SHORT).show();
