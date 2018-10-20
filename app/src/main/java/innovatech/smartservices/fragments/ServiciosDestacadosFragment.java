@@ -36,7 +36,7 @@ public class ServiciosDestacadosFragment extends Fragment {
         lstServicio = new ArrayList <> ();
         //lstServicio.add(new Servicio(//Nombre Servicio, //Categoria Servicio, //Descripcion Servicio, //Imagen Servicio));
         //RecyclerView myrv = (RecyclerView) findViewById (R.id.recyclerview_id) ;
-        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter (this,lstServicio);
+        //RecyclerViewAdapter myAdapter = new RecyclerViewAdapter (this,lstServicio);
         //myrv.setLayoutManager ( new GridLayoutManager ( this,3 ) );
         //myrv.setAdapter(myAdapter);
 
