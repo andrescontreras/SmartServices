@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -41,15 +42,27 @@ public class PubUbicacionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_pub_ubicacion, container, false);
         boton = (Button)view.findViewById(R.id.button4);
+        //listDatos= view.findViewById(R.id.recyclerUbicaciones);
+
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                CalendarioFragment ubicacionfragm = new CalendarioFragment();
-                ft.replace(R.id.fragment_container, ubicacionfragm);
-                ft.addToBackStack(null);
-                //notificacion.setArguments(bundle);
-                ft.commit();
+                if(listDatos.isEmpty()){
+                    Toast.makeText(getActivity(), "Debe ingresar almenos una ubicación", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    CalendarioFragment ubicacionfragm = new CalendarioFragment();
+                    ft.replace(R.id.fragment_container, ubicacionfragm);
+                    ft.addToBackStack(null);
+                    Bundle bundle = getArguments();
+                    System.out.println("los datos son "+listDatos.get(0).getUbicacion());
+                    bundle.putString("ubicacion", listDatos.toString());
+                    System.out.println("lo que se guarda es XXXXXXXXXX-X-X-X-X-X-X-X  "+listDatos.toString());
+                    ubicacionfragm.setArguments(bundle);
+                    //notificacion.setArguments(bundle);
+                    ft.commit();
+                }
             }
         });
 

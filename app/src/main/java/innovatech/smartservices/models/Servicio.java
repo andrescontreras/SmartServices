@@ -1,34 +1,68 @@
 package innovatech.smartservices.models;
 
-import java.io.File;
+import android.net.Uri;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Servicio {
 
-    String descripcion;
+    String incluye;
+    String noIncluye;
+    String adicional;
     String nombre;
     int precio;
     int promedioCalificacion;
-    List<File> fotos= new ArrayList<File>();
+    List<Uri> fotos= new ArrayList<Uri>();
+    String fechaActivacion;
+    Boolean posicionamiento;
+    String tipo;
+    List<Ubicacion> ubicacion;
+    List<Integer> disponibilidadDias=new ArrayList<>();
+    List<Integer> disponibilidadHoras=new ArrayList<>();
 
     public Servicio(){
 
     }
 
-    public Servicio(String descripcion, String nombre, int precio, int promedioCalificacion) {
-        this.descripcion = descripcion;
+    public Servicio(String incluye, String noIncluye, String adicional, String nombre, int precio, int promedioCalificacion, List<Uri> fotos, String fechaActivacion, Boolean posicionamiento, String tipo, List<Ubicacion> ubicacion, List<Integer> disponibilidadDias, List<Integer> disponibilidadHoras) {
+        this.incluye = incluye;
+        this.noIncluye = noIncluye;
+        this.adicional = adicional;
         this.nombre = nombre;
         this.precio = precio;
         this.promedioCalificacion = promedioCalificacion;
+        this.fotos = fotos;
+        this.fechaActivacion = fechaActivacion;
+        this.posicionamiento = posicionamiento;
+        this.tipo = tipo;
+        this.ubicacion = ubicacion;
+        this.disponibilidadDias = disponibilidadDias;
+        this.disponibilidadHoras = disponibilidadHoras;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getIncluye() {
+        return incluye;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setIncluye(String incluye) {
+        this.incluye = incluye;
+    }
+
+    public String getNoIncluye() {
+        return noIncluye;
+    }
+
+    public void setNoIncluye(String noIncluye) {
+        this.noIncluye = noIncluye;
+    }
+
+    public String getAdicional() {
+        return adicional;
+    }
+
+    public void setAdicional(String adicional) {
+        this.adicional = adicional;
     }
 
     public String getNombre() {
@@ -55,4 +89,73 @@ public class Servicio {
         this.promedioCalificacion = promedioCalificacion;
     }
 
+    public List<Uri> getFotos() {
+        return fotos;
+    }
+
+    public void setFotos(List<Uri> fotos) {
+        this.fotos = fotos;
+    }
+
+    public String getFechaActivacion() {
+        return fechaActivacion;
+    }
+
+    public void setFechaActivacion(String fechaActivacion) {
+        this.fechaActivacion = fechaActivacion;
+    }
+
+    public Boolean getPosicionamiento() {
+        return posicionamiento;
+    }
+
+    public void setPosicionamiento(Boolean posicionamiento) {
+        this.posicionamiento = posicionamiento;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public List<Ubicacion> getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(List<Ubicacion> ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+
+    public List<Integer> getDisponibilidadDias() {
+        return disponibilidadDias;
+    }
+
+    public void setDisponibilidadDias(List<Integer> disponibilidadDias) {
+        this.disponibilidadDias = disponibilidadDias;
+    }
+
+    public List<Integer> getDisponibilidadHoras() {
+        return disponibilidadHoras;
+    }
+
+    public void setDisponibilidadHoras(List<Integer> disponibilidadHoras) {
+        this.disponibilidadHoras = disponibilidadHoras;
+    }
+
+    public void addDias(int dia){
+        this.disponibilidadDias.add(dia);
+    }
+    public void addHoras(int hora){
+        this.disponibilidadHoras.add(hora);
+    }
+    public void addImagen(Uri imagen){
+        fotos.add(imagen);
+    }
 }
+
+
+
+

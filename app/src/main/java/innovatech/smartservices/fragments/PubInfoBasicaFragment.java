@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -45,9 +47,9 @@ public class PubInfoBasicaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_pub_info_basica_servicio_cs, container, false);
+        Bundle bundle = getArguments();
         nProgressDialog = new ProgressDialog(getActivity());
         mStorage = FirebaseStorage.getInstance().getReference();
-        nProgressDialog = new ProgressDialog(getActivity());
         mStorage = FirebaseStorage.getInstance().getReference();
         nombre = (EditText)view.findViewById(R.id.txtNombre);
         precio = (EditText)view.findViewById(R.id.txtPrecio);
@@ -143,10 +145,20 @@ public class PubInfoBasicaFragment extends Fragment {
                         PubDetallesFragment detallesServ = new PubDetallesFragment();
                         ft.replace(R.id.fragment_container, detallesServ);
                         ft.addToBackStack(null);
-                        Bundle bundle= new Bundle();
+                        Bundle bundle= getArguments();
+                        //String categor = bundle.getString("categorias");
+                        //System.out.println("nombre despues de inicializado------ "+nombre.getText().toString());
+
+                        /*
+                        ArrayList<String>listaImagenesStr= new ArrayList<String>();
+                        for(int i=0;i<listaImagenes.size();i++){
+                            listaImagenesStr.add(listaImagenes.get(i).toString());
+                        }
+                        */
                         bundle.putString("nombre",nombre.getText().toString());
                         int precioInt = Integer.parseInt(precio.getText().toString());
                         bundle.putInt("precio",precioInt);
+                        //bundle.putStringArrayList("imagenes",listaImagenesStr);
                         detallesServ.setArguments(bundle);
                         ft.commit();
                     }catch(NumberFormatException excepcion){
@@ -157,4 +169,6 @@ public class PubInfoBasicaFragment extends Fragment {
             }
         });
     }
+
+
 }

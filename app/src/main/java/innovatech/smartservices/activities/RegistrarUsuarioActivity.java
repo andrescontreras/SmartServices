@@ -1,5 +1,6 @@
 package innovatech.smartservices.activities;
 
+import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,11 +32,13 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
     EditText ciudad;
     EditText barrio;
     Button registrar;
+    private ProgressDialog nProgressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar_usuario);
         mAuth = FirebaseAuth.getInstance();
+        nProgressDialog = new ProgressDialog(this);
         nombre = (EditText)findViewById(R.id.nombreRegister);
         password = (EditText)findViewById(R.id.passwordRegister);
         email = (EditText)findViewById(R.id.emailRegister);
@@ -66,7 +69,8 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
             Toast.makeText(this, "Tiene que ingresar todos los datos para registrarse !", Toast.LENGTH_SHORT).show();
         }
         else{
-            //progressbar.setVisibility(View.VISIBLE);
+            nProgressDialog.setMessage("Registrando usuario...");
+            nProgressDialog.show();
             mAuth.createUserWithEmailAndPassword(emailTxt, passwordTxt)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -83,16 +87,19 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         //progressbar.setVisibility(View.GONE);
                                         if(task.isSuccessful()){
+                                            nProgressDialog.dismiss();
                                             Toast.makeText(RegistrarUsuarioActivity.this, "Se ha registrado correctamente", Toast.LENGTH_SHORT).show();
                                             //updateUI(user);
 
                                         }
                                         else{
+                                            nProgressDialog.dismiss();
                                             Toast.makeText(RegistrarUsuarioActivity.this, "Hubo un error al crear el usuario", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
                             } else {
+                                nProgressDialog.dismiss();
                                 // If sign in fails, display a message to the user.
                                 Toast.makeText(RegistrarUsuarioActivity.this, "Fallo la creacion, intente colocar su contraseña de almenos 6 digitos y un email valido",
                                         Toast.LENGTH_SHORT).show();

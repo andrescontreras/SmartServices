@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import innovatech.smartservices.R;
+import innovatech.smartservices.fragments.ServiciosDestacadosFragment;
 import innovatech.smartservices.models.Usuario;
 import innovatech.smartservices.fragments.CuentaFragment;
 import innovatech.smartservices.fragments.NotificacionesFragment;
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new ServiciosDestacadosFragment()).commit();
     }
 
     //Metodo se activa cuando se selecciona un item del drawer
@@ -68,21 +71,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(item.getItemId()){
             case R.id.nav_inicio:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new CuentaFragment()).commit();
+                        new ServiciosDestacadosFragment()).commit();
                 break;
             case R.id.nav_account:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new CuentaFragment()).commit();
+                if(verificarSesion()){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            new CuentaFragment()).commit();
+                }else{
+                    Toast.makeText(this, "Debe iniciar sesion para entrar a Cuenta", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.nav_notificaciones:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new NotificacionesFragment()).commit();
+                if(verificarSesion()){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            new NotificacionesFragment()).commit();
+                }else{
+                    Toast.makeText(this, "Debe iniciar sesion para entrar a Notificaciones", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.nav_favoritos:
-                Toast.makeText(this, "Oprimio favoritos", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.nav_share:
-                Toast.makeText(this, "Oprimio el compartir", Toast.LENGTH_SHORT).show();
+                if(verificarSesion()){
+                    Toast.makeText(this, "Oprimio favoritos", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this, "Debe iniciar sesion para entrar a Favoritos", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.nav_exit:
                 FirebaseAuth.getInstance().signOut();
@@ -119,7 +131,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         //Si no mandarlo a la pagina de login
     }
-
+    public boolean verificarSesion(){
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser!=null){ //Cuando el usuario ya esta logeado, mandarlo a la actividad principal
+            return true;
+        }
+        return false;
+    }
     private void informacionUsuarioDrawer(){
 
         FirebaseUser user = mAuth.getCurrentUser();
