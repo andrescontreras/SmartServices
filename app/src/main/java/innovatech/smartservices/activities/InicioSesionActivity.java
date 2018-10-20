@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import innovatech.smartservices.R;
+import innovatech.smartservices.fragments.ServiciosDestacadosFragment;
 
 public class InicioSesionActivity extends AppCompatActivity {
 
@@ -99,10 +100,10 @@ public class InicioSesionActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 //FirebaseUser user = mAuth.getCurrentUser();
                                 nProgressDialog.dismiss();
-                                Toast.makeText(InicioSesionActivity.this, "Inicio sesion exitosamente", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(InicioSesionActivity.this, "Inició sesión exitosamente", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(InicioSesionActivity.this,MainActivity.class);
+                                startActivity(intent);
                                 //updateUI(user);
-                                //Intent intent = new Intent(MainActivity.this,DrawerActivity.class);
-                                //startActivity(intent);
                             } else {
                                 // If sign in fails, display a message to the user.
                                 nProgressDialog.dismiss();

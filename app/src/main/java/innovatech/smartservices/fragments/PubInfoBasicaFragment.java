@@ -67,8 +67,6 @@ public class PubInfoBasicaFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == RESULT_LOAD_IMAGE && resultCode== RESULT_OK){ // TODO Probar si funciona sin verificar el GALLERY INTENT
             if(data.getClipData()!=null){
-                nProgressDialog.setMessage("Subiendo los archivos...");
-                nProgressDialog.show();
                 ClipData imagenes = data.getClipData();
                 int totalItemsSelected = data.getClipData().getItemCount();
 
@@ -91,7 +89,6 @@ public class PubInfoBasicaFragment extends Fragment {
                     });
                     */
                 }
-                nProgressDialog.dismiss();
                 mAdapter = new ImageAdapter(getActivity(),listaImagenes);
                 mRecyclerView.setAdapter(mAdapter);
                 Toast.makeText(getActivity(), "Se subieron los archivos", Toast.LENGTH_SHORT).show();
@@ -149,16 +146,14 @@ public class PubInfoBasicaFragment extends Fragment {
                         //String categor = bundle.getString("categorias");
                         //System.out.println("nombre despues de inicializado------ "+nombre.getText().toString());
 
-                        /*
                         ArrayList<String>listaImagenesStr= new ArrayList<String>();
                         for(int i=0;i<listaImagenes.size();i++){
                             listaImagenesStr.add(listaImagenes.get(i).toString());
                         }
-                        */
                         bundle.putString("nombre",nombre.getText().toString());
                         int precioInt = Integer.parseInt(precio.getText().toString());
                         bundle.putInt("precio",precioInt);
-                        //bundle.putStringArrayList("imagenes",listaImagenesStr);
+                        bundle.putStringArrayList("imagenes",listaImagenesStr);
                         detallesServ.setArguments(bundle);
                         ft.commit();
                     }catch(NumberFormatException excepcion){

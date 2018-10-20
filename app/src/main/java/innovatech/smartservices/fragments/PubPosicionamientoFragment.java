@@ -1,5 +1,7 @@
 package innovatech.smartservices.fragments;
 
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,17 +11,25 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import innovatech.smartservices.R;
 import innovatech.smartservices.models.Servicio;
@@ -27,14 +37,20 @@ import innovatech.smartservices.models.Ubicacion;
 
 public class PubPosicionamientoFragment extends Fragment {
     private FirebaseAuth mAuth;
+    private StorageReference mStorage;
+    private ProgressDialog nProgressDialog;
+    List<Uri> imgUri = new ArrayList<Uri>();
+    String referenciaUrl = "";
+    Bundle bundle ;
     @Nullable
     @Override
-
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_pub_posicionamiento, container, false);
         mAuth = FirebaseAuth.getInstance();
+        nProgressDialog = new ProgressDialog(getActivity());
         Button botonSI = (Button)view.findViewById(R.id.buttonSIPosicion);
         Button botonNO= (Button)view.findViewById(R.id.buttonNOPosicion);
+        mStorage =FirebaseStorage.getInstance().getReference("Uploads");
         botonSI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,8 +76,10 @@ public class PubPosicionamientoFragment extends Fragment {
     }
 
     public void guardarEnFirebase(Boolean posicion){
+        nProgressDialog.setMessage("Publicando el servicio...");
+        nProgressDialog.show();
         Servicio servicio=new Servicio();
-        Bundle bundle=getArguments();
+        bundle=getArguments();
 
         servicio.setIncluye(bundle.getString("incluye"));
         servicio.setNoIncluye(bundle.getString("noIncluye"));
@@ -127,15 +145,17 @@ public class PubPosicionamientoFragment extends Fragment {
         }
         //---------------------------------------------------------
             servicio.setPosicionamiento(posicion);
-/*
-        ArrayList<String> listaImagenes= new ArrayList<String>();
+
+        List<String> listaImagenes = new ArrayList<String>(); //Si hay error, cambiar el List por ArrayList
         listaImagenes=bundle.getStringArrayList("imagenes");
-
-
+        String imagenUrl="";
         for(int i=0;i<listaImagenes.size();i++){
-            servicio.addImagen(Uri.parse(listaImagenes.get(i)));
+            imagenUrl = subirImagenesStorage(Uri.parse(listaImagenes.get(i)));
+            servicio.addImagen(imagenUrl);
         }
-        */
+
+        servicio.setFotos(bundle.getStringArrayList("imagenes")); //Debe subirse la referenci en del Storage donde quede la imagen
+
 
         servicio.setFechaActivacion(Calendar.getInstance().getTime().toString());
 
@@ -153,12 +173,22 @@ public class PubPosicionamientoFragment extends Fragment {
 
         }*/
         FirebaseUser user = mAuth.getCurrentUser();
-        FirebaseDatabase.getInstance().getReference("servicios").child(user.getUid()).setValue(servicio).addOnCompleteListener(new OnCompleteListener<Void>() {
+        FirebaseDatabase.getInstance().getReference("servicios").child(user.getUid()+String.valueOf(System.currentTimeMillis())).setValue(servicio).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 //progressbar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
-                    Toast.makeText(getActivity(), "Se ha registrado correctamente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Se ha publicado el servicio", Toast.LENGTH_SHORT).show();
+/*
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    PruebaImagenFragment detallesServ = new PruebaImagenFragment();
+                    ft.replace(R.id.fragment_container, detallesServ);
+                    ft.addToBackStack(null);
+                    detallesServ.setArguments(bundle);
+                    ft.commit();
+                    */
+                    nProgressDialog.dismiss();
+
                     //updateUI(user);
 
                 }
@@ -169,6 +199,28 @@ public class PubPosicionamientoFragment extends Fragment {
             }
 
             });
+
+    }
+    private String extensionImagen(Uri uri){
+        ContentResolver cr = getActivity().getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cr.getType(uri));
+    }
+    private String subirImagenesStorage(Uri uri){
+
+        StorageReference fileReference = mStorage.child(System.currentTimeMillis()+"."+extensionImagen(uri));
+        fileReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                referenciaUrl = taskSnapshot.getDownloadUrl().toString();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "Falló la subida de una imagen", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return referenciaUrl;
     }
 }
 

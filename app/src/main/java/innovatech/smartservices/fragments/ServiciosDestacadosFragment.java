@@ -3,12 +3,17 @@ package innovatech.smartservices.fragments;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+<<<<<<< HEAD
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+=======
+import android.support.v4.app.FragmentTransaction;
+>>>>>>> 162ee95efbc7940e61bfbef499fc5fd6d37b1382
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +23,12 @@ import innovatech.smartservices.R;
 import static android.support.v7.widget.LinearLayoutManager.*;
 
 public class ServiciosDestacadosFragment extends Fragment {
+<<<<<<< HEAD
     List<Servicio> lstServicio;
 
+=======
+    Button prueba;
+>>>>>>> 162ee95efbc7940e61bfbef499fc5fd6d37b1382
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,6 +41,17 @@ public class ServiciosDestacadosFragment extends Fragment {
         //myrv.setAdapter(myAdapter);
 
         final View view = inflater.inflate(R.layout.fragment_destacados_servicio, container, false);
+        prueba= view.findViewById(R.id.prueba);
+        prueba.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                PruebaImagenFragment detallesServ = new PruebaImagenFragment();
+                ft.replace(R.id.fragment_container, detallesServ);
+                ft.addToBackStack(null);
+                ft.commit();
+            }
+        });
         return view;
     }
 

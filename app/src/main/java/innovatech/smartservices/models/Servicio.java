@@ -13,7 +13,7 @@ public class Servicio {
     String nombre;
     int precio;
     int promedioCalificacion;
-    List<Uri> fotos= new ArrayList<Uri>();
+    List<String> fotos= new ArrayList<String>();
     String fechaActivacion;
     Boolean posicionamiento;
     String tipo;
@@ -25,7 +25,7 @@ public class Servicio {
 
     }
 
-    public Servicio(String incluye, String noIncluye, String adicional, String nombre, int precio, int promedioCalificacion, List<Uri> fotos, String fechaActivacion, Boolean posicionamiento, String tipo, List<Ubicacion> ubicacion, List<Integer> disponibilidadDias, List<Integer> disponibilidadHoras) {
+    public Servicio(String incluye, String noIncluye, String adicional, String nombre, int precio, int promedioCalificacion, List<String> fotos, String fechaActivacion, Boolean posicionamiento, String tipo, List<Ubicacion> ubicacion, List<Integer> disponibilidadDias, List<Integer> disponibilidadHoras) {
         this.incluye = incluye;
         this.noIncluye = noIncluye;
         this.adicional = adicional;
@@ -89,11 +89,11 @@ public class Servicio {
         this.promedioCalificacion = promedioCalificacion;
     }
 
-    public List<Uri> getFotos() {
+    public List<String> getFotos() {
         return fotos;
     }
 
-    public void setFotos(List<Uri> fotos) {
+    public void setFotos(List<String> fotos) {
         this.fotos = fotos;
     }
 
@@ -151,7 +151,7 @@ public class Servicio {
     public void addHoras(int hora){
         this.disponibilidadHoras.add(hora);
     }
-    public void addImagen(Uri imagen){
+    public void addImagen(String imagen){
         fotos.add(imagen);
     }
 }

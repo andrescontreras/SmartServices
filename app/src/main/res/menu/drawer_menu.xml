@@ -19,11 +19,4 @@
         android:icon="@drawable/ic_exit"
         android:title="Cerrar sesion"></item>
 </group>
-<item android:title="Communicate">
-    <menu>
-        <item android:id="@+id/nav_share"
-            android:icon="@drawable/ic_share"
-            android:title="Compartir"></item>
-    </menu>
-</item>
 </menu>
