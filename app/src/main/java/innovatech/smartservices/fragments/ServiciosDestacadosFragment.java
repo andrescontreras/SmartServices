@@ -16,16 +16,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import innovatech.smartservices.R;
+import innovatech.smartservices.models.Servicio;
 
 import static android.support.v7.widget.LinearLayoutManager.*;
 
 public class ServiciosDestacadosFragment extends Fragment {
     List<Servicio> lstServicio;
-
-    Button prueba;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        final View view = inflater.inflate(R.layout.fragment_destacados_servicio, container, false);
 
         lstServicio = new ArrayList <> ();
         //lstServicio.add(new Servicio(//Nombre Servicio, //Categoria Servicio, //Descripcion Servicio, //Imagen Servicio));
@@ -33,19 +34,6 @@ public class ServiciosDestacadosFragment extends Fragment {
         //RecyclerViewAdapter myAdapter = new RecyclerViewAdapter (this,lstServicio);
         //myrv.setLayoutManager ( new GridLayoutManager ( this,3 ) );
         //myrv.setAdapter(myAdapter);
-
-        final View view = inflater.inflate(R.layout.fragment_destacados_servicio, container, false);
-        prueba= view.findViewById(R.id.prueba);
-        prueba.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                PruebaImagenFragment detallesServ = new PruebaImagenFragment();
-                ft.replace(R.id.fragment_container, detallesServ);
-                ft.addToBackStack(null);
-                ft.commit();
-            }
-        });
         return view;
     }
 

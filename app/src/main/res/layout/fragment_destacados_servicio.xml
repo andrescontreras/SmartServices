@@ -11,9 +11,11 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview_id"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent">
 
-        //android:id="@+id/textView4"
+    </android.support.v7.widget.RecyclerView>
+<TextView
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="34dp"
@@ -21,13 +23,7 @@
         android:text="@string/servicios_destacados"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textSize="24dp"/>*/
-
-
-
-</LinearLayout>
         android:textSize="24dp"/>
-
     <Button
         android:id="@+id/prueba"
         android:layout_width="wrap_content"
@@ -37,4 +33,9 @@
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-</android.support.constraint.ConstraintLayout>
+
+
+
+</LinearLayout>
+
+

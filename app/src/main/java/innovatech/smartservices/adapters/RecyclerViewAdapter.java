@@ -1,8 +1,6 @@
-package innovatech.smartservices.fragments;
+package innovatech.smartservices.adapters;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,6 +9,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import innovatech.smartservices.R;
+import innovatech.smartservices.fragments.ServiciosDestacadosFragment;
+import innovatech.smartservices.models.Servicio;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
@@ -24,19 +24,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent , int viewType) {
-
+    /*
         View view;
-        //LayoutInflater mInflater = LayoutInflater.from ( mContext );
-        //view = mInflater.inflate ( R.layout.cardview_item_servicio,parent,false );
-        //return new MyViewHolder ( view );
-        return null;
+        LayoutInflater mInflater = LayoutInflater.from ( mContext );
+        view = mInflater.inflate ( R.layout.cardview_item_servicio,parent,false );
+        return new MyViewHolder ( view );
+        */
+    return null;
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder , int position) {
 
-        holder.tv_servicio_title.setText(mData.get(position).getTitle ());
-        holder.img_servicio_thumbnail.setImageResource ( mData.get(position).getThumbnail () );
+        holder.tv_servicio_title.setText(mData.get(position).getNombre());
+        //holder.img_servicio_thumbnail.setImageResource ( mData.get(position).getThumbnail () );
 
     }
 
