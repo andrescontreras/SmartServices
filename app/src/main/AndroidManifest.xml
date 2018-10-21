@@ -13,15 +13,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.MainActivity" android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.InicioSesionActivity" />
-        <activity android:name=".activities.RegistrarUsuarioActivity" />
+        <activity android:name=".activities.InicioSesionActivity" android:screenOrientation="portrait"
+            />
+        <activity android:name=".activities.RegistrarUsuarioActivity" android:screenOrientation="portrait"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDsUNpD2CYDbU8zHPd-zcHjzrg7pE5MW94"/>
