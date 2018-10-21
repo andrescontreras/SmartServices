@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,6 +42,10 @@ public class ServiciosDestacadosFragment extends Fragment {
 
         final View view = inflater.inflate(R.layout.fragment_destacados_servicio, container, false);
         mAuth = FirebaseAuth.getInstance();
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
         myrv = (RecyclerView) view.findViewById(R.id.recyclerview_id);
         myrv.setHasFixedSize(true);
         myrv.setLayoutManager ( new GridLayoutManager ( getActivity(),2 ) );

@@ -53,6 +53,9 @@ public class PubPosicionamientoFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_pub_posicionamiento, container, false);
         mAuth = FirebaseAuth.getInstance();
         nProgressDialog = new ProgressDialog(getActivity());
+
+
+
         Button botonSI = (Button)view.findViewById(R.id.buttonSIPosicion);
         Button botonNO= (Button)view.findViewById(R.id.buttonNOPosicion);
         bundle=getArguments();
@@ -151,19 +154,10 @@ public class PubPosicionamientoFragment extends Fragment {
         }
         //----------------------------------------------------------------------------------
             servicio.setPosicionamiento(posicion);
-        List<String> listaImagenes = new ArrayList<String>(); //Si hay error, cambiar el List por ArrayList
-        listaImagenes=bundle.getStringArrayList("imagenes");
-        String imagenUrl="";
-        for(int i=0;i<listaImagenes.size();i++){
-            subirImagenesStorage(Uri.parse(listaImagenes.get(i)));
-            System.out.println("ESTO ES URL DE FIREBASE ANTES DE AÑADIRLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+imagenUrl);
-        }
-        boolean flag = true;
 
-        servicio.setFotos(imgUri);
         servicio.setFechaActivacion(Calendar.getInstance().getTime().toString());
 
-        servicio.setPromedioCalificacion(1000);
+        servicio.setPromedioCalificacion(5);
         //----------------------------------------------------------------------------------
         String auxUbicaciones;
         auxUbicaciones=bundle.getString("ubicacion");
@@ -177,34 +171,7 @@ public class PubPosicionamientoFragment extends Fragment {
             servicio.addUbicacion(ubiAux);
         }
         //----------------------------------------------------------------------------------
-
-        FirebaseUser user = mAuth.getCurrentUser();
-        FirebaseDatabase.getInstance().getReference("servicios").child(user.getUid()+String.valueOf(System.currentTimeMillis())).setValue(servicio).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                //progressbar.setVisibility(View.GONE);
-                if(task.isSuccessful()){
-                    Toast.makeText(getActivity(), "Se ha publicado el servicio", Toast.LENGTH_SHORT).show();
-/*
-                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    PruebaImagenFragment detallesServ = new PruebaImagenFragment();
-                    ft.replace(R.id.fragment_container, detallesServ);
-                    ft.addToBackStack(null);
-                    detallesServ.setArguments(bundle);
-                    ft.commit();
-                    */
-                    nProgressDialog.dismiss();
-
-                    //updateUI(user);
-
-                }
-                else{
-                    Toast.makeText( getActivity(),"Hubo un error al crear el usuario", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            });
+        subirImagenesStorage();
 
     }
     private String extensionImagen(Uri uri){
@@ -212,14 +179,19 @@ public class PubPosicionamientoFragment extends Fragment {
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cr.getType(uri));
     }
-    private void subirImagenesStorage(Uri uri){
-
+    private void subirImagenesStorage(){
+        Uri uri;
+        List<String> listaImagenes = new ArrayList<String>(); //Si hay error, cambiar el List por ArrayList
+        listaImagenes=bundle.getStringArrayList("imagenes");
+        String imagenUrl="";
+        uri=Uri.parse(listaImagenes.get(0));
         StorageReference fileReference = mStorage.child(System.currentTimeMillis()+"."+extensionImagen(uri));
         fileReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 referenciaUrl = taskSnapshot.getDownloadUrl().toString();
                 imgUri.add(referenciaUrl);
+                subirServicio();
                 System.out.println("ESTO ES TASK SNAPSHOT DONWLOAD URL ANTESSSSSSSSSSSS-------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+referenciaUrl);
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -230,6 +202,34 @@ public class PubPosicionamientoFragment extends Fragment {
             }
         });
         System.out.println("ESTO ES TASK SNAPSHOT DONWLOAD URL -------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+referenciaUrl);
+    }
+    public void subirServicio(){
+        servicio.setFotos(imgUri);
+        FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseDatabase.getInstance().getReference("servicios").child(user.getUid()+String.valueOf(System.currentTimeMillis())).setValue(servicio).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                //progressbar.setVisibility(View.GONE);
+                if(task.isSuccessful()){
+                    Toast.makeText(getActivity(), "Se ha publicado el servicio", Toast.LENGTH_SHORT).show();
+
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ServiciosDestacadosFragment servDest= new ServiciosDestacadosFragment();
+                    ft.replace(R.id.fragment_container, servDest);
+                    nProgressDialog.dismiss();
+
+                    ft.commit();
+
+                    //updateUI(user);
+
+                }
+                else{
+                    Toast.makeText( getActivity(),"Hubo un error al crear un servicio", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+        });
     }
 }
 

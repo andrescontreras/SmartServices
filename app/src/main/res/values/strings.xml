@@ -26,7 +26,7 @@
     <string name="info_basica"><u>Información basica</u></string>
     <string name="precio">Precio</string>
     <string name="agregar_imagen">Agregar imagenes</string>
-    <string name="servicios_destacados">Servicios Destacados</string>
+    <string name="servicios_destacados"><u>Servicios Destacados</u></string>
     <string name="detalles"><u>Detalles</u></string>
     <string name="que_incluye">¿Qué incluye?</string>
     <string name="que_no_incluye">¿Qué no incluye?</string>
