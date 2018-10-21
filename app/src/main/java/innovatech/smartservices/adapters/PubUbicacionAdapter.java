@@ -43,23 +43,25 @@ public class PubUbicacionAdapter  extends RecyclerView.Adapter<PubUbicacionAdapt
     public class ViewHolderDatos  extends RecyclerView.ViewHolder{
 
         TextView ubicacion;
-        TextView direccion;
+        TextView nombre;
         public ViewHolderDatos(View itemView) {
             super(itemView);
             ubicacion = itemView.findViewById(R.id.TV_Ubicacion);
+            nombre = itemView.findViewById(R.id.TV_Nombre);
 
         }
 
         public void asignarDatos(Ubicacion s) {
+            System.out.println("-----------------ASIGNAR: "+s.getDireccion());
             ubicacion.setText(s.getDireccion());
-
+            nombre.setText(s.getNombre());
         }
 
 
     }
 
-    public class itemUbicacion{
+   /* public class itemUbicacion{
         private String Ubicacion;
         private String Direccion;
-    }
+    }*/
 }

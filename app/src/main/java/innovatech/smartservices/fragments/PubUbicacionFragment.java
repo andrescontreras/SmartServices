@@ -110,11 +110,15 @@ public class PubUbicacionFragment extends Fragment {
         {
             if(ResultCode == RESULT_OK){
                Place place = PlacePicker.getPlace(data,getActivity());
-               String direccion = String.format("Place: %s",place.getAddress());
+               String direccion = String.format("%s",place.getAddress());
+               String nombre = String.format("%s",place.getName());
+                System.out.println("---------------------Name:"+ nombre);
+               System.out.println("---------------------Ess:"+ direccion);
                double latitud = place.getLatLng().latitude;
                double longitud = place.getLatLng().longitude;
-                Ubicacion u = new Ubicacion( direccion, latitud, longitud);
+                Ubicacion u = new Ubicacion( direccion, nombre, latitud, longitud);
                 //listDatos.add(u);
+                System.out.println("---------------------AAAAAA:"+ u.getDireccion());
                 adapter.addItem(u);
 
             }
