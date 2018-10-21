@@ -63,7 +63,6 @@ public class ServiciosDestacadosFragment extends Fragment {
                         Toast.makeText(getActivity(), "Hubo un problema encontrando los servicios", Toast.LENGTH_SHORT).show();
                     }
                 }
-                //lstServicio.add(new Servicio(//Nombre Servicio, //Categoria Servicio, //Descripcion Servicio, //Imagen Servicio));
                 RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(getActivity(),lstServicio);
                 myrv.setHasFixedSize(true);
                 myrv.setLayoutManager ( new GridLayoutManager ( getActivity(),2 ) );

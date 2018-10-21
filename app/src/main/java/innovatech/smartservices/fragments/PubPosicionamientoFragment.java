@@ -3,6 +3,7 @@ package innovatech.smartservices.fragments;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,12 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
@@ -39,7 +42,7 @@ public class PubPosicionamientoFragment extends Fragment {
     private FirebaseAuth mAuth;
     private StorageReference mStorage;
     private ProgressDialog nProgressDialog;
-    List<Uri> imgUri = new ArrayList<Uri>();
+    List<String> imgUri = new ArrayList<String>();
     String referenciaUrl = "";
     Bundle bundle ;
     @Nullable
@@ -145,18 +148,23 @@ public class PubPosicionamientoFragment extends Fragment {
         }
         //---------------------------------------------------------
             servicio.setPosicionamiento(posicion);
-
-        List<String> listaImagenes = new ArrayList<String>(); //Si hay error, cambiar el List por ArrayList
-        listaImagenes=bundle.getStringArrayList("imagenes");
-        String imagenUrl="";
-        for(int i=0;i<listaImagenes.size();i++){
-            imagenUrl = subirImagenesStorage(Uri.parse(listaImagenes.get(i)));
-            servicio.addImagen(imagenUrl);
-        }
-
-        servicio.setFotos(bundle.getStringArrayList("imagenes")); //Debe subirse la referenci en del Storage donde quede la imagen
-
-
+        /*
+        AsyncTask task = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                List<String> listaImagenes = new ArrayList<String>(); //Si hay error, cambiar el List por ArrayList
+                listaImagenes=bundle.getStringArrayList("imagenes");
+                String imagenUrl="";
+                for(int i=0;i<listaImagenes.size();i++){
+                    imagenUrl = subirImagenesStorage(Uri.parse(listaImagenes.get(i)));
+                    System.out.println("ESTO ES URL DE FIREBASE ANTES DE AÑADIRLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+imagenUrl);
+                    imgUri.add(imagenUrl);
+                }
+                return null;
+            }
+        };
+        */
+        servicio.setFotos(imgUri);
         servicio.setFechaActivacion(Calendar.getInstance().getTime().toString());
 
         servicio.setPromedioCalificacion(1000);
@@ -213,13 +221,16 @@ public class PubPosicionamientoFragment extends Fragment {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 referenciaUrl = taskSnapshot.getDownloadUrl().toString();
+                System.out.println("ESTO ES TASK SNAPSHOT DONWLOAD URL ANTESSSSSSSSSSSS-------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+referenciaUrl);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                referenciaUrl="";
                 Toast.makeText(getActivity(), "Falló la subida de una imagen", Toast.LENGTH_SHORT).show();
             }
         });
+        System.out.println("ESTO ES TASK SNAPSHOT DONWLOAD URL -------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+referenciaUrl);
         return referenciaUrl;
     }
 }

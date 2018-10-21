@@ -1,6 +1,7 @@
 package innovatech.smartservices.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +37,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(MyViewHolder holder , int position) {
 
         holder.tv_servicio_title.setText(mData.get(position).getNombre());
-        Picasso.with(mContext).load(mData.get(position).getFotos().get(0)).into(holder.img_servicio);
+        Picasso.with(mContext).load(Uri.parse(mData.get(position).getFotos().get(0))).into(holder.img_servicio);
+        holder.tv_servicio_precio.setText("$"+String.valueOf(mData.get(position).getPrecio()));
 
     }
 
@@ -49,13 +51,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         TextView tv_servicio_title;
         ImageView img_servicio;
+        TextView tv_servicio_precio;
 
         public MyViewHolder(View itemView) {
             super ( itemView );
             tv_servicio_title = (TextView) itemView.findViewById ( R.id.servicio_title_id );
             img_servicio = (ImageView) itemView.findViewById ( R.id.servicio_img_id );
-
+            tv_servicio_precio = (TextView)itemView.findViewById(R.id.servicio_precio_id);
         }
     }
-
 }
