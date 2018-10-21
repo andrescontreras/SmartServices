@@ -165,11 +165,11 @@ public class PubPosicionamientoFragment extends Fragment {
         auxUbicaciones=bundle.getString("ubicacion");
         //System.out.println("sacando ubicaciones "+auxUbicaciones.toString());
         String[] parts = auxUbicaciones.split("Place");
-        Ubicacion ubiAux=new Ubicacion("","","");
+        Ubicacion ubiAux=new Ubicacion("",0,0);
 
         for(int i=1;i<parts.length;i++){
             System.out.println("lo del split "+parts[i]);
-            ubiAux= new Ubicacion(parts[i],"","");
+            ubiAux= new Ubicacion(parts[i],0,0);
             servicio.addUbicacion(ubiAux);
         }
         //----------------------------------------------------------------------------------
