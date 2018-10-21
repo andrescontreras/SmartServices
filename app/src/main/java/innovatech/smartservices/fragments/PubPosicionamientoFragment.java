@@ -117,7 +117,7 @@ public class PubPosicionamientoFragment extends Fragment {
         if(bundle.getBoolean("domingo")){
             servicio.addDias(7);
         }
-        //---------------------------------------------------------
+        //----------------------------------------------------------------------------------
         if(bundle.getBoolean("7a9")){
             servicio.addHoras(7);
             servicio.addHoras(8);
@@ -137,15 +137,16 @@ public class PubPosicionamientoFragment extends Fragment {
         }
         if(bundle.getBoolean("4a6")){
             servicio.addHoras(16);
-            servicio.addHoras(17);
+
+            
         }
         if(bundle.getBoolean("6a8")){
             servicio.addHoras(18);
             servicio.addHoras(19);
         }
-        //---------------------------------------------------------
+        //----------------------------------------------------------------------------------
             servicio.setPosicionamiento(posicion);
-
+        //----------------------------------------------------------------------------------
         List<String> listaImagenes = new ArrayList<String>(); //Si hay error, cambiar el List por ArrayList
         listaImagenes=bundle.getStringArrayList("imagenes");
         String imagenUrl="";
@@ -155,7 +156,7 @@ public class PubPosicionamientoFragment extends Fragment {
         }
 
         servicio.setFotos(bundle.getStringArrayList("imagenes")); //Debe subirse la referenci en del Storage donde quede la imagen
-
+        //----------------------------------------------------------------------------------
 
         servicio.setFechaActivacion(Calendar.getInstance().getTime().toString());
 
