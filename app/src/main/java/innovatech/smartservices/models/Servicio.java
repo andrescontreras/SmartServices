@@ -17,7 +17,7 @@ public class Servicio {
     String fechaActivacion;
     Boolean posicionamiento;
     String tipo;
-    List<Ubicacion> ubicacion;
+    List<Ubicacion> ubicacion=new ArrayList<>();
     List<Integer> disponibilidadDias=new ArrayList<>();
     List<Integer> disponibilidadHoras=new ArrayList<>();
 
@@ -147,6 +147,9 @@ public class Servicio {
 
     public void addDias(int dia){
         this.disponibilidadDias.add(dia);
+    }
+    public void addUbicacion(Ubicacion ubi){
+        this.ubicacion.add(ubi);
     }
     public void addHoras(int hora){
         this.disponibilidadHoras.add(hora);

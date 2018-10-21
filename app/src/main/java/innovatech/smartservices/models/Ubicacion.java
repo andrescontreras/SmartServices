@@ -11,6 +11,9 @@ public class Ubicacion {
     private String Ubicacion;
     private String Direccion;
 
+    public Ubicacion() {
+    }
+
     public Ubicacion(String posicionGPS, String ubicacion, String direccion) {
         PosicionGPS = posicionGPS;
         Ubicacion = ubicacion;
