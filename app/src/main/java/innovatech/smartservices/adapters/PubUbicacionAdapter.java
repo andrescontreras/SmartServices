@@ -51,7 +51,7 @@ public class PubUbicacionAdapter  extends RecyclerView.Adapter<PubUbicacionAdapt
         }
 
         public void asignarDatos(Ubicacion s) {
-            ubicacion.setText(s.getUbicacion());
+            ubicacion.setText(s.getDireccion());
 
         }
 
