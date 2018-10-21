@@ -37,7 +37,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(MyViewHolder holder , int position) {
 
         holder.tv_servicio_title.setText(mData.get(position).getNombre());
-        Picasso.with(mContext).load(Uri.parse(mData.get(position).getFotos().get(0))).into(holder.img_servicio);
+        if((mData.get(position).getFotos().size()>0)){
+            Picasso.with(mContext).load(Uri.parse(mData.get(position).getFotos().get(0))).into(holder.img_servicio);
+        }
+
         holder.tv_servicio_precio.setText("$"+String.valueOf(mData.get(position).getPrecio()));
 
     }

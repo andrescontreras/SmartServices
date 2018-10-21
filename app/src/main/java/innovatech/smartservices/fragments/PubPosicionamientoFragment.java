@@ -33,6 +33,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import innovatech.smartservices.R;
 import innovatech.smartservices.models.Servicio;
@@ -45,6 +46,7 @@ public class PubPosicionamientoFragment extends Fragment {
     List<String> imgUri = new ArrayList<String>();
     String referenciaUrl = "";
     Bundle bundle ;
+    Servicio servicio = new Servicio();
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,7 +55,9 @@ public class PubPosicionamientoFragment extends Fragment {
         nProgressDialog = new ProgressDialog(getActivity());
         Button botonSI = (Button)view.findViewById(R.id.buttonSIPosicion);
         Button botonNO= (Button)view.findViewById(R.id.buttonNOPosicion);
+        bundle=getArguments();
         mStorage =FirebaseStorage.getInstance().getReference("Uploads");
+
         botonSI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,8 +85,6 @@ public class PubPosicionamientoFragment extends Fragment {
     public void guardarEnFirebase(Boolean posicion){
         nProgressDialog.setMessage("Publicando el servicio...");
         nProgressDialog.show();
-        Servicio servicio=new Servicio();
-        bundle=getArguments();
 
         servicio.setIncluye(bundle.getString("incluye"));
         servicio.setNoIncluye(bundle.getString("noIncluye"));
@@ -149,22 +151,15 @@ public class PubPosicionamientoFragment extends Fragment {
         }
         //----------------------------------------------------------------------------------
             servicio.setPosicionamiento(posicion);
-        /*
-        AsyncTask task = new AsyncTask() {
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                List<String> listaImagenes = new ArrayList<String>(); //Si hay error, cambiar el List por ArrayList
-                listaImagenes=bundle.getStringArrayList("imagenes");
-                String imagenUrl="";
-                for(int i=0;i<listaImagenes.size();i++){
-                    imagenUrl = subirImagenesStorage(Uri.parse(listaImagenes.get(i)));
-                    System.out.println("ESTO ES URL DE FIREBASE ANTES DE AÑADIRLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+imagenUrl);
-                    imgUri.add(imagenUrl);
-                }
-                return null;
-            }
-        };
-        */
+        List<String> listaImagenes = new ArrayList<String>(); //Si hay error, cambiar el List por ArrayList
+        listaImagenes=bundle.getStringArrayList("imagenes");
+        String imagenUrl="";
+        for(int i=0;i<listaImagenes.size();i++){
+            subirImagenesStorage(Uri.parse(listaImagenes.get(i)));
+            System.out.println("ESTO ES URL DE FIREBASE ANTES DE AÑADIRLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+imagenUrl);
+        }
+        boolean flag = true;
+
         servicio.setFotos(imgUri);
         servicio.setFechaActivacion(Calendar.getInstance().getTime().toString());
 
@@ -217,13 +212,14 @@ public class PubPosicionamientoFragment extends Fragment {
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cr.getType(uri));
     }
-    private String subirImagenesStorage(Uri uri){
+    private void subirImagenesStorage(Uri uri){
 
         StorageReference fileReference = mStorage.child(System.currentTimeMillis()+"."+extensionImagen(uri));
         fileReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 referenciaUrl = taskSnapshot.getDownloadUrl().toString();
+                imgUri.add(referenciaUrl);
                 System.out.println("ESTO ES TASK SNAPSHOT DONWLOAD URL ANTESSSSSSSSSSSS-------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+referenciaUrl);
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -234,7 +230,6 @@ public class PubPosicionamientoFragment extends Fragment {
             }
         });
         System.out.println("ESTO ES TASK SNAPSHOT DONWLOAD URL -------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+referenciaUrl);
-        return referenciaUrl;
     }
 }
 
