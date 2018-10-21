@@ -120,7 +120,7 @@ public class PubPosicionamientoFragment extends Fragment {
         if(bundle.getBoolean("domingo")){
             servicio.addDias(7);
         }
-        //---------------------------------------------------------
+        //----------------------------------------------------------------------------------
         if(bundle.getBoolean("7a9")){
             servicio.addHoras(7);
             servicio.addHoras(8);
@@ -140,13 +140,14 @@ public class PubPosicionamientoFragment extends Fragment {
         }
         if(bundle.getBoolean("4a6")){
             servicio.addHoras(16);
-            servicio.addHoras(17);
+
+            
         }
         if(bundle.getBoolean("6a8")){
             servicio.addHoras(18);
             servicio.addHoras(19);
         }
-        //---------------------------------------------------------
+        //----------------------------------------------------------------------------------
             servicio.setPosicionamiento(posicion);
         /*
         AsyncTask task = new AsyncTask() {
@@ -168,18 +169,20 @@ public class PubPosicionamientoFragment extends Fragment {
         servicio.setFechaActivacion(Calendar.getInstance().getTime().toString());
 
         servicio.setPromedioCalificacion(1000);
-
+        //----------------------------------------------------------------------------------
         String auxUbicaciones;
         auxUbicaciones=bundle.getString("ubicacion");
-        System.out.println("Las ubicaciones son");
+        //System.out.println("sacando ubicaciones "+auxUbicaciones.toString());
+        String[] parts = auxUbicaciones.split("Place");
+        Ubicacion ubiAux=new Ubicacion("",0,0);
 
-        System.out.println(auxUbicaciones);
+        for(int i=1;i<parts.length;i++){
+            System.out.println("lo del split "+parts[i]);
+            ubiAux= new Ubicacion(parts[i],0,0);
+            servicio.addUbicacion(ubiAux);
+        }
+        //----------------------------------------------------------------------------------
 
-        /*
-        System.out.println("Las direcicones son ");
-        for(int i=0;i<bundle.getString("ubicacion")){
-
-        }*/
         FirebaseUser user = mAuth.getCurrentUser();
         FirebaseDatabase.getInstance().getReference("servicios").child(user.getUid()+String.valueOf(System.currentTimeMillis())).setValue(servicio).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

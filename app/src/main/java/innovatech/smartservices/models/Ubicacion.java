@@ -19,35 +19,39 @@ public class Ubicacion {
         Direccion = direccion;
     }
 
-    public String getApto() {
-        return apto;
+
+    // datos de ubicacion exactos generagos por google
+    private double latitud; // se obtienen por medio de place.getLng()
+    private double longitud; //// se obtienen por medio de place.getLng()
+    private String direccion; // Returns a human readable address for this Place. place.getAddress()
+
+    public Ubicacion(String direccion, double latitud, double longitud) {
+        direccion = direccion;
+        latitud = latitud;
+        longitud = longitud;
     }
 
-    public void setApto(String apto) {
-        this.apto = apto;
+    public double getLatitud() {
+        return latitud;
     }
 
-    public String getPosicionGPS() {
-        return PosicionGPS;
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
     }
 
-    public void setPosicionGPS(String posicionGPS) {
-        PosicionGPS = posicionGPS;
+    public double getLongitud() {
+        return longitud;
     }
 
-    public String getUbicacion() {
-        return Ubicacion;
-    }
-
-    public void setUbicacion(String ubicacion) {
-        Ubicacion = ubicacion;
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
     }
 
     public String getDireccion() {
-        return Direccion;
+        return direccion;
     }
 
     public void setDireccion(String direccion) {
-        Direccion = direccion;
+        this.direccion = direccion;
     }
 }
