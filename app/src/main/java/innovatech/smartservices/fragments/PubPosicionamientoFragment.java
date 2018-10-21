@@ -157,7 +157,7 @@ public class PubPosicionamientoFragment extends Fragment {
 
         servicio.setFechaActivacion(Calendar.getInstance().getTime().toString());
 
-        servicio.setPromedioCalificacion(1000);
+        servicio.setPromedioCalificacion(5);
         //----------------------------------------------------------------------------------
         String auxUbicaciones;
         auxUbicaciones=bundle.getString("ubicacion");
@@ -184,12 +184,6 @@ public class PubPosicionamientoFragment extends Fragment {
         List<String> listaImagenes = new ArrayList<String>(); //Si hay error, cambiar el List por ArrayList
         listaImagenes=bundle.getStringArrayList("imagenes");
         String imagenUrl="";
-        /*
-        for(int i=0;i<listaImagenes.size();i++){
-            subirImagenesStorage();
-            System.out.println("ESTO ES URL DE FIREBASE ANTES DE AÑADIRLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+imagenUrl);
-        }
-        */
         uri=Uri.parse(listaImagenes.get(0));
         StorageReference fileReference = mStorage.child(System.currentTimeMillis()+"."+extensionImagen(uri));
         fileReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -218,21 +212,19 @@ public class PubPosicionamientoFragment extends Fragment {
                 //progressbar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
                     Toast.makeText(getActivity(), "Se ha publicado el servicio", Toast.LENGTH_SHORT).show();
-/*
+
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    PruebaImagenFragment detallesServ = new PruebaImagenFragment();
-                    ft.replace(R.id.fragment_container, detallesServ);
-                    ft.addToBackStack(null);
-                    detallesServ.setArguments(bundle);
-                    ft.commit();
-                    */
+                    ServiciosDestacadosFragment servDest= new ServiciosDestacadosFragment();
+                    ft.replace(R.id.fragment_container, servDest);
                     nProgressDialog.dismiss();
+
+                    ft.commit();
 
                     //updateUI(user);
 
                 }
                 else{
-                    Toast.makeText( getActivity(),"Hubo un error al crear el usuario", Toast.LENGTH_SHORT).show();
+                    Toast.makeText( getActivity(),"Hubo un error al crear un servicio", Toast.LENGTH_SHORT).show();
                 }
 
             }
