@@ -56,20 +56,9 @@ public class PubUbicacionFragment extends Fragment {
                     ft.replace(R.id.fragment_container, ubicacionfragm);
                     ft.addToBackStack(null);
                     Bundle bundle = getArguments();
-                    System.out.println("los datos son "+listDatos.get(0).getUbicacion());
-                    String superAux="";
-                    for(int i=0;i<listDatos.size();i++){
-                        if(i!=0){
-                            superAux = superAux + " "+listDatos.get(i).getUbicacion();
-                        }
-                        else {
-                            superAux = superAux + listDatos.get(i).getUbicacion();
-                        }
-                    }
-                    //System.out.println("El superAux queda "+superAux);
-                    //System.out.println("parte del tostring queda de la sigueinte forma "+listDatos.toString());
-                    bundle.putString("ubicacion", superAux);
-                    //System.out.println("lo que se guarda es XXXXXXXXXX-X-X-X-X-X-X-X  "+listDatos.toString());
+                    System.out.println("los datos son "+listDatos.get(0).getDireccion());
+                    bundle.putString("ubicacion", listDatos.toString());
+                    System.out.println("lo que se guarda es XXXXXXXXXX-X-X-X-X-X-X-X  "+listDatos.toString());
                     ubicacionfragm.setArguments(bundle);
                     //notificacion.setArguments(bundle);
                     ft.commit();
@@ -122,8 +111,9 @@ public class PubUbicacionFragment extends Fragment {
             if(ResultCode == RESULT_OK){
                Place place = PlacePicker.getPlace(data,getActivity());
                String direccion = String.format("Place: %s",place.getAddress());
-               String ubi = place.getName().toString();
-                Ubicacion u = new Ubicacion("NUEVO", direccion, "DIR-"+ubi );
+               double latitud = place.getLatLng().latitude;
+               double longitud = place.getLatLng().longitude;
+                Ubicacion u = new Ubicacion( direccion, latitud, longitud);
                 //listDatos.add(u);
                 adapter.addItem(u);
 
