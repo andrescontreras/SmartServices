@@ -19,6 +19,8 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -32,6 +34,7 @@ public class PubUbicacionFragment extends Fragment {
 
     private final static int PLACE_PICKER_REQUEST = 999;
     ArrayList<Ubicacion> listDatos;
+    FirebaseAuth mAuth ;
     RecyclerView recycler;
     public Button agregar1;
     Button boton;
@@ -41,9 +44,9 @@ public class PubUbicacionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_pub_ubicacion, container, false);
+        mAuth = FirebaseAuth.getInstance();
         boton = (Button)view.findViewById(R.id.button4);
         //listDatos= view.findViewById(R.id.recyclerUbicaciones);
-
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,6 +125,17 @@ public class PubUbicacionFragment extends Fragment {
                 adapter.addItem(u);
 
             }
+        }
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser==null){ //Cuando el usuario ya esta logeado, mandarlo a la actividad principal
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            ServiciosDestacadosFragment servDest= new ServiciosDestacadosFragment();
+            ft.replace(R.id.fragment_container, servDest);
+            ft.commit();
         }
     }
 }

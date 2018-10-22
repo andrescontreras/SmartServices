@@ -36,6 +36,7 @@ public class PubInfoBasicaFragment extends Fragment {
     Button sig;
     EditText nombre;
     EditText precio;
+    private FirebaseAuth mAuth;
     private StorageReference mStorage;
     private static final int GALLERY_INTENT = 2;
     private static final int RESULT_LOAD_IMAGE = 1;
@@ -50,7 +51,7 @@ public class PubInfoBasicaFragment extends Fragment {
         Bundle bundle = getArguments();
         nProgressDialog = new ProgressDialog(getActivity());
         mStorage = FirebaseStorage.getInstance().getReference();
-        mStorage = FirebaseStorage.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
         nombre = (EditText)view.findViewById(R.id.txtNombre);
         precio = (EditText)view.findViewById(R.id.txtPrecio);
         selecImagen = (Button)view.findViewById(R.id.btn_agregarImagenes);
@@ -163,6 +164,17 @@ public class PubInfoBasicaFragment extends Fragment {
                 }
             }
         });
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser==null){ //Cuando el usuario ya esta logeado, mandarlo a la actividad principal
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            ServiciosDestacadosFragment servDest= new ServiciosDestacadosFragment();
+            ft.replace(R.id.fragment_container, servDest);
+            ft.commit();
+        }
     }
 
 

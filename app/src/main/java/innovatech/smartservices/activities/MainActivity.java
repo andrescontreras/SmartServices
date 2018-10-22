@@ -132,6 +132,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else{
             nombreHeader.setText("Usuario visitante");
             emailHeader.setText("");
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new ServiciosDestacadosFragment()).commit();
+
         }
         //Si no mandarlo a la pagina de login
     }

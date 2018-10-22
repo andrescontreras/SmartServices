@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 
 public class CuentaFragment extends Fragment {
     Button nueva_publi;
@@ -19,10 +22,12 @@ public class CuentaFragment extends Fragment {
     Button buzon_p;
     // boton de prueba
     Button ubicacion;
+    private FirebaseAuth mAuth;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_cuenta, container, false);
+        mAuth = FirebaseAuth.getInstance();
         inicializarBotones(view);
         accionBotones(view);
         return view;
@@ -118,6 +123,17 @@ public class CuentaFragment extends Fragment {
             }
         });
 
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser==null){ //Cuando el usuario ya esta logeado, mandarlo a la actividad principal
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            ServiciosDestacadosFragment servDest= new ServiciosDestacadosFragment();
+            ft.replace(R.id.fragment_container, servDest);
+            ft.commit();
+        }
     }
 }
 

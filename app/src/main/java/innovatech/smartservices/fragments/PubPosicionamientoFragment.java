@@ -53,14 +53,10 @@ public class PubPosicionamientoFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_pub_posicionamiento, container, false);
         mAuth = FirebaseAuth.getInstance();
         nProgressDialog = new ProgressDialog(getActivity());
-
-
-
         Button botonSI = (Button)view.findViewById(R.id.buttonSIPosicion);
         Button botonNO= (Button)view.findViewById(R.id.buttonNOPosicion);
         bundle=getArguments();
         mStorage =FirebaseStorage.getInstance().getReference("Uploads");
-
         botonSI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -217,7 +213,6 @@ public class PubPosicionamientoFragment extends Fragment {
                     ServiciosDestacadosFragment servDest= new ServiciosDestacadosFragment();
                     ft.replace(R.id.fragment_container, servDest);
                     nProgressDialog.dismiss();
-
                     ft.commit();
 
                     //updateUI(user);
@@ -230,6 +225,18 @@ public class PubPosicionamientoFragment extends Fragment {
             }
 
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser==null){ //Cuando el usuario ya esta logeado, mandarlo a la actividad principal
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            ServiciosDestacadosFragment servDest= new ServiciosDestacadosFragment();
+            ft.replace(R.id.fragment_container, servDest);
+            ft.commit();
+        }
     }
 }
 

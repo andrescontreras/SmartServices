@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import innovatech.smartservices.R;
 
 public class PubDetallesFragment extends Fragment {
@@ -19,10 +22,12 @@ public class PubDetallesFragment extends Fragment {
     EditText noIncluye;
     EditText adicional;
     Button boton;
+    private FirebaseAuth mAuth;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_pub_detalles_servicio, container, false);
+        mAuth = FirebaseAuth.getInstance();
         boton = (Button)view.findViewById(R.id.boton_detalles);
         incluye = (EditText)view.findViewById(R.id.texto_incluye);
         noIncluye= (EditText)view.findViewById(R.id.texto_no_incluye);
@@ -49,5 +54,16 @@ public class PubDetallesFragment extends Fragment {
             }
         });
         return view;
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser==null){ //Cuando el usuario ya esta logeado, mandarlo a la actividad principal
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            ServiciosDestacadosFragment servDest= new ServiciosDestacadosFragment();
+            ft.replace(R.id.fragment_container, servDest);
+            ft.commit();
+        }
     }
 }

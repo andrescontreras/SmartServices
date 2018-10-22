@@ -28,11 +28,13 @@ public class PubCrearServicioFragment extends Fragment {
     Spinner spinner_nv3;
     Spinner spinner_nv4;
     Boolean spinnerCompleto = false;
+    private FirebaseAuth mAuth;
     ConstraintLayout c_layout;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_pub_categoria_servicio, container, false);
+        mAuth = FirebaseAuth.getInstance();
         inicializar(view);
         accionBotones(view);
         return view;
@@ -429,5 +431,16 @@ public class PubCrearServicioFragment extends Fragment {
                 elementos.add("No se encuentran más subcategorias");
         }
         return elementos;
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser==null){ //Cuando el usuario ya esta logeado, mandarlo a la actividad principal
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            ServiciosDestacadosFragment servDest= new ServiciosDestacadosFragment();
+            ft.replace(R.id.fragment_container, servDest);
+            ft.commit();
+        }
     }
 }
