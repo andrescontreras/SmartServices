@@ -195,7 +195,7 @@
         android:layout_marginStart="36dp"
         android:layout_marginTop="25dp"
         android:drawableLeft="@drawable/ic_public_black_24dp"
-        android:text="@string/Text_c_disponibilidad"
+        android:text="Disponibilidad"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
