@@ -20,6 +20,7 @@ public class CuentaFragment extends Fragment {
     Button edit_usu;
     Button serv_solic;
     Button buzon_p;
+    Button ranking;
     // boton de prueba
     Button ubicacion;
     private FirebaseAuth mAuth;
@@ -62,6 +63,7 @@ public class CuentaFragment extends Fragment {
         serv_solic = (Button)view.findViewById(R.id.btn_histo_servicios);
         buzon_p = (Button)view.findViewById(R.id.btn_buzon);
         ubicacion =  view.findViewById(R.id.ubicacion);
+        ranking =  (Button)view.findViewById(R.id.btn_ranking);
     }
     //METODO QUE CONTIENE TODAS LAS ACCIONES DE LOS BOTONES
     private  void accionBotones(View view){
@@ -85,6 +87,20 @@ public class CuentaFragment extends Fragment {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 PubUbicacionFragment ubi = new PubUbicacionFragment();
                 ft.replace(R.id.fragment_container,ubi);
+                ft.addToBackStack(null);
+                //notificacion.setArguments(bundle);
+                ft.commit();
+            }
+        });
+
+
+
+        ranking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                CuentaRankingFragment rank = new CuentaRankingFragment();
+                ft.replace(R.id.fragment_container,rank);
                 ft.addToBackStack(null);
                 //notificacion.setArguments(bundle);
                 ft.commit();

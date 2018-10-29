@@ -87,4 +87,8 @@
     <string name="textView_c_disponibilidad">Calendario de disponibilidad</string>
     <string name="correo">Correo</string>
     <string name="ubicaci_n_del_servicio"><u>Ubicación del servicio</u></string>
+    <string name="tu_ranking"><u>Tu ranking</u></string>
+    <string name="basado_en_la_opini_n_de_los_integrantes_de_nuestra_plataforma_tu_ranking_es">Basado en la opinión de los integrantes de nuestra plataforma tu ranking es:</string>
+    <string name="como_prestador_de_servicios">Como prestador de servicios</string>
+    <string name="como_contratador_de_servicios">Como contratador de servicios</string>
 </resources>
