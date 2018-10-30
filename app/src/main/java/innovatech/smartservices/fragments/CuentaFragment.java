@@ -112,9 +112,16 @@ public class CuentaFragment extends Fragment {
         admin_serv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                CuentaAdministrarServicioFragment adminServices= new CuentaAdministrarServicioFragment();
+                ft.replace(R.id.fragment_container,adminServices);
+                ft.addToBackStack(null);
+                //notificacion.setArguments(bundle);
+                ft.commit();
             }
         });
+
+
         edit_usu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
