@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Servicio {
-
+    String idUsuario;
     String incluye;
     String noIncluye;
     String adicional;
@@ -144,7 +144,12 @@ public class Servicio {
     public void setDisponibilidadHoras(List<Integer> disponibilidadHoras) {
         this.disponibilidadHoras = disponibilidadHoras;
     }
-
+    public void setIdUsuario(String id){
+        this.idUsuario= id;
+    }
+    public String getIdUsuario(){
+        return this.idUsuario;
+    }
     public void addDias(int dia){
         this.disponibilidadDias.add(dia);
     }

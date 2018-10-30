@@ -24,7 +24,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -38,21 +42,25 @@ import java.util.concurrent.ExecutionException;
 import innovatech.smartservices.R;
 import innovatech.smartservices.models.Servicio;
 import innovatech.smartservices.models.Ubicacion;
+import innovatech.smartservices.models.Usuario;
 
 public class PubPosicionamientoFragment extends Fragment {
     private FirebaseAuth mAuth;
     private StorageReference mStorage;
     private ProgressDialog nProgressDialog;
+    DatabaseReference mDataBase;
     List<String> imgUri = new ArrayList<String>();
     String referenciaUrl = "";
     Bundle bundle ;
     Servicio servicio = new Servicio();
+    Usuario usr = new Usuario();
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_pub_posicionamiento, container, false);
         mAuth = FirebaseAuth.getInstance();
         nProgressDialog = new ProgressDialog(getActivity());
+        mDataBase = FirebaseDatabase.getInstance().getReference("users");
         Button botonSI = (Button)view.findViewById(R.id.buttonSIPosicion);
         Button botonNO= (Button)view.findViewById(R.id.buttonNOPosicion);
         bundle=getArguments();
@@ -166,6 +174,7 @@ public class PubPosicionamientoFragment extends Fragment {
             ubiAux= new Ubicacion(parts[i],"",0,0);
             servicio.addUbicacion(ubiAux);
         }
+        servicio.setIdUsuario(mAuth.getCurrentUser().getUid());
         //----------------------------------------------------------------------------------
         subirImagenesStorage();
 
@@ -202,13 +211,14 @@ public class PubPosicionamientoFragment extends Fragment {
     public void subirServicio(){
         servicio.setFotos(imgUri);
         FirebaseUser user = mAuth.getCurrentUser();
-        FirebaseDatabase.getInstance().getReference("servicios").child(user.getUid()+String.valueOf(System.currentTimeMillis())).setValue(servicio).addOnCompleteListener(new OnCompleteListener<Void>() {
+        final String idServicio = user.getUid()+String.valueOf(System.currentTimeMillis());
+        FirebaseDatabase.getInstance().getReference("servicios").child(idServicio).setValue(servicio).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 //progressbar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
                     Toast.makeText(getActivity(), "Se ha publicado el servicio", Toast.LENGTH_SHORT).show();
-
+                    infoActualUsuario(idServicio);
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     ServiciosDestacadosFragment servDest= new ServiciosDestacadosFragment();
                     ft.replace(R.id.fragment_container, servDest);
@@ -238,6 +248,34 @@ public class PubPosicionamientoFragment extends Fragment {
             ft.commit();
         }
     }
+    private void infoActualUsuario(final String idServicio){
+        FirebaseUser user = mAuth.getCurrentUser();
+        String uid = user.getUid();
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("users").child(uid);
+        db.addValueEventListener(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    usr = dataSnapshot.getValue(Usuario.class);
+                    usr.setServicio(idServicio);
+                    mDataBase.child(mAuth.getCurrentUser().getUid()).setValue(usr);
+                    Toast.makeText(getActivity(), "Se realizaron los cambios", Toast.LENGTH_SHORT).show();
+                    //int cedula = dataSnapshot.child("cedula").getValue(Integer.class);
+                    //String nombre = dataSnapshot.child("nombre").getValue(String.class);
+                    System.out.println("ESTO ES EL NOMBREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE  "+ usr.getNombre());
+                    System.out.println("ESTO ES EL EMAILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL  "+ usr.getEmail());
+                }
+                else{
+                    Toast.makeText(getActivity(), "Hubo un problema encontrando el uid", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
+    }
+
 }
 
 

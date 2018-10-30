@@ -1,5 +1,8 @@
 package innovatech.smartservices.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Usuario {
 
     private String nombre;
@@ -9,6 +12,7 @@ public class Usuario {
     private String barrio;
     private int telefono;
     private String email;
+    private List<String>idServicios = new ArrayList<String>();
 
     public Usuario(){
 
@@ -78,8 +82,18 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
-
-
+    }
+    public List<String>getListaIDServicios(){
+        return this.idServicios;
+    }
+    public String getServicio(String id){
+        return null;
+    }
+    public void setListaServicios(List<String> servicios){
+        this.idServicios = servicios;
+    }
+    public void setServicio(String idServicio){
+        this.idServicios.add(idServicio);
     }
 }
 

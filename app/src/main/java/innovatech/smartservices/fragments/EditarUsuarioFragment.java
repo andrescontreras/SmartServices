@@ -101,7 +101,6 @@ public class EditarUsuarioFragment extends Fragment {
             mDataBase.child(mAuth.getCurrentUser().getUid()).setValue(usu);
             Toast.makeText(getActivity(), "Se realizaron los cambios", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     private boolean verificarInformacionVacia(){
