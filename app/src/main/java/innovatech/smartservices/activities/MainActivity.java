@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +12,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,9 +28,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import innovatech.smartservices.R;
 import innovatech.smartservices.fragments.PublicacionesFavoritasFragment;
 import innovatech.smartservices.fragments.ServiciosDestacadosFragment;
+import innovatech.smartservices.models.Servicio;
 import innovatech.smartservices.models.Usuario;
 import innovatech.smartservices.fragments.CuentaFragment;
 import innovatech.smartservices.fragments.NotificacionesFragment;
@@ -39,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView nombreHeader;
     TextView emailHeader;
     ImageButton imgUsuario;
+    ArrayList<Servicio> listaServicios = new ArrayList<Servicio>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,4 +182,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
+
 }

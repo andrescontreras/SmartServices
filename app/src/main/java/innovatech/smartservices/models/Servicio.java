@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Servicio {
+    String id;
     String idUsuario;
     String incluye;
     String noIncluye;
@@ -25,7 +26,8 @@ public class Servicio {
 
     }
 
-    public Servicio(String incluye, String noIncluye, String adicional, String nombre, int precio, int promedioCalificacion, List<String> fotos, String fechaActivacion, Boolean posicionamiento, String tipo, List<Ubicacion> ubicacion, List<Integer> disponibilidadDias, List<Integer> disponibilidadHoras) {
+    public Servicio(String id,String incluye, String noIncluye, String adicional, String nombre, int precio, int promedioCalificacion, List<String> fotos, String fechaActivacion, Boolean posicionamiento, String tipo, List<Ubicacion> ubicacion, List<Integer> disponibilidadDias, List<Integer> disponibilidadHoras) {
+        this.id=id;
         this.incluye = incluye;
         this.noIncluye = noIncluye;
         this.adicional = adicional;
@@ -143,6 +145,12 @@ public class Servicio {
 
     public void setDisponibilidadHoras(List<Integer> disponibilidadHoras) {
         this.disponibilidadHoras = disponibilidadHoras;
+    }
+    public void setId(String id){
+        this.id=id;
+    }
+    public String getId(){
+        return this.id;
     }
     public void setIdUsuario(String id){
         this.idUsuario= id;

@@ -24,14 +24,25 @@
     <string name="buzon_preguntas">Buzón de preguntas</string>
     <string name="siguiente">Siguiente</string>
     <string name="info_basica"><u>Información basica</u></string>
+    <string name="info_basica2">Información basica</string>
     <string name="precio">Precio</string>
     <string name="agregar_imagen">Agregar imagenes</string>
     <string name="servicios_destacados"><u>Servicios Destacados</u></string>
     <string name="detalles"><u>Detalles</u></string>
+    <string name="detalles_serv">Detalles</string>
     <string name="que_incluye">¿Qué incluye?</string>
     <string name="que_no_incluye">¿Qué no incluye?</string>
     <string name="informacion_adicional">Información adicional</string>
     <string name="coloque_texto">Coloque aquí su texto...</string>
+    <string name="preguntas">Preguntas</string>
+    <string name="comentarios">Comentarios</string>
+    <string name="solicitar_servicio">Solicitar servicio</string>
+    <string name="agregar_favoritos">Agregar a favoritos</string>
+    <string name="comentario_de">Comentario de:</string>
+    <string name="incluye">Incluye</string>
+    <string name="no_incluye">No incluye</string>
+    <string name="buscador">Buscador</string>
+
     <string-array name="tipoServicio_nv1">
         <item>Seleccionar categoria</item>
         <item>Belleza</item>
