@@ -258,7 +258,7 @@ public class PubPosicionamientoFragment extends Fragment {
                     usr = dataSnapshot.getValue(Usuario.class);
                     usr.setServicio(idServicio);
                     mDataBase.child(mAuth.getCurrentUser().getUid()).setValue(usr);
-                    Toast.makeText(getActivity(), "Se realizaron los cambios", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "Se realizaron los cambios", Toast.LENGTH_SHORT).show();
                     //int cedula = dataSnapshot.child("cedula").getValue(Integer.class);
                     //String nombre = dataSnapshot.child("nombre").getValue(String.class);
                     System.out.println("ESTO ES EL NOMBREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE  "+ usr.getNombre());

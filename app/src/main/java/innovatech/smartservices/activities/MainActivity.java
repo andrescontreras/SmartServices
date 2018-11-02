@@ -26,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import innovatech.smartservices.R;
+import innovatech.smartservices.fragments.PublicacionesFavoritasFragment;
 import innovatech.smartservices.fragments.ServiciosDestacadosFragment;
 import innovatech.smartservices.models.Usuario;
 import innovatech.smartservices.fragments.CuentaFragment;
@@ -95,7 +96,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_favoritos:
                 if(verificarSesion()){
-                    Toast.makeText(this, "Oprimio favoritos", Toast.LENGTH_SHORT).show();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            new PublicacionesFavoritasFragment()).commit();
                 }else{
                     Toast.makeText(this, "Debe iniciar sesion para entrar a Favoritos", Toast.LENGTH_SHORT).show();
                 }

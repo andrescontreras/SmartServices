@@ -1,6 +1,7 @@
 package innovatech.smartservices.fragments;
 import innovatech.smartservices.R;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -31,6 +32,7 @@ public class CuentaFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         inicializarBotones(view);
         accionBotones(view);
+
         return view;
         //return inflater.inflate(R.layout.fragment_cuenta,container,false);
         /*
@@ -108,18 +110,19 @@ public class CuentaFragment extends Fragment {
         });
 
 
-
         admin_serv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                CuentaAdministrarServicioFragment adminServices= new CuentaAdministrarServicioFragment();
-                ft.replace(R.id.fragment_container,adminServices);
+                PruebaFragment editUsu = new PruebaFragment();
+                ft.replace(R.id.fragment_container, editUsu);
                 ft.addToBackStack(null);
                 //notificacion.setArguments(bundle);
                 ft.commit();
             }
         });
+
+
 
 
         edit_usu.setOnClickListener(new View.OnClickListener() {
