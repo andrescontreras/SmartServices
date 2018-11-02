@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import innovatech.smartservices.R;
@@ -24,14 +27,16 @@ import innovatech.smartservices.fragments.ServiciosDestacadosFragment;
 import innovatech.smartservices.interfaces.OnItemClickListenerInterface;
 import innovatech.smartservices.models.Servicio;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> implements Filterable {
 
     private Context mContext;
     private List<Servicio> mData;
+    private List<Servicio> mDataFull;
 
     public RecyclerViewAdapter(Context mContext , List <Servicio> mData) {
         this.mContext = mContext;
         this.mData = mData;
+        mDataFull = new ArrayList<Servicio>(mData);
     }
 
     @Override
@@ -95,4 +100,42 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             itemClickListener.onClick(view,getAdapterPosition());
         }
     }
+    /*
+    public void setFilter(ArrayList<Servicio> listaServicios){
+        this.mData = new ArrayList<>();
+        this.mData = listaServicios;
+        notifyDataSetChanged();
+    }
+    */
+
+    @Override
+    public Filter getFilter() {
+        return serviceFilter;
+    }
+    private Filter serviceFilter= new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Servicio>filteredResults = new ArrayList<Servicio>();
+            if(constraint == null || constraint.length() == 0){
+                filteredResults.addAll(mDataFull);
+            }else{
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for(Servicio servicio : mDataFull){
+                    if(servicio.getNombre().toLowerCase().contains(filterPattern)){
+                        filteredResults.add(servicio);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredResults;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            mData.clear();
+            mData.addAll((List)filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 }

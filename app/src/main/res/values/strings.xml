@@ -24,6 +24,7 @@
     <string name="buzon_preguntas">Buzón de preguntas</string>
     <string name="siguiente">Siguiente</string>
     <string name="info_basica"><u>Información basica</u></string>
+    <string name="info_basica2">Información basica</string>
     <string name="precio">Precio</string>
     <string name="agregar_imagen">Agregar imagenes</string>
     <string name="servicios_destacados"><u>Servicios Destacados</u></string>
@@ -38,6 +39,10 @@
     <string name="solicitar_servicio">Solicitar servicio</string>
     <string name="agregar_favoritos">Agregar a favoritos</string>
     <string name="comentario_de">Comentario de:</string>
+    <string name="incluye">Incluye</string>
+    <string name="no_incluye">No incluye</string>
+    <string name="buscador">Buscador</string>
+
     <string-array name="tipoServicio_nv1">
         <item>Seleccionar categoria</item>
         <item>Belleza</item>

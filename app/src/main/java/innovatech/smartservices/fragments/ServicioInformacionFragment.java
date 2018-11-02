@@ -88,7 +88,7 @@ public class ServicioInformacionFragment extends Fragment {
         });
     }
     public void accionBotones(final String idServ){
-        btn_comentarios.setOnClickListener(new View.OnClickListener() {
+       /* btn_comentarios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
@@ -98,6 +98,19 @@ public class ServicioInformacionFragment extends Fragment {
                 Bundle bundle = getArguments();
                 bundle.putString("idServicio",idServ);
                 opinionesServ.setArguments(bundle);
+                ft.commit();
+            }
+        });*/
+        btn_detalles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ServicioDetallesFragment detallesServ = new ServicioDetallesFragment();
+                ft.replace(R.id.fragment_container, detallesServ);
+                ft.addToBackStack(null);
+                Bundle bundle = getArguments();
+                bundle.putString("idServicio",idServ);
+                detallesServ.setArguments(bundle);
                 ft.commit();
             }
         });
