@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Usuario {
 
+    private String id;
     private String nombre;
     private int cedula;
     private String ciudad;
@@ -18,7 +19,8 @@ public class Usuario {
 
     }
 
-    public Usuario(String nombre, int cedula, String ciudad, String direccion, String barrio, int telefono, String email) {
+    public Usuario(String id,String nombre, int cedula, String ciudad, String direccion, String barrio, int telefono, String email) {
+        this.id=id;
         this.nombre = nombre;
         this.cedula = cedula;
         this.ciudad = ciudad;
@@ -88,6 +90,12 @@ public class Usuario {
     }
     public String getServicio(String id){
         return null;
+    }
+    public void setId(String id){
+        this.id=id;
+    }
+    public String getId(){
+        return this.id;
     }
     public void setListaServicios(List<String> servicios){
         this.idServicios = servicios;

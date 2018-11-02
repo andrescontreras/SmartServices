@@ -76,13 +76,13 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-
                                 // Sign in success, update UI with the signed-in user's information
                                 int cedulaInt = Integer.parseInt(cedulaTxt);
                                 int telefonoInt =Integer.parseInt(telefonoTxt);
-                                Usuario usuario = new Usuario(nombreTxt,cedulaInt,ciudadTxt,direccionTxt,barrioTxt,telefonoInt,emailTxt);
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).setValue(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                String idUsu = user.getUid();
+                                Usuario usuario = new Usuario(idUsu,nombreTxt,cedulaInt,ciudadTxt,direccionTxt,barrioTxt,telefonoInt,emailTxt);
+                                FirebaseDatabase.getInstance().getReference("users").child(idUsu).setValue(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         //progressbar.setVisibility(View.GONE);

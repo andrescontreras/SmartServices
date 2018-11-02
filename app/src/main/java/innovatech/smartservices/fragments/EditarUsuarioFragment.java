@@ -95,7 +95,9 @@ public class EditarUsuarioFragment extends Fragment {
             Toast.makeText(getActivity(), "Ningun campo puede estar vacio, rellene todos los campos", Toast.LENGTH_SHORT).show();
         }
         else{
-            Usuario usu  = new Usuario(nombre.getText().toString().trim(),Integer.parseInt(cedula.getText().toString().trim()),
+            FirebaseUser user = mAuth.getCurrentUser();
+            String idUser = user.getUid();
+            Usuario usu  = new Usuario(idUser,nombre.getText().toString().trim(),Integer.parseInt(cedula.getText().toString().trim()),
                     ciudad.getText().toString().trim(), direccion.getText().toString().trim(),barrio.getText().toString().trim(),
                     Integer.parseInt(telefono.getText().toString().trim()), email.getText().toString().trim());
             mDataBase.child(mAuth.getCurrentUser().getUid()).setValue(usu);
