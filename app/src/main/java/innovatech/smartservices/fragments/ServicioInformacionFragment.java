@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +24,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import innovatech.smartservices.R;
+import innovatech.smartservices.adapters.ImagenInformacionServicioAdapter;
 import innovatech.smartservices.models.Servicio;
+
+import me.relex.circleindicator.CircleIndicator;
 
 public class ServicioInformacionFragment extends Fragment {
     Button btn_solic_serv;
@@ -34,8 +41,12 @@ public class ServicioInformacionFragment extends Fragment {
     Button btn_favoritos;
     TextView titulo_serv;
     TextView precio_serv;
-    ImageView imagenServ;
     RatingBar ratingBar;
+
+    ViewPager viewPager;
+    ImagenInformacionServicioAdapter imgAnfAdapter;
+    List<String> listaImagenes = new ArrayList<String>();
+    CircleIndicator indicator;
 
     FirebaseAuth mAuth ;
     DatabaseReference mDataBase;
@@ -53,8 +64,9 @@ public class ServicioInformacionFragment extends Fragment {
         btn_favoritos = (Button)view.findViewById(R.id.serv_btn_favoritos);
         titulo_serv = (TextView)view.findViewById(R.id.serv_txt_titulo);
         precio_serv = (TextView)view.findViewById(R.id.serv_txt_precio);
-        imagenServ = (ImageView)view.findViewById(R.id.imagenServ);
         ratingBar = (RatingBar)view.findViewById(R.id.ratingBarServ);
+        viewPager = (ViewPager)view.findViewById(R.id.viewPagerServ);
+        indicator = (CircleIndicator)view.findViewById(R.id.ciImagenesAlojAPA);
         Bundle bundle = getArguments();
         String idServ = bundle.getString("idServicio");
         capturarInfoActual(idServ);
@@ -74,7 +86,12 @@ public class ServicioInformacionFragment extends Fragment {
                    precio_serv.setText(String.valueOf(serv.getPrecio()));
                    //imagenServ.setImageURI(null);
                    //imagenServ.setImageURI(Uri.parse(serv.getFotos().get(0)));
-                    Picasso.with(getContext()).load(Uri.parse(serv.getFotos().get(0))).into(imagenServ);
+                    imgAnfAdapter = new ImagenInformacionServicioAdapter(getActivity(),serv.getFotos());
+                    viewPager.setAdapter(imgAnfAdapter);
+                    
+                    indicator.setViewPager(viewPager);
+
+                    //Picasso.with(getContext()).load(Uri.parse(serv.getFotos().get(0))).into(imagenServ);
                 }
                 else{
                     Toast.makeText(getActivity(), "Hubo un problema encontrando el uid", Toast.LENGTH_SHORT).show();

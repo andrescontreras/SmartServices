@@ -6,24 +6,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imagenServ"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="117dp"
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="117dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/googleg_standard_color_18" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPagerServ"
+            android:layout_width="368dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <me.relex.circleindicator.CircleIndicator
+            android:id="@+id/ciImagenesAlojAPA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/serv_btn_detalles"
         android:layout_width="74dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="43dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="348dp"
         android:background="@null"
         android:text="@string/detalles_serv"
@@ -35,9 +49,10 @@
         android:id="@+id/serv_btn_preguntas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="43dp"
-        android:text="@string/preguntas"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
         android:background="@null"
+        android:text="@string/preguntas"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/serv_btn_detalles" />
@@ -46,22 +61,23 @@
         android:id="@+id/serv_btn_comentarios"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="43dp"
-        android:text="@string/comentarios"
+        android:layout_marginStart="40dp"
         android:background="@null"
+        android:text="@string/comentarios"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/serv_btn_preguntas" />
 
     <RatingBar
         android:id="@+id/ratingBarServ"
+        style="@style/Widget.AppCompat.RatingBar.Indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="72dp"
+        android:clickable="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/serv_btn_solicitar" />
 
@@ -70,10 +86,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="113dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="113dp"
         android:text="@string/solicitar_servicio"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/serv_txt_precio" />
 
@@ -81,7 +98,8 @@
         android:id="@+id/serv_btn_favoritos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="43dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="4dp"
         android:background="@null"
         android:text="@string/agregar_favoritos"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,22 +110,24 @@
         android:layout_width="wrap_content"
         android:layout_height="23dp"
         android:layout_marginStart="163dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="165dp"
         android:layout_marginEnd="163dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagenServ" />
+        app:layout_constraintTop_toTopOf="@+id/relativeLayout" />
 
     <TextView
         android:id="@+id/serv_txt_precio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="163dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="163dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/serv_txt_titulo" />
 </android.support.constraint.ConstraintLayout>
