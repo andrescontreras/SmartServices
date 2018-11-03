@@ -31,7 +31,7 @@ import innovatech.smartservices.adapters.RecyclerViewAdapter;
 import innovatech.smartservices.adapters.RecyclerViewAdministrarServiciosAdapter;
 import innovatech.smartservices.models.Servicio;
 
-public class PruebaFragment extends Fragment {
+public class CuentaAdministrarServiciosFragment extends Fragment {
     private FirebaseAuth mAuth;
     private StorageReference mStorage;
     private ProgressDialog nProgressDialog;

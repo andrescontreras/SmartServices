@@ -1,7 +1,6 @@
 package innovatech.smartservices.fragments;
 import innovatech.smartservices.R;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -114,7 +113,7 @@ public class CuentaFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                PruebaFragment editUsu = new PruebaFragment();
+                CuentaAdministrarServiciosFragment editUsu = new CuentaAdministrarServiciosFragment();
                 ft.replace(R.id.fragment_container, editUsu);
                 ft.addToBackStack(null);
                 //notificacion.setArguments(bundle);
