@@ -172,11 +172,11 @@ public class Servicio {
         fotos.add(imagen);
     }
 
-    public List<UsuarioxServicio> getRelaciones() {
+    public List<UsuarioxServicio> getRelacionUsuario() {
         return relacionUsuario;
     }
 
-    public void setRelaciones(List<UsuarioxServicio> relacionUsuario) {
+    public void setRelacionUsuario(List<UsuarioxServicio> relacionUsuario) {
         this.relacionUsuario = relacionUsuario;
     }
 }

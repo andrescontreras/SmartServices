@@ -227,7 +227,7 @@ public class PubPosicionamientoFragment extends Fragment {
         final UsuarioxServicio ususerv= new UsuarioxServicio(user.getUid(),idServicio, RelacionEnum.PUBLICADOR);
         final List<UsuarioxServicio>listRelacion = new ArrayList<UsuarioxServicio>();
         listRelacion.add(ususerv);
-        servicio.setRelaciones(listRelacion);
+        servicio.setRelacionUsuario(listRelacion);
         FirebaseDatabase.getInstance().getReference("servicios").child(idServicio).setValue(servicio).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
