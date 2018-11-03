@@ -26,7 +26,7 @@ import innovatech.smartservices.interfaces.OnItemClickListenerInterface;
 import innovatech.smartservices.models.Servicio;
 import innovatech.smartservices.models.Usuario;
 
-public class RecyclerViewNotificaciones extends RecyclerView.Adapter<RecyclerViewNotificaciones.MyViewHolder> implements Filterable {
+public class RecyclerViewNotificaciones extends RecyclerView.Adapter<RecyclerViewNotificaciones.MyViewHolder> {
 
     private Context mContext;
     private List<Servicio> mData;
@@ -42,34 +42,15 @@ public class RecyclerViewNotificaciones extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent , int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.cardview_item_servicio,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.cardview_item_notificaciones,parent,false);
         return new MyViewHolder ( view );
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder , int position) {
 
-        holder.tv_servicio_title.setText(mData.get(position).getNombre());
-        if((mData.get(position).getFotos().size()>0)){
-            Picasso.with(mContext).load(Uri.parse(mData.get(position).getFotos().get(0))).into(holder.img_servicio);
-        }
-        holder.tv_servicio_precio.setText("$"+String.valueOf(mData.get(position).getPrecio()));
-        holder.setItemClickListener(new OnItemClickListenerInterface() {
-            @Override
-            public void onClick(View view, int position) {
-                MainActivity myActivity = (MainActivity)mContext;
-                Toast.makeText(mContext, "Elemento "+mData.get(position).getNombre(), Toast.LENGTH_SHORT).show();
-                FragmentTransaction ft = myActivity.getSupportFragmentManager().beginTransaction();
-                ServicioInformacionFragment infoServFragm = new ServicioInformacionFragment();
-                ft.replace(R.id.fragment_container, infoServFragm);
-                ft.addToBackStack(null);
-                Bundle bundle = new Bundle();
-                bundle.putString("idServicio", mData.get(position).getId());
-                infoServFragm.setArguments(bundle);
-                //notificacion.setArguments(bundle);
-                ft.commit();
-            }
-        });
+        //holder.tv_servicio_title.setText(mData.get(position).getNombre());
+        holder.tv_notificacion.setText("Usuario "+"user"+"Pidio el servicio"+"Servicio");
 
     }
 
@@ -78,65 +59,14 @@ public class RecyclerViewNotificaciones extends RecyclerView.Adapter<RecyclerVie
         return mData.size ();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tv_servicio_title;
-        ImageButton img_servicio;
-        TextView tv_servicio_precio;
-        private OnItemClickListenerInterface itemClickListener;
-
+        TextView tv_notificacion;
         public MyViewHolder(View itemView) {
             super ( itemView );
-            tv_servicio_title = (TextView) itemView.findViewById ( R.id.servicio_title_id );
-            img_servicio = (ImageButton) itemView.findViewById ( R.id.servicio_img_id );
-            tv_servicio_precio = (TextView)itemView.findViewById(R.id.servicio_precio_id);
-            itemView.setOnClickListener(this);
-        }
-        public void setItemClickListener(OnItemClickListenerInterface itemClickListener){
-            this.itemClickListener = itemClickListener;
-        }
+         //   tv_notificacion = (TextView) itemView.findViewById ( R.id);
 
-        @Override
-        public void onClick(View view) {
-            itemClickListener.onClick(view,getAdapterPosition());
         }
     }
-    /*
-    public void setFilter(ArrayList<Servicio> listaServicios){
-        this.mData = new ArrayList<>();
-        this.mData = listaServicios;
-        notifyDataSetChanged();
-    }
-    */
-
-    @Override
-    public Filter getFilter() {
-        return serviceFilter;
-    }
-    private Filter serviceFilter= new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<Servicio>filteredResults = new ArrayList<Servicio>();
-            if(constraint == null || constraint.length() == 0){
-                filteredResults.addAll(mDataFull);
-            }else{
-                String filterPattern = constraint.toString().toLowerCase().trim();
-                for(Servicio servicio : mDataFull){
-                    if(servicio.getNombre().toLowerCase().contains(filterPattern)){
-                        filteredResults.add(servicio);
-                    }
-                }
-            }
-            FilterResults results = new FilterResults();
-            results.values = filteredResults;
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            mData.clear();
-            mData.addAll((List)filterResults.values);
-            notifyDataSetChanged();
-        }
-    };
 }
+
