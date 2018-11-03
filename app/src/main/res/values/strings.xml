@@ -74,21 +74,21 @@
     <string name="action_example">Example action</string>
 
     <string name="action_settings">Settings</string>
-    <string name = "button_calendario">Siguiente</string>
-    <string name = "checkBox_c_lunes">Lunes</string>
-    <string name = "checkBox_c_martes">Martes</string>
-    <string name = "checkBox_c_miercoles">Miercoles</string>
-    <string name = "checkBox_c_jueves">Jueves</string>
-    <string name = "checkBox_c_viernes">Viernes</string>
-    <string name = "checkBox_c_sabado">Sabado</string>
-    <string name = "checkBox_c_domingo">Domingo</string>
-    <string name= "checkBox_c_7a9">7:00 am - 9:00 am</string>
-    <string name= "checkBox_c_9a11">9:00 am - 11:00 am</string>
-    <string name= "checkBox_c_11a1">11:00 am - 1:00 pm</string>
-    <string name= "checkBox_c_2a4">2:00 pm - 4:00 pm</string>
-    <string name= "checkBox_c_4a6">4:00 pm - 6:00 pm</string>
-    <string name= "checkBox_c_6a8">6:00 pm - 8:00 pm</string>
-    <string name= "Text_c_disponibilidad"><u>Ubicación y disponibilidad</u></string>
+    <string name="button_calendario">Siguiente</string>
+    <string name="checkBox_c_lunes">Lunes</string>
+    <string name="checkBox_c_martes">Martes</string>
+    <string name="checkBox_c_miercoles">Miercoles</string>
+    <string name="checkBox_c_jueves">Jueves</string>
+    <string name="checkBox_c_viernes">Viernes</string>
+    <string name="checkBox_c_sabado">Sabado</string>
+    <string name="checkBox_c_domingo">Domingo</string>
+    <string name="checkBox_c_7a9">7:00 am - 9:00 am</string>
+    <string name="checkBox_c_9a11">9:00 am - 11:00 am</string>
+    <string name="checkBox_c_11a1">11:00 am - 1:00 pm</string>
+    <string name="checkBox_c_2a4">2:00 pm - 4:00 pm</string>
+    <string name="checkBox_c_4a6">4:00 pm - 6:00 pm</string>
+    <string name="checkBox_c_6a8">6:00 pm - 8:00 pm</string>
+    <string name="Text_c_disponibilidad"><u>Ubicación y disponibilidad</u></string>
     <string name="posicionamiento"><u>Posicionamiento</u></string>
     <string name="ya_est_s_a_punto_de_acabar">Ya estás a punto de acabar!</string>
     <string name="con_la_opci_n_de_posicionamiento_puedes_hacer_que_tus_publicaciones_salgan_como_destacadas_cuando_es_buscado_un_servicio_como_el_tuyo_es_decir_tu_servicio_se_mostrar_entre_los_primeros_deseas_activarlo_este_servicio_se_cobrar_mensualmente_a_trav_s_de_tu_tarjeta_de_cr_dito_por_un_monto_de_2_d_lares">Con la opción de posicionamiento puedes hacer que tus publicaciones salgan como destacadas cuando es buscado un servicio como el tuyo, es decir, tu servicio se mostrará entre los primeros. Deseas activarlo?(Este servicio se cobrará mensualmente a través de tu tarjeta de crédito por un monto de $2 dólares)</string>
@@ -103,4 +103,9 @@
     <string name="basado_en_la_opini_n_de_los_integrantes_de_nuestra_plataforma_tu_ranking_es">Basado en la opinión de los integrantes de nuestra plataforma tu ranking es:</string>
     <string name="como_prestador_de_servicios">Como prestador de servicios</string>
     <string name="como_contratador_de_servicios">Como contratador de servicios</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="textView_Notificaciones"> Tus notificaciones</string>
+
 </resources>
