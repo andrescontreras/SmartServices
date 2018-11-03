@@ -102,4 +102,6 @@
     <string name="basado_en_la_opini_n_de_los_integrantes_de_nuestra_plataforma_tu_ranking_es">Basado en la opinión de los integrantes de nuestra plataforma tu ranking es:</string>
     <string name="como_prestador_de_servicios">Como prestador de servicios</string>
     <string name="como_contratador_de_servicios">Como contratador de servicios</string>
+    <string name="textView_Notificaciones"> Tus notificaciones</string>
+
 </resources>
