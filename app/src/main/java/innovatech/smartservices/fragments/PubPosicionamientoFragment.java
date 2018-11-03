@@ -50,10 +50,12 @@ public class PubPosicionamientoFragment extends Fragment {
     private ProgressDialog nProgressDialog;
     DatabaseReference mDataBase;
     List<String> imgUri = new ArrayList<String>();
+    List<String> listaImagenes;
     String referenciaUrl = "";
     Bundle bundle ;
     Servicio servicio = new Servicio();
     Usuario usr = new Usuario();
+    int subidos;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -186,26 +188,33 @@ public class PubPosicionamientoFragment extends Fragment {
     }
     private void subirImagenesStorage(){
         Uri uri;
-        List<String> listaImagenes = new ArrayList<String>(); //Si hay error, cambiar el List por ArrayList
+        listaImagenes = new ArrayList<String>(); //Si hay error, cambiar el List por ArrayList
         listaImagenes=bundle.getStringArrayList("imagenes");
         String imagenUrl="";
-        uri=Uri.parse(listaImagenes.get(0));
-        StorageReference fileReference = mStorage.child(System.currentTimeMillis()+"."+extensionImagen(uri));
-        fileReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                referenciaUrl = taskSnapshot.getDownloadUrl().toString();
-                imgUri.add(referenciaUrl);
-                subirServicio();
-                System.out.println("ESTO ES TASK SNAPSHOT DONWLOAD URL ANTESSSSSSSSSSSS-------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+referenciaUrl);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                referenciaUrl="";
-                Toast.makeText(getActivity(), "Falló la subida de una imagen", Toast.LENGTH_SHORT).show();
-            }
-        });
+        subidos=0;
+        for(int i=0;i<listaImagenes.size();i++) {
+            uri = Uri.parse(listaImagenes.get(i));
+            StorageReference fileReference = mStorage.child(System.currentTimeMillis() + "." + extensionImagen(uri));
+            fileReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    referenciaUrl = taskSnapshot.getDownloadUrl().toString();
+                    imgUri.add(referenciaUrl);
+                    subidos++;
+                    if(subidos==listaImagenes.size()){
+                        subirServicio();
+                    }
+
+                    System.out.println("ESTO ES TASK SNAPSHOT DONWLOAD URL ANTESSSSSSSSSSSS-------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + referenciaUrl);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    referenciaUrl = "";
+                    Toast.makeText(getActivity(), "Falló la subida de una imagen", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
         System.out.println("ESTO ES TASK SNAPSHOT DONWLOAD URL -------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+referenciaUrl);
     }
     public void subirServicio(){
