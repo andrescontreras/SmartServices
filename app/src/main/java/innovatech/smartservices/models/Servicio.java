@@ -21,6 +21,7 @@ public class Servicio {
     List<Ubicacion> ubicacion=new ArrayList<>();
     List<Integer> disponibilidadDias=new ArrayList<>();
     List<Integer> disponibilidadHoras=new ArrayList<>();
+    List<UsuarioxServicio> relacionUsuario=new ArrayList<UsuarioxServicio>();
 
     public Servicio(){
 
@@ -169,6 +170,14 @@ public class Servicio {
     }
     public void addImagen(String imagen){
         fotos.add(imagen);
+    }
+
+    public List<UsuarioxServicio> getRelaciones() {
+        return relacionUsuario;
+    }
+
+    public void setRelaciones(List<UsuarioxServicio> relacionUsuario) {
+        this.relacionUsuario = relacionUsuario;
     }
 }
 

@@ -39,6 +39,8 @@ import static android.support.v7.widget.LinearLayoutManager.*;
 
 public class ServiciosDestacadosFragment extends Fragment{
     ArrayList<Servicio> lstServicio =  new ArrayList<Servicio>();
+    List<Servicio> listaPrioridad = new ArrayList<Servicio>();//Se guardaran los servicios con posicionamiento para mostrarlos de primero
+    List<Servicio> listaSinPrioridad = new ArrayList<Servicio>();
     RecyclerView myrv;
     FirebaseAuth mAuth ;
     RecyclerViewAdapter myAdapter;

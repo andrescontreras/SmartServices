@@ -14,6 +14,7 @@ public class Usuario {
     private int telefono;
     private String email;
     private List<String>idServicios = new ArrayList<String>();
+    List<UsuarioxServicio> relacionServicio=new ArrayList<UsuarioxServicio>();
 
     public Usuario(){
 
@@ -102,6 +103,22 @@ public class Usuario {
     }
     public void setServicio(String idServicio){
         this.idServicios.add(idServicio);
+    }
+
+    public List<String> getIdServicios() {
+        return idServicios;
+    }
+
+    public void setIdServicios(List<String> idServicios) {
+        this.idServicios = idServicios;
+    }
+
+    public List<UsuarioxServicio> getRelacionServicio() {
+        return relacionServicio;
+    }
+
+    public void setRelacionServicio(List<UsuarioxServicio> relacionServicio) {
+        this.relacionServicio = relacionServicio;
     }
 }
 

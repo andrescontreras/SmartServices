@@ -97,10 +97,39 @@ public class EditarUsuarioFragment extends Fragment {
         else{
             FirebaseUser user = mAuth.getCurrentUser();
             String idUser = user.getUid();
+            DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("users").child(idUser);
+            db.addValueEventListener(new ValueEventListener() {
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot!=null){
+                        Usuario usr = dataSnapshot.getValue(Usuario.class);
+                        //int cedula = dataSnapshot.child("cedula").getValue(Integer.class);
+                        //String nombre = dataSnapshot.child("nombre").getValue(String.class);
+                        System.out.println("ESTO ES EL NOMBREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE  "+ usr.getNombre());
+                        System.out.println("ESTO ES EL EMAILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL  "+ usr.getEmail());
+                        usr.setNombre(nombre.getText().toString().trim());
+                        usr.setCedula(Integer.parseInt(cedula.getText().toString().trim()));
+                        usr.setCiudad(ciudad.getText().toString().trim());
+                        usr.setDireccion(direccion.getText().toString().trim());
+                        usr.setBarrio(barrio.getText().toString().trim());
+                        usr.setTelefono(Integer.parseInt(telefono.getText().toString().trim()));
+                        mDataBase.child(mAuth.getCurrentUser().getUid()).setValue(usr);
+                    }
+                    else{
+                        Toast.makeText(getActivity(), "Hubo un problema encontrando el uid", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    throw databaseError.toException();
+                }
+            });
+            /*
             Usuario usu  = new Usuario(idUser,nombre.getText().toString().trim(),Integer.parseInt(cedula.getText().toString().trim()),
                     ciudad.getText().toString().trim(), direccion.getText().toString().trim(),barrio.getText().toString().trim(),
                     Integer.parseInt(telefono.getText().toString().trim()), email.getText().toString().trim());
             mDataBase.child(mAuth.getCurrentUser().getUid()).setValue(usu);
+            */
             Toast.makeText(getActivity(), "Se realizaron los cambios", Toast.LENGTH_SHORT).show();
         }
     }

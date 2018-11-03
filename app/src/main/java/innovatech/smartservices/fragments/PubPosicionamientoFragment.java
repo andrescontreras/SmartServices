@@ -40,9 +40,11 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import innovatech.smartservices.R;
+import innovatech.smartservices.helpers.RelacionEnum;
 import innovatech.smartservices.models.Servicio;
 import innovatech.smartservices.models.Ubicacion;
 import innovatech.smartservices.models.Usuario;
+import innovatech.smartservices.models.UsuarioxServicio;
 
 public class PubPosicionamientoFragment extends Fragment {
     private FirebaseAuth mAuth;
@@ -222,13 +224,17 @@ public class PubPosicionamientoFragment extends Fragment {
         FirebaseUser user = mAuth.getCurrentUser();
         final String idServicio = user.getUid()+String.valueOf(System.currentTimeMillis());
         servicio.setId(idServicio);
+        final UsuarioxServicio ususerv= new UsuarioxServicio(user.getUid(),idServicio, RelacionEnum.PUBLICADOR);
+        final List<UsuarioxServicio>listRelacion = new ArrayList<UsuarioxServicio>();
+        listRelacion.add(ususerv);
+        servicio.setRelaciones(listRelacion);
         FirebaseDatabase.getInstance().getReference("servicios").child(idServicio).setValue(servicio).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 //progressbar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
                     Toast.makeText(getActivity(), "Se ha publicado el servicio", Toast.LENGTH_SHORT).show();
-                    infoActualUsuario(idServicio);
+                    infoActualUsuario(idServicio,listRelacion);
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     ServiciosDestacadosFragment servDest= new ServiciosDestacadosFragment();
                     ft.replace(R.id.fragment_container, servDest);
@@ -258,7 +264,7 @@ public class PubPosicionamientoFragment extends Fragment {
             ft.commit();
         }
     }
-    private void infoActualUsuario(final String idServicio){
+    private void infoActualUsuario(final String idServicio, final List<UsuarioxServicio> ususerv){
         FirebaseUser user = mAuth.getCurrentUser();
         String uid = user.getUid();
         DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("users").child(uid);
@@ -267,6 +273,7 @@ public class PubPosicionamientoFragment extends Fragment {
                 if(dataSnapshot!=null){
                     usr = dataSnapshot.getValue(Usuario.class);
                     usr.setServicio(idServicio);
+                    usr.setRelacionServicio(ususerv);
                     mDataBase.child(mAuth.getCurrentUser().getUid()).setValue(usr);
                     //Toast.makeText(getActivity(), "Se realizaron los cambios", Toast.LENGTH_SHORT).show();
                     //int cedula = dataSnapshot.child("cedula").getValue(Integer.class);

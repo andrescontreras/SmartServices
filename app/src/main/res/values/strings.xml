@@ -42,6 +42,7 @@
     <string name="incluye">Incluye</string>
     <string name="no_incluye">No incluye</string>
     <string name="buscador">Buscador</string>
+    <string name="vas_solicitar">Vas a solicitar:</string>
 
     <string-array name="tipoServicio_nv1">
         <item>Seleccionar categoria</item>
