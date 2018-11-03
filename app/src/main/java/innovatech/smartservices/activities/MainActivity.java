@@ -166,10 +166,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Usuario usr = dataSnapshot.getValue(Usuario.class);
                     //int cedula = dataSnapshot.child("cedula").getValue(Integer.class);
                     //String nombre = dataSnapshot.child("nombre").getValue(String.class);
-                    System.out.println("ESTO ES EL NOMBREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE  "+ usr.getNombre());
-                    System.out.println("ESTO ES EL EMAILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL  "+ usr.getEmail());
-                    nombreHeader.setText(usr.getNombre());
-                    emailHeader.setText(usr.getEmail());
+                    if(usr!=null){
+                        System.out.println("ESTO ES EL NOMBREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE  "+ usr.getNombre());
+                        System.out.println("ESTO ES EL EMAILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL  "+ usr.getEmail());
+                        nombreHeader.setText(usr.getNombre());
+                        emailHeader.setText(usr.getEmail());
+                    }else{
+                        nombreHeader.setText("Usuario visitante");
+                        emailHeader.setText("");
+                    }
+
                 }
                 else{
                     Toast.makeText(MainActivity.this, "Hubo un problema encontrando el uid", Toast.LENGTH_SHORT).show();
