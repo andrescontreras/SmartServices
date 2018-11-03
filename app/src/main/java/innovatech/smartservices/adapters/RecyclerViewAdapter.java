@@ -26,6 +26,7 @@ import innovatech.smartservices.fragments.ServicioInformacionFragment;
 import innovatech.smartservices.fragments.ServiciosDestacadosFragment;
 import innovatech.smartservices.interfaces.OnItemClickListenerInterface;
 import innovatech.smartservices.models.Servicio;
+import innovatech.smartservices.models.Usuario;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> implements Filterable {
 

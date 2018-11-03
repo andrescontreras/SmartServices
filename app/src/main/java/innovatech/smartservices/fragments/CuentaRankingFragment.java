@@ -47,6 +47,7 @@ public class CuentaRankingFragment extends Fragment {
         mStorage =FirebaseStorage.getInstance().getReference("Uploads");
 
 
+
         return  view;
     }
 
