@@ -234,13 +234,7 @@ public class PubPosicionamientoFragment extends Fragment {
                 //progressbar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
                     Toast.makeText(getActivity(), "Se ha publicado el servicio", Toast.LENGTH_SHORT).show();
-                    infoActualUsuario(idServicio,listRelacion);
-                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    ServiciosDestacadosFragment servDest= new ServiciosDestacadosFragment();
-                    ft.replace(R.id.fragment_container, servDest);
-                    nProgressDialog.dismiss();
-                    ft.commit();
-
+                    infoActualUsuario(idServicio,ususerv);
                     //updateUI(user);
 
                 }
@@ -264,22 +258,27 @@ public class PubPosicionamientoFragment extends Fragment {
             ft.commit();
         }
     }
-    private void infoActualUsuario(final String idServicio, final List<UsuarioxServicio> ususerv){
+    private void infoActualUsuario(final String idServicio, final UsuarioxServicio ususerv){
         FirebaseUser user = mAuth.getCurrentUser();
         String uid = user.getUid();
         DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("users").child(uid);
-        db.addValueEventListener(new ValueEventListener() {
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot!=null){
                     usr = dataSnapshot.getValue(Usuario.class);
                     usr.setServicio(idServicio);
-                    usr.setRelacionServicio(ususerv);
+                    usr.addRelacion(ususerv);
                     mDataBase.child(mAuth.getCurrentUser().getUid()).setValue(usr);
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ServiciosDestacadosFragment servDest= new ServiciosDestacadosFragment();
+                    ft.replace(R.id.fragment_container, servDest);
+                    nProgressDialog.dismiss();
+                    ft.commit();
                     //Toast.makeText(getActivity(), "Se realizaron los cambios", Toast.LENGTH_SHORT).show();
                     //int cedula = dataSnapshot.child("cedula").getValue(Integer.class);
                     //String nombre = dataSnapshot.child("nombre").getValue(String.class);
-                    System.out.println("ESTO ES EL NOMBREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE  "+ usr.getNombre());
-                    System.out.println("ESTO ES EL EMAILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL  "+ usr.getEmail());
+                    System.out.println("ESTO ES EL NOMBREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE  en PUB POSICIONAMIENT"+ usr.getNombre());
+                    System.out.println("ESTO ES EL EMAILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL  EN PUB POSICIONAMIENTO"+ usr.getEmail());
                 }
                 else{
                     Toast.makeText(getActivity(), "Hubo un problema encontrando el uid", Toast.LENGTH_SHORT).show();

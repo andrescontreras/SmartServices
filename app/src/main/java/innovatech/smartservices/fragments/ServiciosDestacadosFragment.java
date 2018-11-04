@@ -38,8 +38,7 @@ import innovatech.smartservices.models.Servicio;
 import static android.support.v7.widget.LinearLayoutManager.*;
 
 public class ServiciosDestacadosFragment extends Fragment{
-    ArrayList<Servicio> lstServicio =  new ArrayList<Servicio>();
-    List<Servicio> listaPrioridad = new ArrayList<Servicio>();//Se guardaran los servicios con posicionamiento para mostrarlos de primero
+    ArrayList<Servicio> lstServicio =  new ArrayList<Servicio>(); //Se guardaran primero los servicios con posicionamiento para mostrarlos de primero
     List<Servicio> listaSinPrioridad = new ArrayList<Servicio>();
     RecyclerView myrv;
     FirebaseAuth mAuth ;
@@ -63,8 +62,8 @@ public class ServiciosDestacadosFragment extends Fragment{
         return view;
     }
     public void agregarServicios(){
-        lstServicio = new ArrayList <> ();
-
+        lstServicio = new ArrayList <Servicio> ();
+        listaSinPrioridad = new ArrayList<Servicio>();
         FirebaseUser user = mAuth.getCurrentUser();
         DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("servicios");
         db.addValueEventListener(new ValueEventListener() {
@@ -72,11 +71,19 @@ public class ServiciosDestacadosFragment extends Fragment{
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if(snapshot!=null){
                         Servicio serv = snapshot.getValue(Servicio.class);
-                        lstServicio.add(serv);
+                        if(serv.getPosicionamiento()){
+                            lstServicio.add(serv);
+                        }
+                        else{
+                            listaSinPrioridad.add(serv);
+                        }
                     }
                     else{
                         Toast.makeText(getActivity(), "Hubo un problema encontrando los servicios", Toast.LENGTH_SHORT).show();
                     }
+                }
+                if(listaSinPrioridad.size()>0){
+                    lstServicio.addAll(listaSinPrioridad);
                 }
                 myAdapter = new RecyclerViewAdapter(getActivity(),lstServicio);
                 myrv.setHasFixedSize(true);
@@ -110,59 +117,5 @@ public class ServiciosDestacadosFragment extends Fragment{
             }
         });
     }
-    /*
-    public boolean onCreateOptionsMenu(Menu menu){
-        getActivity().getMenuInflater().inflate(R.menu.menu_buscador,menu);
-        MenuItem item = menu.findItem(R.id.buscador);
-        SearchView searchView = (SearchView)MenuItemCompat.getActionView(item);
-        searchView.setOnQueryTextListener(this);
-        MenuItemCompat.setOnActionExpandListener(item,new MenuItemCompat.OnActionExpandListener(){
 
-            @Override
-            public boolean onMenuItemActionExpand(MenuItem item) {
-
-
-                return true;
-            }
-
-            @Override
-            public boolean onMenuItemActionCollapse(MenuItem item) {
-                myAdapter.setFilter(lstServicio);
-                return true;
-            }
-        });
-        return true;
-    }
-
-    @Override
-    public boolean onQueryTextSubmit(String s) {
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String s) {
-        try{
-            ArrayList<Servicio>filtrados = filter(lstServicio,s);
-            myAdapter.setFilter(filtrados);
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return false;
-    }
-    private ArrayList<Servicio> filter(ArrayList<Servicio> servicios, String texto){
-        ArrayList<Servicio> filtrados = new ArrayList<Servicio>();
-        try{
-            for(Servicio servicio : servicios){
-                String nombre = servicio.getNombre();
-                if(nombre.contains(texto)){
-                    filtrados.add(servicio);
-                }
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return filtrados;
-    }
-    */
 }

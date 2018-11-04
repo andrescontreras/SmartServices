@@ -45,7 +45,7 @@ public class ServicioInformacionFragment extends Fragment {
 
     ViewPager viewPager;
     ImagenInformacionServicioAdapter imgAnfAdapter;
-    List<String> listaImagenes = new ArrayList<String>();
+    String imagenInicial ="";
     CircleIndicator indicator;
 
     FirebaseAuth mAuth ;
@@ -84,6 +84,7 @@ public class ServicioInformacionFragment extends Fragment {
                     //String nombre = dataSnapshot.child("nombre").getValue(String.class);
                    titulo_serv.setText(serv.getNombre());
                    precio_serv.setText(String.valueOf(serv.getPrecio()));
+                   imagenInicial = serv.getFotos().get(0);
                    //imagenServ.setImageURI(null);
                    //imagenServ.setImageURI(Uri.parse(serv.getFotos().get(0)));
                     imgAnfAdapter = new ImagenInformacionServicioAdapter(getActivity(),serv.getFotos());
@@ -128,6 +129,21 @@ public class ServicioInformacionFragment extends Fragment {
                 Bundle bundle = getArguments();
                 bundle.putString("idServicio",idServ);
                 detallesServ.setArguments(bundle);
+                ft.commit();
+            }
+        });
+        btn_solic_serv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ServicioSolicitarDiaFragment solicitarServ = new ServicioSolicitarDiaFragment();
+                ft.replace(R.id.fragment_container, solicitarServ);
+                ft.addToBackStack(null);
+                Bundle bundle = new Bundle();
+                bundle.putString("nombreServ",titulo_serv.getText().toString());
+                bundle.putString("precioServ",precio_serv.getText().toString());
+                bundle.putString("imagenIni",imagenInicial);
+                solicitarServ.setArguments(bundle);
                 ft.commit();
             }
         });

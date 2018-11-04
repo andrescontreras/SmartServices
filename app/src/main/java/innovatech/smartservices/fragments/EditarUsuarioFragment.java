@@ -98,7 +98,7 @@ public class EditarUsuarioFragment extends Fragment {
             FirebaseUser user = mAuth.getCurrentUser();
             String idUser = user.getUid();
             DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("users").child(idUser);
-            db.addValueEventListener(new ValueEventListener() {
+            db.addListenerForSingleValueEvent(new ValueEventListener() {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if(dataSnapshot!=null){
                         Usuario usr = dataSnapshot.getValue(Usuario.class);
