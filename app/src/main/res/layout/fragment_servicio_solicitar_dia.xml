@@ -27,7 +27,7 @@
         app:srcCompat="@drawable/ic_money_24dp" />
 
     <TextView
-        android:id="@+id/textView31"
+        android:id="@+id/txtSolicDiaTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="51dp"
@@ -37,17 +37,17 @@
         app:layout_constraintTop_toBottomOf="@+id/textView29" />
 
     <TextView
-        android:id="@+id/textView33"
+        android:id="@+id/txtSolicDiaPrecio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="51dp"
         android:layout_marginTop="12dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView31" />
+        app:layout_constraintTop_toBottomOf="@+id/txtSolicDiaTitulo" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/txtSolicDiaImagen"
         android:layout_width="130dp"
         android:layout_height="100dp"
         android:layout_marginTop="5dp"
@@ -69,7 +69,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <CalendarView
-        android:id="@+id/calendarView"
+        android:id="@+id/calendarSolicDia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="136dp"
@@ -78,6 +78,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/btnSolicDiaSig"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="31dp"

@@ -86,9 +86,6 @@ public class Usuario {
     public void setEmail(String email) {
         this.email = email;
     }
-    public List<String>getListaIDServicios(){
-        return this.idServicios;
-    }
     public String getServicio(String id){
         return null;
     }
@@ -97,9 +94,6 @@ public class Usuario {
     }
     public String getId(){
         return this.id;
-    }
-    public void setListaServicios(List<String> servicios){
-        this.idServicios = servicios;
     }
     public void setServicio(String idServicio){
         this.idServicios.add(idServicio);
@@ -120,5 +114,9 @@ public class Usuario {
     public void setRelacionServicio(List<UsuarioxServicio> relacionServicio) {
         this.relacionServicio = relacionServicio;
     }
+    public void addRelacion(UsuarioxServicio ususerv){
+        this.relacionServicio.add(ususerv);
+    }
+
 }
 

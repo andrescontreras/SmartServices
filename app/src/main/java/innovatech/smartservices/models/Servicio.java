@@ -18,7 +18,7 @@ public class Servicio {
     String fechaActivacion;
     Boolean posicionamiento;
     String tipo;
-    List<Ubicacion> ubicacion=new ArrayList<>();
+    List<Ubicacion> ubicacion=new ArrayList<Ubicacion>();
     List<Integer> disponibilidadDias=new ArrayList<>();
     List<Integer> disponibilidadHoras=new ArrayList<>();
     List<UsuarioxServicio> relacionUsuario=new ArrayList<UsuarioxServicio>();
