@@ -20,6 +20,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -28,14 +33,15 @@ import java.util.List;
 
 import innovatech.smartservices.R;
 import innovatech.smartservices.adapters.ImageAdapter;
+import innovatech.smartservices.models.Servicio;
 
 import static android.app.Activity.RESULT_OK;
 
 public class PubInfoBasicaEditandoFragment extends Fragment {
     Button selecImagen ;
     Button sig;
-    EditText nombre;
-    EditText precio;
+    private EditText nombre;
+    private EditText precio;
     private FirebaseAuth mAuth;
     private StorageReference mStorage;
     private static final int GALLERY_INTENT = 2;
@@ -44,6 +50,7 @@ public class PubInfoBasicaEditandoFragment extends Fragment {
     private ImageAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private List<Uri> listaImagenes = new ArrayList<Uri>();
+    List<Servicio> lstServicio =  new ArrayList<Servicio>();
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,6 +66,7 @@ public class PubInfoBasicaEditandoFragment extends Fragment {
         mRecyclerView= view.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        cargarInfoAnterior(savedInstanceState,view,mAuth);
         accionBotones(view);
         return view;
     }
@@ -75,20 +83,7 @@ public class PubInfoBasicaEditandoFragment extends Fragment {
                     ClipData.Item item = imagenes.getItemAt(i);
                     Uri uri = item.getUri();
                     listaImagenes.add(uri);
-                    /*
-                    StorageReference filepath = mStorage.child("Photos").child(uri.getLastPathSegment());
-                    filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-
-                        }
-                    });
-                    */
                 }
                 mAdapter = new ImageAdapter(getActivity(),listaImagenes);
                 mRecyclerView.setAdapter(mAdapter);
@@ -98,24 +93,7 @@ public class PubInfoBasicaEditandoFragment extends Fragment {
                 listaImagenes.add(uri);
                 mAdapter = new ImageAdapter(getActivity(),listaImagenes);
                 mRecyclerView.setAdapter(mAdapter);
-                /*
-                nProgressDialog.setMessage("Subiendo archivo...");
-                nProgressDialog.show();
-                Uri uri = data.getData();
-                StorageReference filepath = mStorage.child("Photos").child(uri.getLastPathSegment());
-                filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(getActivity(), "Se subio el archivo", Toast.LENGTH_SHORT).show();
-                        nProgressDialog.dismiss();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
 
-                    }
-                });
-                */
             }
         }
     }
@@ -144,9 +122,6 @@ public class PubInfoBasicaEditandoFragment extends Fragment {
                         ft.replace(R.id.fragment_container, detallesServ);
                         ft.addToBackStack(null);
                         Bundle bundle= getArguments();
-                        //String categor = bundle.getString("categorias");
-                        //System.out.println("nombre despues de inicializado------ "+nombre.getText().toString());
-
                         ArrayList<String>listaImagenesStr= new ArrayList<String>();
                         for(int i=0;i<listaImagenes.size();i++){
                             listaImagenesStr.add(listaImagenes.get(i).toString());
@@ -165,6 +140,51 @@ public class PubInfoBasicaEditandoFragment extends Fragment {
             }
         });
     }
+
+    public void cargarInfoAnterior(Bundle savedInstanceState, View view, FirebaseAuth mAuth){
+        lstServicio = new ArrayList<>();
+        System.out.println("si llega");
+        Bundle bundle=getArguments();
+        final String idServ=bundle.getString("idServicio");
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("servicios");
+        db.addValueEventListener(new ValueEventListener() {
+            boolean seguir = false;
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot != null) {
+                        Servicio serv = snapshot.getValue(Servicio.class);
+                        lstServicio.add(serv);
+                        seguir = true;
+                    } else {
+                        Toast.makeText(getActivity(), "Hubo un problema encontrando los servicios", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                if(seguir){
+                    System.out.println("si entra a seguir");
+                    for(int i=0;i<lstServicio.size();i++){
+                        if(lstServicio.get(i).getId()!=null && idServ!=null){
+                            System.out.println("si entra al if de que no son nulos");
+                            if(lstServicio.get(i).getId().equals(idServ)){
+                                nombre.setText(lstServicio.get(i).getNombre().toString());
+                                precio.setText(String.valueOf(lstServicio.get(i).getPrecio()));
+                            }
+                        }
+
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
+
+
+    }
+
+
     @Override
     public void onStart() {
         super.onStart();

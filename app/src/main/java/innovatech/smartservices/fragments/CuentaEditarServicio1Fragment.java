@@ -16,10 +16,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -28,6 +34,7 @@ import java.util.List;
 
 import innovatech.smartservices.R;
 import innovatech.smartservices.adapters.ImageAdapter;
+import innovatech.smartservices.models.Servicio;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -39,6 +46,8 @@ public class CuentaEditarServicio1Fragment extends Fragment {
     Button ubicacion;
     Button disponibilidad;
     Button posicionamiento;
+    private TextView editando;
+    List<Servicio> lstServicio =  new ArrayList<Servicio>();
 
     private FirebaseAuth mAuth;
     private StorageReference mStorage;
@@ -51,12 +60,16 @@ public class CuentaEditarServicio1Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_cuenta_editar_servicio_1, container, false);
         mAuth = FirebaseAuth.getInstance();
-        inicializarBotones(view);
+        Bundle bundle = getArguments();
+        inicializarBotones(view,savedInstanceState);
         accionBotones(view);
         return view;
     }
 
-    private void inicializarBotones(View view){
+    private void inicializarBotones(View view,Bundle savedInstanceState){
+        Bundle bundle=getArguments();
+        final String idServ=bundle.getString("idServicio");
+        editando=(TextView)view.findViewById(R.id.textEditando);
         eliminar= (Button)view.findViewById(R.id.btn_eliminar);
         categorias= (Button)view.findViewById(R.id.btn_categorias);
         nombre= (Button)view.findViewById(R.id.btn_nombre);
@@ -64,6 +77,38 @@ public class CuentaEditarServicio1Fragment extends Fragment {
         ubicacion= (Button)view.findViewById(R.id.btn_ubicacion);
         disponibilidad= (Button)view.findViewById(R.id.btn_disponibilidad);
         posicionamiento= (Button)view.findViewById(R.id.btn_posicionamiento);
+        //CARGA DEL NOMBRE--------------------------------------------------------------
+        FirebaseUser user = mAuth.getCurrentUser();
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("servicios");
+        db.addValueEventListener(new ValueEventListener() {
+        boolean seguir=false;
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                if (snapshot != null) {
+                    Servicio serv = snapshot.getValue(Servicio.class);
+                    lstServicio.add(serv);
+                    seguir = true;
+                } else {
+                    Toast.makeText(getActivity(), "Hubo un problema encontrando los servicios", Toast.LENGTH_SHORT).show();
+                }
+            }
+            if(seguir){
+                for(int i=0;i<lstServicio.size();i++){
+                    if(lstServicio.get(i).getId()!=null && idServ!=null){
+                        System.out.println("si entra al if de que no son nulos");
+                        if(lstServicio.get(i).getId().equals(idServ)){
+                            editando.setText("Estás editando: "+lstServicio.get(i).getNombre().toString());
+                        }
+                    }
+
+                }
+            }
+        }
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            throw databaseError.toException();
+        }
+        });
     }
 
     private  void accionBotones(View view){
@@ -94,26 +139,42 @@ public class CuentaEditarServicio1Fragment extends Fragment {
 
 
         nombre.setOnClickListener(new View.OnClickListener() {
+            Bundle bundle = getArguments();
             @Override
             public void onClick(View view) {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 PubInfoBasicaEditandoFragment bas = new PubInfoBasicaEditandoFragment();
                 ft.replace(R.id.fragment_container,bas);
                 ft.addToBackStack(null);
-                //notificacion.setArguments(bundle);
+                bas.setArguments(bundle);
                 ft.commit();
             }
         });
 
 
         incluye.setOnClickListener(new View.OnClickListener() {
+            Bundle bundle = getArguments();
             @Override
             public void onClick(View view) {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 PubDetallesEditandoFragment bas = new PubDetallesEditandoFragment();
                 ft.replace(R.id.fragment_container,bas);
                 ft.addToBackStack(null);
-                //notificacion.setArguments(bundle);
+                bas.setArguments(bundle);
+                ft.commit();
+            }
+        });
+
+
+        disponibilidad.setOnClickListener(new View.OnClickListener() {
+            Bundle bundle=getArguments();
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                CalendarioEditandoFragment bas = new CalendarioEditandoFragment();
+                ft.replace(R.id.fragment_container,bas);
+                ft.addToBackStack(null);
+                bas.setArguments(bundle);
                 ft.commit();
             }
         });
@@ -124,19 +185,6 @@ public class CuentaEditarServicio1Fragment extends Fragment {
             public void onClick(View view) {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 PubUbicacionEditandoFragment bas = new PubUbicacionEditandoFragment();
-                ft.replace(R.id.fragment_container,bas);
-                ft.addToBackStack(null);
-                //notificacion.setArguments(bundle);
-                ft.commit();
-            }
-        });
-
-
-        disponibilidad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                CalendarioEditandoFragment bas = new CalendarioEditandoFragment();
                 ft.replace(R.id.fragment_container,bas);
                 ft.addToBackStack(null);
                 //notificacion.setArguments(bundle);

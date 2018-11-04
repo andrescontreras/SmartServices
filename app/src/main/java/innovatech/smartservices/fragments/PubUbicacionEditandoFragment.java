@@ -44,6 +44,8 @@ public class PubUbicacionEditandoFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_pub_ubicacion_editando, container, false);
         mAuth = FirebaseAuth.getInstance();
         boton = (Button)view.findViewById(R.id.button4);
+        adapter = new PubUbicacionAdapter(listDatos);
+        recycler.setAdapter(adapter);
         //listDatos= view.findViewById(R.id.recyclerUbicaciones);
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +127,9 @@ public class PubUbicacionEditandoFragment extends Fragment {
             }
         }
     }
+
+
+    
     @Override
     public void onStart() {
         super.onStart();
