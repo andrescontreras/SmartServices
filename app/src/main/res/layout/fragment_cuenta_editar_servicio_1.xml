@@ -28,7 +28,7 @@
             android:layout_width="360dp"
             android:layout_height="60dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="80dp"
             android:background="@color/cardview_light_background"
             android:text="Categorías"
             android:textAlignment="viewStart"
@@ -44,7 +44,7 @@
             android:layout_width="360dp"
             android:layout_height="60dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="132dp"
+            android:layout_marginTop="140dp"
             android:background="@color/cardview_light_background"
             android:text="Nombre, precio, imágenes"
             android:textAlignment="viewStart"
@@ -60,7 +60,7 @@
             android:layout_width="360dp"
             android:layout_height="60dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="192dp"
+            android:layout_marginTop="200dp"
             android:background="@color/cardview_light_background"
             android:text="Que incluye, que no incluye, información adicional"
             android:textAlignment="viewStart"
@@ -76,7 +76,7 @@
             android:layout_width="360dp"
             android:layout_height="60dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="252dp"
+            android:layout_marginTop="260dp"
             android:background="@color/cardview_light_background"
             android:text="Ubicación"
             android:textAlignment="viewStart"
@@ -92,7 +92,7 @@
             android:layout_width="360dp"
             android:layout_height="60dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="312dp"
+            android:layout_marginTop="320dp"
             android:background="@color/cardview_light_background"
             android:text="Disponibilidad"
             android:textAlignment="viewStart"
@@ -108,7 +108,7 @@
             android:layout_width="360dp"
             android:layout_height="60dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="372dp"
+            android:layout_marginTop="380dp"
             android:background="@color/cardview_light_background"
             android:text="Posicionamiento"
             android:textAlignment="viewStart"
@@ -119,11 +119,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textEditando"
             android:layout_width="wrap_content"
-            android:layout_height="23dp"
+            android:layout_height="27dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="40dp"
             android:drawableLeft="@drawable/ic_assignment_black_24dp"
             android:text='Estás editando ""'
@@ -132,6 +132,19 @@
             app:layout_constraintHorizontal_bias="0.036"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView26"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="40dp"
+            android:text="Selecciona la característica que deseas editar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.095"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textEditando" />
 
 </android.support.constraint.ConstraintLayout>
 

@@ -19,6 +19,7 @@ import java.util.List;
 import innovatech.smartservices.R;
 import innovatech.smartservices.activities.MainActivity;
 import innovatech.smartservices.fragments.CuentaEditarServicio1Fragment;
+import innovatech.smartservices.fragments.PubDetallesEditandoFragment;
 import innovatech.smartservices.fragments.ServicioInformacionFragment;
 import innovatech.smartservices.interfaces.OnItemClickListenerInterface;
 import innovatech.smartservices.models.Servicio;
@@ -50,13 +51,12 @@ public class RecyclerViewAdministrarServiciosAdapter extends RecyclerView.Adapte
                 MainActivity myActivity = (MainActivity)mContext;
                 Toast.makeText(mContext, "Elemento "+mData.get(position).getNombre(), Toast.LENGTH_SHORT).show();
                 FragmentTransaction ft = myActivity.getSupportFragmentManager().beginTransaction();
-                CuentaEditarServicio1Fragment infoServFragm = new CuentaEditarServicio1Fragment();
-                ft.replace(R.id.fragment_container, infoServFragm);
+                CuentaEditarServicio1Fragment pubDetallesEdit= new CuentaEditarServicio1Fragment();
+                ft.replace(R.id.fragment_container, pubDetallesEdit);
                 ft.addToBackStack(null);
                 Bundle bundle = new Bundle();
                 bundle.putString("idServicio", mData.get(position).getId());
-                infoServFragm.setArguments(bundle);
-                //notificacion.setArguments(bundle);
+                pubDetallesEdit.setArguments(bundle);
                 ft.commit();
             }
         });

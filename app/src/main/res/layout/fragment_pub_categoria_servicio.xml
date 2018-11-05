@@ -6,11 +6,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/textEditando2"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:drawableLeft="@drawable/ic_dehaze_black_24dp"
+        android:text="Categorías"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.036"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Spinner
         android:id="@+id/spin_servicio_nivel1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="80dp"
         android:entries="@array/tipoServicio_nv1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -21,37 +37,37 @@
         android:id="@+id/spin_servicio_nivel2"
         android:layout_width="match_parent"
         android:layout_height="49dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="30dp"
         android:entries="@array/tipoServicio_nv1"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></Spinner>
+        app:layout_constraintTop_toBottomOf="@+id/spin_servicio_nivel1"></Spinner>
 
     <Spinner
         android:id="@+id/spin_servicio_nivel3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="30dp"
         android:entries="@array/tipoServicio_nv1"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></Spinner>
+        app:layout_constraintTop_toBottomOf="@+id/spin_servicio_nivel2"></Spinner>
 
     <Spinner
         android:id="@+id/spin_servicio_nivel4"
         android:layout_width="match_parent"
         android:layout_height="49dp"
-        android:layout_marginTop="244dp"
+        android:layout_marginTop="30dp"
         android:entries="@array/tipoServicio_nv1"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></Spinner>
+        app:layout_constraintTop_toBottomOf="@+id/spin_servicio_nivel3"></Spinner>
 
     <Button
         android:id="@+id/btn_sig_infoBasica"
