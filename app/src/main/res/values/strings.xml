@@ -43,6 +43,9 @@
     <string name="no_incluye">No incluye</string>
     <string name="buscador">Buscador</string>
     <string name="vas_solicitar">Vas a solicitar:</string>
+    <string name="enviar_reserva">Enviar reserva</string>
+    <string name="horas_disponibles">Horas disponibles</string>
+    <string name="metodo_pago">Metodo de pago</string>
 
     <string-array name="tipoServicio_nv1">
         <item>Seleccionar categoria</item>
@@ -66,6 +69,11 @@
         <item>Piercing y Tatuajes</item>
         <item>Cosmetologia</item>
         <item>Peluqueria</item>
+    </string-array>
+    <string-array name="method_pagos">
+        <item>Efectivo</item>
+        <item>Tarjeta debito</item>
+        <item>Tarjeta credito</item>
     </string-array>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

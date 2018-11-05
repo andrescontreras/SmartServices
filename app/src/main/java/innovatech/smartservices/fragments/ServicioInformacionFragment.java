@@ -42,7 +42,7 @@ public class ServicioInformacionFragment extends Fragment {
     TextView titulo_serv;
     TextView precio_serv;
     RatingBar ratingBar;
-
+    Servicio serv ;
     ViewPager viewPager;
     ImagenInformacionServicioAdapter imgAnfAdapter;
     String imagenInicial ="";
@@ -79,7 +79,7 @@ public class ServicioInformacionFragment extends Fragment {
         db.addValueEventListener(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot!=null){
-                    Servicio serv = dataSnapshot.getValue(Servicio.class);
+                    serv = dataSnapshot.getValue(Servicio.class);
                     //int cedula = dataSnapshot.child("cedula").getValue(Integer.class);
                     //String nombre = dataSnapshot.child("nombre").getValue(String.class);
                    titulo_serv.setText(serv.getNombre());
@@ -143,6 +143,7 @@ public class ServicioInformacionFragment extends Fragment {
                 bundle.putString("nombreServ",titulo_serv.getText().toString());
                 bundle.putString("precioServ",precio_serv.getText().toString());
                 bundle.putString("imagenIni",imagenInicial);
+                bundle.putSerializable("servicio",serv);
                 solicitarServ.setArguments(bundle);
                 ft.commit();
             }

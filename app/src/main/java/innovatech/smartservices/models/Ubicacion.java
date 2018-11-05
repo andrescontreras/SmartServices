@@ -1,6 +1,8 @@
 package innovatech.smartservices.models;
 
-public class Ubicacion {
+import java.io.Serializable;
+
+public class Ubicacion implements Serializable {
 
     // datos de ubicacion exactos generagos por google
     private double latitud; // se obtienen por medio de place.getLng()

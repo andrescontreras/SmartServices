@@ -153,6 +153,7 @@ public class PubPosicionamientoFragment extends Fragment {
         }
         if(bundle.getBoolean("4a6")){
             servicio.addHoras(16);
+            servicio.addHoras(17);
 
             
         }

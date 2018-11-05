@@ -1,8 +1,10 @@
 package innovatech.smartservices.models;
 
+import java.io.Serializable;
+
 import innovatech.smartservices.helpers.RelacionEnum;
 
-public class UsuarioxServicio {
+public class UsuarioxServicio implements Serializable {
     String idUsuario;
     String idServicio;
     RelacionEnum relacion;
