@@ -42,7 +42,7 @@ public class ServicioInformacionFragment extends Fragment {
     TextView titulo_serv;
     TextView precio_serv;
     RatingBar ratingBar;
-
+    Servicio serv ;
     ViewPager viewPager;
     ImagenInformacionServicioAdapter imgAnfAdapter;
     String imagenInicial ="";
@@ -79,7 +79,7 @@ public class ServicioInformacionFragment extends Fragment {
         db.addValueEventListener(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot!=null){
-                    Servicio serv = dataSnapshot.getValue(Servicio.class);
+                    serv = dataSnapshot.getValue(Servicio.class);
                     //int cedula = dataSnapshot.child("cedula").getValue(Integer.class);
                     //String nombre = dataSnapshot.child("nombre").getValue(String.class);
                    titulo_serv.setText(serv.getNombre());
@@ -135,17 +135,31 @@ public class ServicioInformacionFragment extends Fragment {
         btn_solic_serv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ServicioSolicitarDiaFragment solicitarServ = new ServicioSolicitarDiaFragment();
-                ft.replace(R.id.fragment_container, solicitarServ);
-                ft.addToBackStack(null);
-                Bundle bundle = new Bundle();
-                bundle.putString("nombreServ",titulo_serv.getText().toString());
-                bundle.putString("precioServ",precio_serv.getText().toString());
-                bundle.putString("imagenIni",imagenInicial);
-                solicitarServ.setArguments(bundle);
-                ft.commit();
+                if(verificarSesion()){
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ServicioSolicitarDiaFragment solicitarServ = new ServicioSolicitarDiaFragment();
+                    ft.replace(R.id.fragment_container, solicitarServ);
+                    ft.addToBackStack(null);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("nombreServ",titulo_serv.getText().toString());
+                    bundle.putString("precioServ",precio_serv.getText().toString());
+                    bundle.putString("imagenIni",imagenInicial);
+                    bundle.putSerializable("servicio",serv);
+                    solicitarServ.setArguments(bundle);
+                    ft.commit();
+                }else{
+                    Toast.makeText(getActivity(), "Para realizar la reserva de un servicio debe haber iniciado sesión", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
+    }
+   public boolean verificarSesion(){
+       FirebaseUser currentUser = mAuth.getCurrentUser();
+       if(currentUser==null){ //Cuando el usuario ya esta logeado, mandarlo a la actividad principal
+           return false;
+       }else{
+           return true;
+       }
     }
 }

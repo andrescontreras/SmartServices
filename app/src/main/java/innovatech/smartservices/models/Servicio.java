@@ -2,10 +2,11 @@ package innovatech.smartservices.models;
 
 import android.net.Uri;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Servicio {
+public class Servicio implements Serializable {
     String id;
     String idUsuario;
     String incluye;
@@ -23,7 +24,7 @@ public class Servicio {
     List<Integer> disponibilidadHoras=new ArrayList<>();
     List<UsuarioxServicio> relacionUsuario=new ArrayList<UsuarioxServicio>();
 
-    public Servicio(){
+    public Servicio (){
 
     }
 
