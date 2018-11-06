@@ -135,18 +135,31 @@ public class ServicioInformacionFragment extends Fragment {
         btn_solic_serv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ServicioSolicitarDiaFragment solicitarServ = new ServicioSolicitarDiaFragment();
-                ft.replace(R.id.fragment_container, solicitarServ);
-                ft.addToBackStack(null);
-                Bundle bundle = new Bundle();
-                bundle.putString("nombreServ",titulo_serv.getText().toString());
-                bundle.putString("precioServ",precio_serv.getText().toString());
-                bundle.putString("imagenIni",imagenInicial);
-                bundle.putSerializable("servicio",serv);
-                solicitarServ.setArguments(bundle);
-                ft.commit();
+                if(verificarSesion()){
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ServicioSolicitarDiaFragment solicitarServ = new ServicioSolicitarDiaFragment();
+                    ft.replace(R.id.fragment_container, solicitarServ);
+                    ft.addToBackStack(null);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("nombreServ",titulo_serv.getText().toString());
+                    bundle.putString("precioServ",precio_serv.getText().toString());
+                    bundle.putString("imagenIni",imagenInicial);
+                    bundle.putSerializable("servicio",serv);
+                    solicitarServ.setArguments(bundle);
+                    ft.commit();
+                }else{
+                    Toast.makeText(getActivity(), "Para realizar la reserva de un servicio debe haber iniciado sesión", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
+    }
+   public boolean verificarSesion(){
+       FirebaseUser currentUser = mAuth.getCurrentUser();
+       if(currentUser==null){ //Cuando el usuario ya esta logeado, mandarlo a la actividad principal
+           return false;
+       }else{
+           return true;
+       }
     }
 }

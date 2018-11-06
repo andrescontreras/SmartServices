@@ -3,27 +3,46 @@ package innovatech.smartservices.fragments;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import innovatech.smartservices.R;
+import innovatech.smartservices.helpers.EstadoReserva;
+import innovatech.smartservices.models.Reserva;
 import innovatech.smartservices.models.Servicio;
 import sun.bob.mcalendarview.MCalendarView;
 import sun.bob.mcalendarview.MarkStyle;
@@ -36,14 +55,20 @@ public class ServicioSolicitarDiaFragment extends Fragment {
     TextView precio;
     ImageView imagen ;
     MCalendarView calendario;
-    Button siguiente;
+    Button reservar;
     Servicio serv ;
     Bundle bundle;
+    Spinner horas;
+    Spinner pagos;
+    private FirebaseAuth mAuth;
     List<DateData> marcados = new ArrayList<DateData>(); //Se encuentran todos los elementos dentro del MCalendarView que estan marcados por el punto verde
-    List<DateData> disponibles = new ArrayList<DateData>();
+    List<DateData> disponibles = new ArrayList<DateData>(); //Se encuentran los dias disponibles del servicio
+    List<Reserva> fechasReservadas = new ArrayList<Reserva>();  // Se encuentran todas las fechas reservados del servicio
+
     int mes;
     int anio;
-
+    int dia;
+    int horaSeleccionada;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,15 +77,30 @@ public class ServicioSolicitarDiaFragment extends Fragment {
         precio = (TextView) view.findViewById(R.id.txtSolicDiaPrecio);
         imagen = (ImageView) view.findViewById(R.id.txtSolicDiaImagen);
         calendario = (MCalendarView)view.findViewById(R.id.calendarSolicDia);
-        siguiente = (Button) view.findViewById(R.id.btnSolicDiaSig);
+        reservar = (Button) view.findViewById(R.id.btnSolicDiaReserva);
+        horas = (Spinner)view.findViewById(R.id.spinSolicHoras);
+        pagos = (Spinner)view.findViewById(R.id.spinSolicPagos);
+        mAuth = FirebaseAuth.getInstance();
+        marcados = new ArrayList<DateData>();
+        disponibles= new ArrayList<DateData>();
+        fechasReservadas = new ArrayList<Reserva>();
         limpiarPuntos();
         bundle = getArguments();
         titulo.setText(bundle.getString("nombreServ"));
         precio.setText("$"+bundle.getString("precioServ"));
                 Picasso.with(getContext()).load(Uri.parse(bundle.getString("imagenIni"))).into(imagen);
         serv = (Servicio) bundle.getSerializable("servicio");
+        llenarReservas(serv.getId());
+        List<String>horasString = new ArrayList<String>();
+        horasString.add("Seleccionar hora");
+        for(int i =0;i<serv.getDisponibilidadHoras().size();i++){
+            horasString.add(String.valueOf(serv.getDisponibilidadHoras().get(i)));
+        }
+        ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,horasString);
+        horas.setAdapter(adapterElem);
         anio = Calendar.getInstance().get(Calendar.YEAR); // Variable que contiene el año actual
         mes = Calendar.getInstance().get(Calendar.MONTH); // Variable que contiene el mes actual
+        dia = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         Calendar mycal = new GregorianCalendar(anio,mes,1);
         int diasMes = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
         System.out.println("AÑO->>>>>>>>>>>>>> "+anio+" MES----------->>>>>>>>> "+mes+" DIAS QUE TIENE EL MES ->>>>>>>>>>>>> "+diasMes);
@@ -72,11 +112,26 @@ public class ServicioSolicitarDiaFragment extends Fragment {
             int dayweek =(cal.get(Calendar.DAY_OF_WEEK)-1);
             if(verificarDias(dayweek)){
                  dateData = new DateData(anio,mes+1,i);
-                 disponibles.add(dateData);
-                 calendario.unMarkDate(dateData);
-                 calendario.markDate(dateData.setMarkStyle(new MarkStyle(MarkStyle.BACKGROUND,Color.BLUE)));
+                 if(!estaReservado(dateData)){
+                     disponibles.add(dateData);
+                     calendario.unMarkDate(dateData);
+                     calendario.markDate(dateData.setMarkStyle(new MarkStyle(MarkStyle.BACKGROUND,Color.BLUE)));
+                 }
+            }
+        horas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(!adapterView.getItemAtPosition(i).equals("Seleccionar hora")){
+                    String seleccion = (String)horas.getSelectedItem();
+                    horaSeleccionada = Integer.parseInt(seleccion);
+                }
             }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         }
         calendario.setOnDateClickListener(new OnDateClickListener() {
             @Override
@@ -109,8 +164,10 @@ public class ServicioSolicitarDiaFragment extends Fragment {
                         int diaSemanaCambio =  (calendar.get(Calendar.DAY_OF_WEEK)-1);
                         if(verificarDias(diaSemanaCambio)){
                             changeMonth = new DateData(year,month,j);
-                            calendario.markDate(changeMonth.setMarkStyle(new MarkStyle(MarkStyle.BACKGROUND,Color.BLUE)));
-                            disponibles.add(changeMonth);
+                            if(!estaReservado(changeMonth)){
+                                calendario.markDate(changeMonth.setMarkStyle(new MarkStyle(MarkStyle.BACKGROUND,Color.BLUE)));
+                                disponibles.add(changeMonth);
+                            }
                         }
                     }
                 }
@@ -120,22 +177,26 @@ public class ServicioSolicitarDiaFragment extends Fragment {
         return view;
     }
     public void accionBotones(){
-        siguiente.setOnClickListener(new View.OnClickListener() {
+        reservar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(marcados.size()>0){
+                    subirReserva(serv);
+                    /*
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     ServicioSolicitarFinalFragment solicitarFinal = new ServicioSolicitarFinalFragment();
                     ft.replace(R.id.fragment_container, solicitarFinal);
                     ft.addToBackStack(null);
                     solicitarFinal.setArguments(bundle);
                     ft.commit();
+                     */
                 }else{
                     Toast.makeText(getActivity(), "Tiene que seleccionar almenos una fecha para reservar el servicio", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+    //Verifica si el dia de la semana(Lunes(0), martes(1), ...) que llega como parametro, esta dentro de los dias que establecio el usuario como disponible
     public boolean verificarDias(int dayweek){
         for(int i = 0 ;i<serv.getDisponibilidadDias().size();i++){
             if(serv.getDisponibilidadDias().get(i)==dayweek)
@@ -143,6 +204,7 @@ public class ServicioSolicitarDiaFragment extends Fragment {
         }
         return false;
     }
+    //Verifica las fechas que fueron marcadas por el usuario
     public boolean verificarMarcados(DateData date){
         for(int i=0;i<marcados.size();i++){
             if(marcados.get(i).equals(date))
@@ -166,6 +228,81 @@ public class ServicioSolicitarDiaFragment extends Fragment {
             int diasMes = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
             for(int j=1;j<=diasMes;j++)
                 calendario.unMarkDate(new DateData(year,i,j).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.GREEN)));
+        }
+    }
+    //Llena una lista que contiene las reservas hechas a un servicio
+    public void llenarReservas(final String idServ){
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("reservas");
+        db.addValueEventListener(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if(snapshot!=null){
+                        Reserva reserva = snapshot.getValue(Reserva.class);
+                        if(reserva!=null){
+                            if(reserva.getIdServicio().equals(idServ)){
+                                fechasReservadas.add(reserva);
+                            }
+                        }
+                    }
+                    else{
+                        Toast.makeText(getActivity(), "Hubo un problema encontrando las reservas", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
+    }
+    //Le llega una fecha, para comprobar si esta se encuentra dentro de los datos reservados
+    public boolean estaReservado(DateData fecha){
+        String fechaString = String.valueOf(fecha.getYear())+"-"+fecha.getMonthString()+"-"+fecha.getDayString();
+        for(int i=0;i<fechasReservadas.size();i++){
+            if(fechasReservadas.get(i).getFecha().equals(fechaString)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public void subirReserva(Servicio servicio){
+        String idReserva=servicio.getId()+String.valueOf(System.currentTimeMillis());
+        FirebaseUser user = mAuth.getCurrentUser();
+        String fecha = String.valueOf(marcados.get(0).getYear())+"-"+marcados.get(0).getMonthString()+"-"+marcados.get(0).getDayString();
+        Reserva reserva = new Reserva();
+        reserva.setId(idReserva);
+        reserva.setEstado(EstadoReserva.PENDIENTE);
+        reserva.setIdUsuSolicitante(user.getUid());
+        reserva.setIdServicio(servicio.getId());
+        reserva.setFecha(fecha);
+        reserva.setHora(horaSeleccionada);
+        FirebaseDatabase.getInstance().getReference("reservas").child(idReserva).setValue(reserva).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                //progressbar.setVisibility(View.GONE);
+                if(task.isSuccessful()){
+                    Toast.makeText(getActivity(), "Se ha mandado la solicitud de la reserva", Toast.LENGTH_SHORT).show();
+                    //updateUI(user);
+
+                }
+                else{
+                    Toast.makeText( getActivity(),"Hubo un error al crear la reserva", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+        });
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser==null){ //Cuando el usuario ya esta logeado, mandarlo a la actividad principal
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            ServiciosDestacadosFragment servDest= new ServiciosDestacadosFragment();
+            ft.replace(R.id.fragment_container, servDest);
+            ft.commit();
         }
     }
 }

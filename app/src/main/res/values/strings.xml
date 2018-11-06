@@ -71,6 +71,7 @@
         <item>Peluqueria</item>
     </string-array>
     <string-array name="method_pagos">
+        <item>Seleccionar medio de pago</item>
         <item>Efectivo</item>
         <item>Tarjeta debito</item>
         <item>Tarjeta credito</item>
