@@ -169,6 +169,7 @@ public class PubInfoBasicaEditandoFragment extends Fragment {
                             if(lstServicio.get(i).getId().equals(idServ)){
                                 nombre.setText(lstServicio.get(i).getNombre().toString());
                                 precio.setText(String.valueOf(lstServicio.get(i).getPrecio()));
+
                             }
                         }
 

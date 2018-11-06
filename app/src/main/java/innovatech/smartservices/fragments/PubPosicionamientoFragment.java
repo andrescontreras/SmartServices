@@ -74,6 +74,7 @@ public class PubPosicionamientoFragment extends Fragment {
             public void onClick(View view) {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 guardarEnFirebase(true);
+                System.out.println("entra al boton si");
                 //notificacion.setArguments(bundle);
                 ft.commit();
 
@@ -84,6 +85,7 @@ public class PubPosicionamientoFragment extends Fragment {
             public void onClick(View view) {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 guardarEnFirebase(false);
+                System.out.println("entra al boton no");
                 //notificacion.setArguments(bundle);
                 ft.commit();
 
@@ -107,7 +109,8 @@ public class PubPosicionamientoFragment extends Fragment {
         servicio.setPrecio(bundle.getInt("precio"));
 
 
-        System.out.println("ubicacion ---------- "+(bundle.getString("ubicacion")));
+        System.out.println("ubicacion ---------- "+(bundle.getString("ubicacion").toString()));
+        System.out.println("la ubicacion es "+bundle.getString("ubicacion"));
 
 
 
@@ -161,7 +164,7 @@ public class PubPosicionamientoFragment extends Fragment {
             servicio.addHoras(19);
         }
         //----------------------------------------------------------------------------------
-            servicio.setPosicionamiento(posicion);
+        servicio.setPosicionamiento(posicion);
 
         servicio.setFechaActivacion(Calendar.getInstance().getTime().toString());
 
@@ -169,15 +172,31 @@ public class PubPosicionamientoFragment extends Fragment {
         //----------------------------------------------------------------------------------
         String auxUbicaciones;
         auxUbicaciones=bundle.getString("ubicacion");
-        //System.out.println("sacando ubicaciones "+auxUbicaciones.toString());
-        String[] parts = auxUbicaciones.split("Place");
+        System.out.println("sacando ubicaciones "+auxUbicaciones.toString());
+        String[] parts = auxUbicaciones.split("=");
         Ubicacion ubiAux=new Ubicacion("","",0,0);
+        String direccion;
+        String nombre;
+        Double latitud;
+        Double longitud;
+        for(int i=0;i<parts.length;i=i+4){
+            System.out.println("sacando parte 1 "+parts[i]);
+            System.out.println(" direcicon es "+parts[i]+" nombre es "+parts[i+1]+" lattud es "+parts[i+2]+" longitud es "+parts[i+3]+" ");
+            direccion=parts[i];
+            nombre=parts[i+1];
+            latitud=Double.valueOf(parts[i+2].toString());
+            longitud=Double.valueOf(parts[i+3].toString());
+            ubiAux=new Ubicacion(direccion,nombre,latitud,longitud);
+            servicio.addUbicacion(ubiAux);
 
+        }
+
+/*
         for(int i=1;i<parts.length;i++){
             System.out.println("lo del split "+parts[i]);
             ubiAux= new Ubicacion(parts[i],"",0,0);
             servicio.addUbicacion(ubiAux);
-        }
+        }*/
         servicio.setIdUsuario(mAuth.getCurrentUser().getUid());
         //----------------------------------------------------------------------------------
         subirImagenesStorage();

@@ -59,9 +59,16 @@ public class PubUbicacionFragment extends Fragment {
                     ft.replace(R.id.fragment_container, ubicacionfragm);
                     ft.addToBackStack(null);
                     Bundle bundle = getArguments();
-                    System.out.println("los datos son "+listDatos.get(0).getDireccion());
-                    bundle.putString("ubicacion", listDatos.toString());
-                    System.out.println("lo que se guarda es XXXXXXXXXX-X-X-X-X-X-X-X  "+listDatos.toString());
+                    String datosUbicacion="";
+                    /*System.out.println("los datos de direccion son "+listDatos.get(0).getDireccion());
+                    System.out.println("los datos de direccion son "+listDatos.get(0).getLatitud());
+                    System.out.println("los datos de direccion son "+listDatos.get(0).getLongitud());
+                    System.out.println("los datos de direccion son "+listDatos.get(0).getNombre());*/
+                    for(int i=0;i<listDatos.size();i++){
+                        datosUbicacion=datosUbicacion+listDatos.get(i).getDireccion()+"="+listDatos.get(i).getNombre()+"="+listDatos.get(i).getLatitud()+"="+listDatos.get(i).getLongitud()+"=";
+                    }
+                    System.out.println("los datos de ubicacion son "+datosUbicacion);
+                    bundle.putString("ubicacion", datosUbicacion);
                     ubicacionfragm.setArguments(bundle);
                     //notificacion.setArguments(bundle);
                     ft.commit();

@@ -19,11 +19,18 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import innovatech.smartservices.R;
 import innovatech.smartservices.adapters.PubUbicacionAdapter;
+import innovatech.smartservices.models.Servicio;
 import innovatech.smartservices.models.Ubicacion;
 
 import static android.app.Activity.RESULT_OK;
@@ -31,7 +38,8 @@ import static android.app.Activity.RESULT_OK;
 public class PubUbicacionEditandoFragment extends Fragment {
 
     private final static int PLACE_PICKER_REQUEST = 999;
-    ArrayList<Ubicacion> listDatos;
+    List<Ubicacion> listDatos;
+    List<Servicio> lstServicio =  new ArrayList<Servicio>();
     FirebaseAuth mAuth ;
     RecyclerView recycler;
     public Button agregar1;
@@ -44,9 +52,7 @@ public class PubUbicacionEditandoFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_pub_ubicacion_editando, container, false);
         mAuth = FirebaseAuth.getInstance();
         boton = (Button)view.findViewById(R.id.button4);
-        adapter = new PubUbicacionAdapter(listDatos);
-        recycler.setAdapter(adapter);
-        //listDatos= view.findViewById(R.id.recyclerUbicaciones);
+        cargarInfoAnterior(savedInstanceState,view,mAuth);
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,13 +79,6 @@ public class PubUbicacionEditandoFragment extends Fragment {
         recycler =  view.findViewById(R.id.recyclerUbicaciones);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         listDatos = new ArrayList<Ubicacion>();
-
-        // llenar datos de prueba
-        /*for(int i =0; i< 30 ; i++)
-        {
-            Ubicacion u = new Ubicacion("gpspos"+i*456, "ubi-"+i*123, "dir"+i*963 );
-            listDatos.add(u);
-        }*/
         adapter = new PubUbicacionAdapter(listDatos);
         recycler.setAdapter(adapter);
         accionBotones(view);
@@ -129,7 +128,57 @@ public class PubUbicacionEditandoFragment extends Fragment {
     }
 
 
-    
+
+    public void cargarInfoAnterior(Bundle savedInstanceState, View view, FirebaseAuth mAuth){
+        lstServicio = new ArrayList<>();
+        System.out.println("si llega");
+        Bundle bundle=getArguments();
+        final String idServ=bundle.getString("idServicio");
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("servicios");
+        db.addValueEventListener(new ValueEventListener() {
+            boolean seguir = false;
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot != null) {
+                        Servicio serv = snapshot.getValue(Servicio.class);
+                        lstServicio.add(serv);
+                        seguir = true;
+                    } else {
+                        Toast.makeText(getActivity(), "Hubo un problema encontrando los servicios", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                if(seguir){
+                    System.out.println("si entra a seguir");
+                    List <Ubicacion>aux=new ArrayList<Ubicacion>();
+                    for(int i=0;i<lstServicio.size();i++){
+                        if(lstServicio.get(i).getId()!=null && idServ!=null){
+                            System.out.println("si entra al if de que no son nulos");
+                            if(lstServicio.get(i).getId().equals(idServ)){
+                                aux=lstServicio.get(i).getUbicacion();
+                                adapter = new PubUbicacionAdapter(aux);
+                                recycler.setAdapter(adapter);
+                                for(int j=0;j<aux.size();j++){
+                                    System.out.println("la direccion es "+aux.get(j).getDireccion());
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
+
+
+    }
+
+
+
     @Override
     public void onStart() {
         super.onStart();
