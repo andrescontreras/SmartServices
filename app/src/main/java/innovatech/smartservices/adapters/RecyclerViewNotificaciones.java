@@ -23,21 +23,21 @@ import innovatech.smartservices.R;
 import innovatech.smartservices.activities.MainActivity;
 import innovatech.smartservices.fragments.ServicioInformacionFragment;
 import innovatech.smartservices.interfaces.OnItemClickListenerInterface;
+import innovatech.smartservices.models.Reserva;
 import innovatech.smartservices.models.Servicio;
 import innovatech.smartservices.models.Usuario;
 
 public class RecyclerViewNotificaciones extends RecyclerView.Adapter<RecyclerViewNotificaciones.MyViewHolder> {
 
     private Context mContext;
-    private List<Servicio> mData;
     private List<Usuario> usuarios;
-    private List<Servicio> mDataFull;
+    private List<Servicio> mData;
+   // private List<Reserva> reservas;
 
     public RecyclerViewNotificaciones(Context mContext , List <Servicio> mData, List<Usuario> usuarios) {
         this.mContext = mContext;
         this.mData = mData;
         this.usuarios = usuarios;
-        mDataFull = new ArrayList<Servicio>(mData);
     }
 
     @Override
@@ -49,8 +49,8 @@ public class RecyclerViewNotificaciones extends RecyclerView.Adapter<RecyclerVie
     @Override
     public void onBindViewHolder(MyViewHolder holder , int position) {
 
-        //holder.tv_servicio_title.setText(mData.get(position).getNombre());
-        holder.tv_notificacion.setText("Usuario "+"user"+"Pidio el servicio"+"Servicio");
+
+        holder.tv_notificacion.setText("Usuario "+usuarios.get(position).getNombre()+" pidio el servicio "+ mData.get(position).getNombre());
 
     }
 
@@ -64,7 +64,7 @@ public class RecyclerViewNotificaciones extends RecyclerView.Adapter<RecyclerVie
         TextView tv_notificacion;
         public MyViewHolder(View itemView) {
             super ( itemView );
-         //   tv_notificacion = (TextView) itemView.findViewById ( R.id);
+            tv_notificacion = (TextView) itemView.findViewById ( R.id.notificacion);
 
         }
     }
