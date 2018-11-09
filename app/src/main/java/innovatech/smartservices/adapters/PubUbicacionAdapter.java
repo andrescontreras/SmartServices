@@ -7,15 +7,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import innovatech.smartservices.R;
 import innovatech.smartservices.models.Ubicacion;
 
 public class PubUbicacionAdapter  extends RecyclerView.Adapter<PubUbicacionAdapter.ViewHolderDatos> {
 
-    ArrayList<Ubicacion> listDatos;
+    List<Ubicacion> listDatos;
 
-    public PubUbicacionAdapter(ArrayList<Ubicacion> listDatos) {
+    public PubUbicacionAdapter(List<Ubicacion> listDatos) {
         this.listDatos = listDatos;
     }
 

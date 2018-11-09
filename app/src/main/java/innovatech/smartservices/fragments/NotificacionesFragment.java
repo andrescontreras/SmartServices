@@ -40,6 +40,8 @@ import innovatech.smartservices.R;
 import innovatech.smartservices.adapters.ImageAdapter;
 import innovatech.smartservices.adapters.RecyclerViewAdministrarServiciosAdapter;
 import innovatech.smartservices.adapters.RecyclerViewNotificaciones;
+import innovatech.smartservices.helpers.EstadoReserva;
+import innovatech.smartservices.models.Reserva;
 import innovatech.smartservices.models.Servicio;
 import innovatech.smartservices.models.Usuario;
 
@@ -52,27 +54,32 @@ public class NotificacionesFragment extends Fragment {
     private FirebaseAuth mAuth;
     List<Servicio> lstServicio =  new ArrayList<Servicio>();
     List<Servicio> lstServiciosPropios=  new ArrayList<Servicio>();
-    List<Usuario> lstUsuarios=  new ArrayList<>();
+    List<Usuario> lstUsuarios =  new ArrayList<Usuario>();
+    List<Reserva> lstReservas = new ArrayList<Reserva>();
     RecyclerView myrv;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_notificaciones, container, false);
-       /* mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         FragmentManager fm = getActivity().getSupportFragmentManager();
         myrv = (RecyclerView) view.findViewById(R.id.recyclerview_id);
         myrv.setHasFixedSize(true);
         myrv.setLayoutManager ( new GridLayoutManager( getActivity(),1 ) );
-      */
+        agregarNotificaciones(mAuth);
         return view;
     }
     public void agregarNotificaciones(final FirebaseAuth mAuth){
         lstServicio = new ArrayList<>();
         lstServiciosPropios=new ArrayList<>();
+        lstUsuarios = new ArrayList<>();
+        lstReservas = new ArrayList<>();
 
         FirebaseUser user = mAuth.getCurrentUser();
         DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("servicios");
+        DatabaseReference db2 = FirebaseDatabase.getInstance().getReference().child("users");
+        DatabaseReference db3 = FirebaseDatabase.getInstance().getReference().child("reservas");
         db.addValueEventListener(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 boolean seguir = false;
@@ -93,14 +100,81 @@ public class NotificacionesFragment extends Fragment {
                                 lstServiciosPropios.add(lstServicio.get(i));
                             }
                         }
-
                     }
                 }
 
-                RecyclerViewNotificaciones myAdapter = new RecyclerViewNotificaciones(getActivity(), lstServiciosPropios,lstUsuarios);
+               /* RecyclerViewNotificaciones myAdapter = new RecyclerViewNotificaciones(getActivity(), lstServiciosPropios,lstUsuarios);
+                myrv.setHasFixedSize(true);
+                myrv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+                myrv.setAdapter(myAdapter);*/
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
+        db2.addValueEventListener(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot != null) {
+                        Usuario user = snapshot.getValue(Usuario.class);
+                        lstUsuarios.add(user);
+                    } else {
+                        Toast.makeText(getActivity(), "Hubo un problema encontrando usuarios", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
+        db3.addValueEventListener(new ValueEventListener() {
+
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Servicio> Servicios=  new ArrayList<Servicio>();
+                List<Usuario> Usuarios =  new ArrayList<Usuario>();
+                List<Reserva> MisReservas = new ArrayList<Reserva>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot != null) {
+                        Reserva res = snapshot.getValue(Reserva.class);
+                        lstReservas.add(res);
+                    } else {
+                        Toast.makeText(getActivity(), "Hubo un problema encontrando reservas", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                for (Reserva item:lstReservas){
+                    if (item.getEstado().equals(EstadoReserva.PENDIENTE)){
+                        Servicio servicio1=null;
+                        Usuario user1=null;
+                        for(Servicio services:lstServiciosPropios){
+                            if (item.getIdServicio().equals(services.getId())){
+                                servicio1=services;
+                                break;
+                            }
+                        }
+                        for (Usuario u:lstUsuarios){
+                            if(u.getId().equals(item.getIdUsuSolicitante())){
+                                user1 = u;
+                                break;
+                            }
+                        }
+                        if (servicio1!=null && user1!=null) {
+                            Servicios.add(servicio1);
+                            Usuarios.add(user1);
+                            MisReservas.add(item);
+                        }
+                    }
+                }
+
+                RecyclerViewNotificaciones myAdapter = new RecyclerViewNotificaciones(getActivity(), Servicios,Usuarios,MisReservas);
                 myrv.setHasFixedSize(true);
                 myrv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
                 myrv.setAdapter(myAdapter);
+
+
             }
 
             @Override

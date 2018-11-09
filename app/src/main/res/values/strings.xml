@@ -116,5 +116,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="textView_Notificaciones"> Tus notificaciones</string>
+    <string name="informaci_n_del_usuario"><u>Información del usuario</u></string>
+    <string name="informaci_n_del_servicio"><u>Información del servicio</u></string>
+
 
 </resources>

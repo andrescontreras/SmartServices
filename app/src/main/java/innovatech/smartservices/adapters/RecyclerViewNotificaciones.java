@@ -21,23 +21,27 @@ import java.util.List;
 
 import innovatech.smartservices.R;
 import innovatech.smartservices.activities.MainActivity;
+import innovatech.smartservices.fragments.CuentaEditarServicio1Fragment;
 import innovatech.smartservices.fragments.ServicioInformacionFragment;
+import innovatech.smartservices.fragments.SolicitudServicioFragment;
 import innovatech.smartservices.interfaces.OnItemClickListenerInterface;
+import innovatech.smartservices.models.Reserva;
 import innovatech.smartservices.models.Servicio;
 import innovatech.smartservices.models.Usuario;
 
 public class RecyclerViewNotificaciones extends RecyclerView.Adapter<RecyclerViewNotificaciones.MyViewHolder> {
 
     private Context mContext;
-    private List<Servicio> mData;
     private List<Usuario> usuarios;
-    private List<Servicio> mDataFull;
+    private List<Servicio> mData;
+    private List<Reserva> reserva;
 
-    public RecyclerViewNotificaciones(Context mContext , List <Servicio> mData, List<Usuario> usuarios) {
+    public RecyclerViewNotificaciones(Context mContext , List <Servicio> mData, List<Usuario> usuarios, List<Reserva> reserva) {
         this.mContext = mContext;
         this.mData = mData;
         this.usuarios = usuarios;
-        mDataFull = new ArrayList<Servicio>(mData);
+        this.reserva = reserva;
+
     }
 
     @Override
@@ -48,10 +52,25 @@ public class RecyclerViewNotificaciones extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public void onBindViewHolder(MyViewHolder holder , int position) {
-
-        //holder.tv_servicio_title.setText(mData.get(position).getNombre());
-        holder.tv_notificacion.setText("Usuario "+"user"+"Pidio el servicio"+"Servicio");
-
+        holder.tv_notificacion.setText("Usuario "+usuarios.get(position).getNombre()+" pidio el servicio "+ mData.get(position).getNombre());
+        holder.setItemClickListener(new OnItemClickListenerInterface() {
+            @Override
+            public void onClick(View view, int position) {
+                MainActivity myActivity = (MainActivity)mContext;
+              //  Toast.makeText(mContext, "Elemento "+mData.get(position).getNombre(), Toast.LENGTH_SHORT).show();
+                FragmentTransaction ft = myActivity.getSupportFragmentManager().beginTransaction();
+             //   CuentaEditarServicio1Fragment pubDetallesEdit= new CuentaEditarServicio1Fragment();
+                SolicitudServicioFragment solicitudFragment = new SolicitudServicioFragment();
+                ft.replace(R.id.fragment_container, solicitudFragment);
+                ft.addToBackStack(null);
+                Bundle bundle = new Bundle();
+                bundle.putString("idServicio", mData.get(position).getId());
+                bundle.putString("idUsuario",usuarios.get(position).getId());
+                bundle.putString("reserva",reserva.get(position).getId());
+                solicitudFragment.setArguments(bundle);
+                ft.commit();
+            }
+        });
     }
 
     @Override
@@ -59,13 +78,24 @@ public class RecyclerViewNotificaciones extends RecyclerView.Adapter<RecyclerVie
         return mData.size ();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView tv_notificacion;
+        private OnItemClickListenerInterface itemClickListener;
+
         public MyViewHolder(View itemView) {
             super ( itemView );
-         //   tv_notificacion = (TextView) itemView.findViewById ( R.id);
+            tv_notificacion = (TextView) itemView.findViewById ( R.id.notificacion);
+            itemView.setOnClickListener(this);
 
+        }
+        public void setItemClickListener(OnItemClickListenerInterface itemClickListener){
+            this.itemClickListener = itemClickListener;
+        }
+
+        @Override
+        public void onClick(View view) {
+            itemClickListener.onClick(view,getAdapterPosition());
         }
     }
 }
