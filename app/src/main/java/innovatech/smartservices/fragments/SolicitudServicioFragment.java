@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,11 +38,21 @@ public class SolicitudServicioFragment extends Fragment {
     private ProgressDialog nProgressDialog;
     private StorageReference mStorage;
     private FirebaseAuth mAuth;
+    private TextView NombreUsuario;
+    private TextView CorreoUsuario;
+    private TextView CelUsuario;
+    private TextView NombreServicio;
+    private TextView DiaServicio;
+    private TextView HoraServicio;
+
     List<Servicio> lstServicio =  new ArrayList<Servicio>();
     List<Servicio> lstServiciosPropios=  new ArrayList<Servicio>();
     List<Usuario> lstUsuarios =  new ArrayList<Usuario>();
     List<Reserva> lstReservas = new ArrayList<Reserva>();
     RecyclerView myrv;
+    Servicio servicio;
+    Usuario usr;
+    Reserva res;
 
     @Nullable
     @Override
@@ -48,12 +60,92 @@ public class SolicitudServicioFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_notificaciones_aceptarrechazar, container, false);
         mAuth = FirebaseAuth.getInstance();
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        cargarInformacion(view,mAuth);
+        NombreUsuario=(TextView)view.findViewById(R.id.textViewNombreUsuario);
+        CorreoUsuario=(TextView)view.findViewById(R.id.textViewCorreoUsuario);
+        CelUsuario=(TextView)view.findViewById(R.id.textViewNumeroUsuario);
+        NombreServicio=(TextView)view.findViewById(R.id.textViewNombreServicio);
+        DiaServicio=(TextView)view.findViewById(R.id.textViewDia);
+        HoraServicio=(TextView)view.findViewById(R.id.textViewHora);
+        cargarInformacion(savedInstanceState,view,mAuth);
+
+//        NombreUsuario.setText(usr.getNombre());
+/*        CorreoUsuario.setText(usr.getEmail());
+        CelUsuario.setText(usr.getTelefono());
+        NombreServicio.setText(servicio.getNombre());
+        DiaServicio.setText(res.getFecha());
+        HoraServicio.setText(res.getHora());*/
+
+
         //agregarNotificaciones(view,mAuth);
         return view;
     }
-    public void cargarInformacion(View view, FirebaseAuth mAuth){
+    public void cargarInformacion(Bundle savedInstanceState, View view, FirebaseAuth mAuth){
+        Bundle bundle=getArguments();
+        final String idServ=bundle.getString("idServicio");
+        final String idUsu=bundle.getString("idUsuario");
+        final String idRes=bundle.getString("reserva");
+        servicio = new Servicio();
+        usr = new Usuario();
+        res = new Reserva();
 
+        FirebaseUser user = mAuth.getCurrentUser();
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("servicios").child(idServ);
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    servicio = dataSnapshot.getValue(Servicio.class);
+                    NombreServicio.setText(servicio.getNombre());
+                }
+                else{
+                    Toast.makeText(getActivity(), "Hubo un problema encontrando el servicio", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
+        DatabaseReference db2 = FirebaseDatabase.getInstance().getReference().child("users").child(idUsu);
+        db2.addListenerForSingleValueEvent(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    usr = dataSnapshot.getValue(Usuario.class);
+                    NombreUsuario.setText(usr.getNombre());
+                    CorreoUsuario.setText(usr.getEmail());
+                    CelUsuario.setText(String.valueOf(usr.getTelefono()));
+                    //System.out.println("Usuario: "+ usr.getNombre());
+
+                }
+                else{
+                    Toast.makeText(getActivity(), "Hubo un problema encontrando el usuario", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
+        DatabaseReference db3 = FirebaseDatabase.getInstance().getReference().child("reservas").child(idRes);
+        db3.addListenerForSingleValueEvent(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    res = dataSnapshot.getValue(Reserva.class);
+                    DiaServicio.setText(res.getFecha());
+                    HoraServicio.setText(String.valueOf(res.getHora())+":00");
+
+                }
+                else{
+                    Toast.makeText(getActivity(), "Hubo un problema encontrando el usuario", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
 
     }
 

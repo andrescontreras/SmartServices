@@ -169,7 +169,7 @@ public class NotificacionesFragment extends Fragment {
                     }
                 }
 
-                RecyclerViewNotificaciones myAdapter = new RecyclerViewNotificaciones(getActivity(), Servicios,Usuarios);
+                RecyclerViewNotificaciones myAdapter = new RecyclerViewNotificaciones(getActivity(), Servicios,Usuarios,MisReservas);
                 myrv.setHasFixedSize(true);
                 myrv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
                 myrv.setAdapter(myAdapter);

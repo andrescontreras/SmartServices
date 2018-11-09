@@ -34,12 +34,13 @@ public class RecyclerViewNotificaciones extends RecyclerView.Adapter<RecyclerVie
     private Context mContext;
     private List<Usuario> usuarios;
     private List<Servicio> mData;
-   // private List<Reserva> reservas;
+    private List<Reserva> reserva;
 
-    public RecyclerViewNotificaciones(Context mContext , List <Servicio> mData, List<Usuario> usuarios) {
+    public RecyclerViewNotificaciones(Context mContext , List <Servicio> mData, List<Usuario> usuarios, List<Reserva> reserva) {
         this.mContext = mContext;
         this.mData = mData;
         this.usuarios = usuarios;
+        this.reserva = reserva;
 
     }
 
@@ -65,6 +66,7 @@ public class RecyclerViewNotificaciones extends RecyclerView.Adapter<RecyclerVie
                 Bundle bundle = new Bundle();
                 bundle.putString("idServicio", mData.get(position).getId());
                 bundle.putString("idUsuario",usuarios.get(position).getId());
+                bundle.putString("reserva",reserva.get(position).getId());
                 solicitudFragment.setArguments(bundle);
                 ft.commit();
             }
