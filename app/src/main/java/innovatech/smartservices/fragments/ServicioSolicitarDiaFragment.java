@@ -34,6 +34,7 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -64,7 +65,8 @@ public class ServicioSolicitarDiaFragment extends Fragment {
     List<DateData> marcados = new ArrayList<DateData>(); //Se encuentran todos los elementos dentro del MCalendarView que estan marcados por el punto verde
     List<DateData> disponibles = new ArrayList<DateData>(); //Se encuentran los dias disponibles del servicio
     List<Reserva> fechasReservadas = new ArrayList<Reserva>();  // Se encuentran todas las fechas reservados del servicio
-
+    List<String> horasString = new ArrayList<String>();
+    List<String> horasDisponibles = new ArrayList<String>();
     int mes;
     int anio;
     int dia;
@@ -84,6 +86,7 @@ public class ServicioSolicitarDiaFragment extends Fragment {
         marcados = new ArrayList<DateData>();
         disponibles= new ArrayList<DateData>();
         fechasReservadas = new ArrayList<Reserva>();
+        horasDisponibles = new ArrayList<String>();
         limpiarPuntos();
         bundle = getArguments();
         titulo.setText(bundle.getString("nombreServ"));
@@ -91,13 +94,18 @@ public class ServicioSolicitarDiaFragment extends Fragment {
                 Picasso.with(getContext()).load(Uri.parse(bundle.getString("imagenIni"))).into(imagen);
         serv = (Servicio) bundle.getSerializable("servicio");
         llenarReservas(serv.getId());
-        List<String>horasString = new ArrayList<String>();
-        horasString.add("Seleccionar hora");
+        accionBotones();
+        return view;
+    }
+    public void cargarDatosIniciales(){
+        List<String> inicio = new ArrayList<String>();
+        inicio.add("Seleccionar hora");
+        horasString = new ArrayList<String>();
+        ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,inicio);
+        horas.setAdapter(adapterElem);
         for(int i =0;i<serv.getDisponibilidadHoras().size();i++){
             horasString.add(String.valueOf(serv.getDisponibilidadHoras().get(i)));
         }
-        ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,horasString);
-        horas.setAdapter(adapterElem);
         anio = Calendar.getInstance().get(Calendar.YEAR); // Variable que contiene el año actual
         mes = Calendar.getInstance().get(Calendar.MONTH); // Variable que contiene el mes actual
         dia = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
@@ -111,13 +119,16 @@ public class ServicioSolicitarDiaFragment extends Fragment {
             cal.set(anio,mes,i);
             int dayweek =(cal.get(Calendar.DAY_OF_WEEK)-1);
             if(verificarDias(dayweek)){
-                 dateData = new DateData(anio,mes+1,i);
-                 if(!estaReservado(dateData)){
-                     disponibles.add(dateData);
-                     calendario.unMarkDate(dateData);
-                     calendario.markDate(dateData.setMarkStyle(new MarkStyle(MarkStyle.BACKGROUND,Color.BLUE)));
-                 }
+                dateData = new DateData(anio,mes+1,i);
+                if(!estaReservado(dateData)){
+                    disponibles.add(dateData);
+                    calendario.unMarkDate(dateData);
+                    calendario.markDate(dateData.setMarkStyle(new MarkStyle(MarkStyle.BACKGROUND,Color.BLUE)));
+                }else{
+                    calendario.unMarkDate(dateData);
+                }
             }
+        }
         horas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -132,23 +143,37 @@ public class ServicioSolicitarDiaFragment extends Fragment {
 
             }
         });
-        }
         calendario.setOnDateClickListener(new OnDateClickListener() {
             @Override
             public void onDateClick(View view, DateData date) {
+
+                ArrayAdapter adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item, Collections.emptyList());
+                horas.setAdapter(adapter);
                 System.out.println("Oprimo diaaaaaaaaaaaaaaaaa ->>>>>>>>>>>>>>>>>>>>>>>>>>>");
-                if(esDiaDisponible(date)){
+                horasDisponibles.clear();
+                horasDisponibles.add("Seleccionar hora");
+                System.out.println("Tamaño de horasDisponibles en setOnDateClick 111111 ----------------------->>>>>>>>>> "+horasDisponibles.size());
+                if(esDiaDisponible(date) && !estaReservado(date)){
                     if(!verificarMarcados(date) ) {
+                        ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,horasDisponibles);
+                        System.out.println("Tamaño de horasDisponibles en setOnDateClick 222222222 ----------------------->>>>>>>>>> "+horasDisponibles.size());
+                        horas.setAdapter(adapterElem);
                         calendario.unMarkDate(date);
                         calendario.markDate(date.setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.GREEN)));
                         marcados.add(date);
+
                     }else{
+                        horasDisponibles.clear();
+                        horasDisponibles.add("Seleccionar hora");
+                        ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,horasDisponibles);
+                        horas.setAdapter(adapterElem);
+
                         calendario.unMarkDate(date);
                         calendario.markDate(date.setMarkStyle(new MarkStyle(MarkStyle.BACKGROUND,Color.BLUE)));
                         marcados.remove(date);
                     }
                 }else{
-                        Toast.makeText(getActivity(), "Seleccione uno de los dias disponibles que estan marcados en azul", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Seleccione uno de los dias disponibles que estan marcados en azul", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -173,25 +198,18 @@ public class ServicioSolicitarDiaFragment extends Fragment {
                 }
             }
         });
-        accionBotones();
-        return view;
     }
     public void accionBotones(){
         reservar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(marcados.size()>0){
+                String nivelHoras = (String)horas.getSelectedItem();
+                String nivelPagos = (String)pagos.getSelectedItem();
+                if(marcados.size()>0 && !nivelHoras.equals("Seleccionar hora") && !nivelPagos.equals("Seleccionar medio de pago")){
                     subirReserva(serv);
-                    /*
-                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    ServicioSolicitarFinalFragment solicitarFinal = new ServicioSolicitarFinalFragment();
-                    ft.replace(R.id.fragment_container, solicitarFinal);
-                    ft.addToBackStack(null);
-                    solicitarFinal.setArguments(bundle);
-                    ft.commit();
-                     */
+
                 }else{
-                    Toast.makeText(getActivity(), "Tiene que seleccionar almenos una fecha para reservar el servicio", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Tiene que seleccionar almenos una fecha, una hora y un metodo de pago para realizar la solicitud de reserva", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -233,13 +251,14 @@ public class ServicioSolicitarDiaFragment extends Fragment {
     //Llena una lista que contiene las reservas hechas a un servicio
     public void llenarReservas(final String idServ){
         DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("reservas");
-        db.addValueEventListener(new ValueEventListener() {
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if(snapshot!=null){
                         Reserva reserva = snapshot.getValue(Reserva.class);
                         if(reserva!=null){
                             if(reserva.getIdServicio().equals(idServ)){
+                                System.out.println("Fechas reservadas del servicio ----------------------->>>>>>>>>>>>> "+reserva.getFecha());
                                 fechasReservadas.add(reserva);
                             }
                         }
@@ -248,6 +267,7 @@ public class ServicioSolicitarDiaFragment extends Fragment {
                         Toast.makeText(getActivity(), "Hubo un problema encontrando las reservas", Toast.LENGTH_SHORT).show();
                     }
                 }
+                cargarDatosIniciales();
             }
 
             @Override
@@ -259,12 +279,71 @@ public class ServicioSolicitarDiaFragment extends Fragment {
     //Le llega una fecha, para comprobar si esta se encuentra dentro de los datos reservados
     public boolean estaReservado(DateData fecha){
         String fechaString = String.valueOf(fecha.getYear())+"-"+fecha.getMonthString()+"-"+fecha.getDayString();
+        System.out.println("Verifica si esta reservada la fecha --------------->>>>>>>>>>>>>> "+fechaString);
+        if(estaReservadoHoras(fechaString)){
+            return true;
+        }else{
+            return false;
+        }
+        /*
         for(int i=0;i<fechasReservadas.size();i++){
             if(fechasReservadas.get(i).getFecha().equals(fechaString)){
+                System.out.println("ESTA RESERVADOOOOOOOO");
+                if(estaReservadoHoras())
                 return true;
             }
         }
         return false;
+        */
+    }
+    //Metodo para saber si para una la reserva de un dia, estan ocupadas todas las horas
+    public boolean estaReservadoHoras(String fecha){
+        boolean flag=false;
+        List<String> copiaHoras = new ArrayList<String>();
+        //copiaHoras.addAll(horasString);
+
+        if(fechasReservadas.size()>0){
+            for(int j=0;j<horasString.size();j++){
+                int i=0;
+                flag=false;
+                System.out.println("Tamaño de la lista de reservas -----------------------------------------------------------------> "+fechasReservadas.size());
+                while(i<fechasReservadas.size() && !flag){
+                    System.out.println("Tamaño de horasDisponibles en reservadoHoras 111111 ----------------------->>>>>>>>>> "+horasDisponibles.size());
+                    System.out.println(fechasReservadas.get(i).getFecha());
+                    if(fechasReservadas.get(i).getFecha().equals(fecha)/*&& fechasReservadas.get(i).getEstado() == EstadoReserva.ACEPTADO*/){ //Toca mirar si esta ACEPTADO , para quitar la hora
+                        System.out.println("ESTA RESERVADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                            if(horasString.get(j).equals(String.valueOf(fechasReservadas.get(i).getHora()))){ //Si una de las horas que tiene el servicio es igual a una de las horas que se encuentra en las reservas
+                                /*
+                                System.out.println("Se elimino la hora ----------------------------------->"+ horasString.get(cont));
+                                copiaHoras.remove(cont); //La elimino porque ya esta reservada
+                                cont--;
+                                */
+                                flag=true;
+                                break;
+                            }
+                    }
+                    i++;
+                    System.out.println("Esto es i ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><"+i);
+                }
+                System.out.println("Estado de la bandera "+flag );
+                if(!flag){
+                    //Si no entro al if donde encontraba una fecha en la lista de reservados igual a la que se estaba comparando, entonces se agrega porque es una fecha disponible
+                    System.out.println("La hora "+horasString.get(j) + " no esta reservada");
+                    copiaHoras.add(horasString.get(j));
+                }
+
+            }
+        }else{
+            copiaHoras.addAll(horasString);
+        }
+
+        System.out.println("Tamaño de horasDisponibles en reservadoHoras 2222222222 ----------------------->>>>>>>>>> "+horasDisponibles.size());
+        horasDisponibles.addAll(copiaHoras);
+        System.out.println("Tamaño de horasDisponibles en reservadoHoras 33333333333 ----------------------->>>>>>>>>> "+horasDisponibles.size());
+        if(copiaHoras.size()==0)
+            return true;
+        else
+            return false;
     }
     public void subirReserva(Servicio servicio){
         String idReserva=servicio.getId()+String.valueOf(System.currentTimeMillis());
@@ -283,8 +362,12 @@ public class ServicioSolicitarDiaFragment extends Fragment {
                 //progressbar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
                     Toast.makeText(getActivity(), "Se ha mandado la solicitud de la reserva", Toast.LENGTH_SHORT).show();
-                    //updateUI(user);
-
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ServiciosDestacadosFragment servDestacados = new ServiciosDestacadosFragment();
+                    ft.replace(R.id.fragment_container, servDestacados);
+                    ft.addToBackStack(null);
+                    servDestacados.setArguments(bundle);
+                    ft.commit();
                 }
                 else{
                     Toast.makeText( getActivity(),"Hubo un error al crear la reserva", Toast.LENGTH_SHORT).show();
