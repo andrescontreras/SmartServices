@@ -112,7 +112,7 @@ public class ServicioSolicitarDiaFragment extends Fragment {
         Calendar mycal = new GregorianCalendar(anio,mes,1);
         int diasMes = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
         System.out.println("AÑO->>>>>>>>>>>>>> "+anio+" MES----------->>>>>>>>> "+mes+" DIAS QUE TIENE EL MES ->>>>>>>>>>>>> "+diasMes);
-        System.out.println("El dia que estoy buscando es el ----------------------------->"+serv.getDisponibilidadDias().get(0));
+        //System.out.println("El dia que estoy buscando es el ----------------------------->"+serv.getDisponibilidadDias().get(0));
         Calendar cal = Calendar.getInstance();
         DateData dateData;
         for(int i = 1 ;i<=diasMes;i++){
@@ -120,7 +120,7 @@ public class ServicioSolicitarDiaFragment extends Fragment {
             int dayweek =(cal.get(Calendar.DAY_OF_WEEK)-1);
             if(verificarDias(dayweek)){
                 dateData = new DateData(anio,mes+1,i);
-                if(!estaReservado(dateData)){
+                if(!estaReservado(dateData) && i>dia){
                     disponibles.add(dateData);
                     calendario.unMarkDate(dateData);
                     calendario.markDate(dateData.setMarkStyle(new MarkStyle(MarkStyle.BACKGROUND,Color.BLUE)));

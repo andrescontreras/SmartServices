@@ -118,4 +118,16 @@ public class ServiciosDestacadosFragment extends Fragment{
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemClicked = item.getItemId();
+        if(itemClicked == R.id.action_filter){
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            FiltroBusquedaFragment busqueda_avanzada = new FiltroBusquedaFragment();
+            ft.replace(R.id.fragment_container, busqueda_avanzada);
+            ft.addToBackStack(null);
+            ft.commit();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
