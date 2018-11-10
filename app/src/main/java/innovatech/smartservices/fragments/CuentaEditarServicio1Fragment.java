@@ -126,13 +126,14 @@ public class CuentaEditarServicio1Fragment extends Fragment {
         });
 
         categorias.setOnClickListener(new View.OnClickListener() {
+            Bundle bundle=getArguments();
             @Override
             public void onClick(View view) {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 PubCrearServicioEditandoFragment bas = new PubCrearServicioEditandoFragment();
                 ft.replace(R.id.fragment_container,bas);
                 ft.addToBackStack(null);
-                //notificacion.setArguments(bundle);
+                bas.setArguments(bundle);
                 ft.commit();
             }
         });

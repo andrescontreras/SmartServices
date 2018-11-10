@@ -60,10 +60,6 @@ public class PubUbicacionFragment extends Fragment {
                     ft.addToBackStack(null);
                     Bundle bundle = getArguments();
                     String datosUbicacion="";
-                    /*System.out.println("los datos de direccion son "+listDatos.get(0).getDireccion());
-                    System.out.println("los datos de direccion son "+listDatos.get(0).getLatitud());
-                    System.out.println("los datos de direccion son "+listDatos.get(0).getLongitud());
-                    System.out.println("los datos de direccion son "+listDatos.get(0).getNombre());*/
                     for(int i=0;i<listDatos.size();i++){
                         datosUbicacion=datosUbicacion+listDatos.get(i).getDireccion()+"="+listDatos.get(i).getNombre()+"="+listDatos.get(i).getLatitud()+"="+listDatos.get(i).getLongitud()+"=";
                     }

@@ -16,10 +16,17 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import innovatech.smartservices.R;
+import innovatech.smartservices.models.Servicio;
 
 public class PubCrearServicioEditandoFragment extends Fragment {
     Button sig;
@@ -27,18 +34,113 @@ public class PubCrearServicioEditandoFragment extends Fragment {
     Spinner spinner_nv2;
     Spinner spinner_nv3;
     Spinner spinner_nv4;
+    List<Servicio> lstServicio =  new ArrayList<Servicio>();
     Boolean spinnerCompleto = false;
     private FirebaseAuth mAuth;
     ConstraintLayout c_layout;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_pub_categoria_servicio, container, false);
+        final View view = inflater.inflate(R.layout.fragment_pub_categoria_servicio_editando, container, false);
         mAuth = FirebaseAuth.getInstance();
         inicializar(view);
+        //cargarInfoAnterior(savedInstanceState,view,mAuth);
         accionBotones(view);
         return view;
     }
+/*
+    public void cargarInfoAnterior(Bundle savedInstanceState, View view, FirebaseAuth mAuth){
+        lstServicio = new ArrayList<>();
+        System.out.println("si llega");
+        Bundle bundle=getArguments();
+        final String idServ=bundle.getString("idServicio");
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("servicios");
+        db.addValueEventListener(new ValueEventListener() {
+            boolean seguir = false;
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot != null) {
+                        Servicio serv = snapshot.getValue(Servicio.class);
+                        lstServicio.add(serv);
+                        seguir = true;
+                    } else {
+                        Toast.makeText(getActivity(), "Hubo un problema encontrando los servicios", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                if(seguir){
+                    System.out.println("si entra a seguir");
+                    for(int i=0;i<lstServicio.size();i++){
+                        if(lstServicio.get(i).getId()!=null && idServ!=null){
+                            System.out.println("si entra al if de que no son nulos");
+                            if(lstServicio.get(i).getId().equals(idServ)){
+                                System.out.println("el tipo es "+lstServicio.get(i).getTipo().toString());
+                                String str = lstServicio.get(i).getTipo().toString();
+                                String[] parts=str.split("=");
+                                System.out.println("parts en 0 es "+parts[0]);
+                                spinner_nv1.setSelection(1);
+                                if(parts[0]!=null){
+                                    System.out.println("dejar en ");
+                                    if(parts[0]=="Belleza"){
+                                        spinner_nv1.setId(1);
+                                    }
+                                    if(parts[0]=="Higiene personal"){
+                                        spinner_nv1.setId(2);
+                                    }
+                                    if(parts[0].toString()=="Clases"){
+                                        spinner_nv1.setSelection(3);
+                                    }
+                                    if(parts[0]=="Fiestas y eventos"){
+                                        spinner_nv1.setId(4);
+                                    }
+                                    if(parts[0]=="Hogar"){
+                                        spinner_nv1.setId(5);
+                                    }
+                                    if(parts[0]=="Mantenimiento"){
+                                        spinner_nv1.setId(6);
+                                    }
+                                    if(parts[0]=="Salud"){
+                                        spinner_nv1.setId(7);
+                                    }
+                                    if(parts[0]=="Profesionales"){
+                                        spinner_nv1.setId(8);
+                                    }
+                                    if(parts[0]=="Reparaciones e instalaciones"){
+                                        spinner_nv1.setId(9);
+                                    }
+                                    if(parts[0]=="Ropa"){
+                                        spinner_nv1.setId(10);
+                                    }
+                                    if(parts[0]=="Mascotas"){
+                                        spinner_nv1.setId(11);
+                                    }
+                                    if(parts[0]=="Transporte"){
+                                        spinner_nv1.setId(12);
+                                    }
+                                    if(parts[0]=="Viajes"){
+                                        spinner_nv1.setId(13);
+                                    }
+                                    if(parts[0]=="Otros"){
+                                        spinner_nv1.setId(14);
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
+
+
+    }
+*/
+
     private void inicializar(View view){
         sig = (Button)view.findViewById(R.id.btn_sig_infoBasica);
         spinner_nv1 = (Spinner)view.findViewById(R.id.spin_servicio_nivel1);
@@ -55,12 +157,7 @@ public class PubCrearServicioEditandoFragment extends Fragment {
                 String nivel2 = (String)spinner_nv2.getSelectedItem();
                 String nivel3 = (String)spinner_nv3.getSelectedItem();
                 String nivel4 = (String)spinner_nv4.getSelectedItem();
-                /*
-                System.out.println("Elemento nivel 1 ------------------------> " + nivel1);
-                System.out.println("Elemento nivel 2 --------------------------------------------> " + nivel2);
-                System.out.println("Elemento nivel 3 -------------------------------------------------------------> " + nivel3);
-                System.out.println("Elemento nivel 4 ------------------------------------------------------------------------------> "+ nivel4);
-                */
+
 
                 if((nivel2.equals("") || nivel3.equals("") || nivel4.equals("")) ||
                         (spinnerCompleto && !nivel4.equals("Seleccionar categoria"))){

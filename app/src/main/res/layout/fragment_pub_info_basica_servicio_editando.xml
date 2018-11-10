@@ -101,16 +101,16 @@
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_marginStart="60dp"
+            android:layout_marginTop="450dp"
             android:layout_marginEnd="60dp"
-            android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_button"
             android:text="Guardar cambios"
             android:textAllCaps="false"
             android:textColor="@color/cardview_light_background"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView2"

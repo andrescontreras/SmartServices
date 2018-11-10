@@ -2,6 +2,7 @@ package innovatech.smartservices.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +18,8 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -56,21 +59,35 @@ public class PubUbicacionEditandoFragment extends Fragment {
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle=getArguments();
+                bundle.getString("idServicio");
+                System.out.println("el tamaño de la lista es "+listDatos.size());
                 if(listDatos.isEmpty()){
                     Toast.makeText(getActivity(), "Debe ingresar almenos una ubicación", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    CalendarioFragment ubicacionfragm = new CalendarioFragment();
-                    ft.replace(R.id.fragment_container, ubicacionfragm);
-                    ft.addToBackStack(null);
-                    Bundle bundle = getArguments();
-                    System.out.println("los datos son "+listDatos.get(0).getDireccion());
-                    bundle.putString("ubicacion", listDatos.toString());
-                    System.out.println("lo que se guarda es XXXXXXXXXX-X-X-X-X-X-X-X  "+listDatos.toString());
-                    ubicacionfragm.setArguments(bundle);
-                    //notificacion.setArguments(bundle);
-                    ft.commit();
+                    String datosUbicacion="";
+                    Servicio servAux=new Servicio();
+                    Ubicacion ubiAux=new Ubicacion("","",0,0);
+                    for(int i=0;i<listDatos.size();i++){
+                        ubiAux=new Ubicacion(listDatos.get(i).getDireccion(),listDatos.get(i).getNombre(),listDatos.get(i).getLatitud(),listDatos.get(i).getLongitud());
+                        servAux.addUbicacion(ubiAux);
+                        datosUbicacion=datosUbicacion+listDatos.get(i).getDireccion()+"="+listDatos.get(i).getNombre()+"="+listDatos.get(i).getLatitud()+"="+listDatos.get(i).getLongitud()+"=";
+                    }
+                    FirebaseDatabase.getInstance().getReference("servicios").child(bundle.getString("idServicio")).child("ubicacion").setValue(servAux.getUbicacion()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            //progressbar.setVisibility(View.GONE);
+                            if(task.isSuccessful()){
+                                Toast.makeText(getActivity(), "Servicio actualizado", Toast.LENGTH_SHORT).show();
+
+                            }
+                            else{
+                                Toast.makeText( getActivity(),"Hubo un error al editar el servicio", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    });
                 }
             }
         });
@@ -151,21 +168,19 @@ public class PubUbicacionEditandoFragment extends Fragment {
                 }
                 if(seguir){
                     System.out.println("si entra a seguir");
-                    List <Ubicacion>aux=new ArrayList<Ubicacion>();
+                   // List <Ubicacion>aux=new ArrayList<Ubicacion>();
                     for(int i=0;i<lstServicio.size();i++){
                         if(lstServicio.get(i).getId()!=null && idServ!=null){
                             System.out.println("si entra al if de que no son nulos");
                             if(lstServicio.get(i).getId().equals(idServ)){
-                                aux=lstServicio.get(i).getUbicacion();
-                                adapter = new PubUbicacionAdapter(aux);
-                                recycler.setAdapter(adapter);
-                                for(int j=0;j<aux.size();j++){
-                                    System.out.println("la direccion es "+aux.get(j).getDireccion());
-                                }
+                                listDatos=lstServicio.get(i).getUbicacion();
+
                             }
                         }
 
                     }
+                    adapter = new PubUbicacionAdapter(listDatos);
+                    recycler.setAdapter(adapter);
                 }
             }
             @Override
