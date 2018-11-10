@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Notificacion"
+            android:text="Notificación"
             android:textColor="#2d2d2d"
             android:textSize="13sp" />
 
