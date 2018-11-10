@@ -23,7 +23,9 @@ import innovatech.smartservices.R;
 import innovatech.smartservices.activities.MainActivity;
 import innovatech.smartservices.fragments.CuentaEditarServicio1Fragment;
 import innovatech.smartservices.fragments.ServicioInformacionFragment;
+import innovatech.smartservices.fragments.ServiciosDestacadosFragment;
 import innovatech.smartservices.fragments.SolicitudServicioFragment;
+import innovatech.smartservices.helpers.EstadoReserva;
 import innovatech.smartservices.interfaces.OnItemClickListenerInterface;
 import innovatech.smartservices.models.Reserva;
 import innovatech.smartservices.models.Servicio;
@@ -52,23 +54,39 @@ public class RecyclerViewNotificaciones extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public void onBindViewHolder(MyViewHolder holder , int position) {
-        holder.tv_notificacion.setText("Usuario "+usuarios.get(position).getNombre()+" pidio el servicio "+ mData.get(position).getNombre());
+        if (reserva.get(position).getEstado().equals(EstadoReserva.ACEPTADO)){
+            String notficiacion ="ACEPTADO Servicio " + mData.get(position).getNombre() + " para el día " + reserva.get(position).getFecha() + " a las " + reserva.get(position).getHora()+":00";
+            holder.tv_notificacion.setText(notficiacion);
+        }else if(reserva.get(position).getEstado().equals(EstadoReserva.RECHAZADO)){
+            String notficiacion ="ACEPTADO Servicio " + mData.get(position).getNombre() + " para el día " + reserva.get(position).getFecha() + " a las " + reserva.get(position).getHora()+":00";
+            holder.tv_notificacion.setText(notficiacion);
+        }else {
+            holder.tv_notificacion.setText("Usuario " + usuarios.get(position).getNombre() + " pidio el servicio " + mData.get(position).getNombre());
+        }
+
         holder.setItemClickListener(new OnItemClickListenerInterface() {
             @Override
             public void onClick(View view, int position) {
                 MainActivity myActivity = (MainActivity)mContext;
-              //  Toast.makeText(mContext, "Elemento "+mData.get(position).getNombre(), Toast.LENGTH_SHORT).show();
-                FragmentTransaction ft = myActivity.getSupportFragmentManager().beginTransaction();
-             //   CuentaEditarServicio1Fragment pubDetallesEdit= new CuentaEditarServicio1Fragment();
-                SolicitudServicioFragment solicitudFragment = new SolicitudServicioFragment();
-                ft.replace(R.id.fragment_container, solicitudFragment);
-                ft.addToBackStack(null);
-                Bundle bundle = new Bundle();
-                bundle.putString("idServicio", mData.get(position).getId());
-                bundle.putString("idUsuario",usuarios.get(position).getId());
-                bundle.putString("reserva",reserva.get(position).getId());
-                solicitudFragment.setArguments(bundle);
-                ft.commit();
+                if (reserva.get(position).getEstado().equals(EstadoReserva.PENDIENTE)) {
+                    //  Toast.makeText(mContext, "Elemento "+mData.get(position).getNombre(), Toast.LENGTH_SHORT).show();
+                    FragmentTransaction ft = myActivity.getSupportFragmentManager().beginTransaction();
+                    //   CuentaEditarServicio1Fragment pubDetallesEdit= new CuentaEditarServicio1Fragment();
+                    SolicitudServicioFragment solicitudFragment = new SolicitudServicioFragment();
+                    ft.replace(R.id.fragment_container, solicitudFragment);
+                    ft.addToBackStack(null);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("idServicio", mData.get(position).getId());
+                    bundle.putString("idUsuario", usuarios.get(position).getId());
+                    bundle.putString("reserva", reserva.get(position).getId());
+                    solicitudFragment.setArguments(bundle);
+                    ft.commit();
+                }else{
+                    FragmentTransaction ft = myActivity.getSupportFragmentManager().beginTransaction();
+                    ServiciosDestacadosFragment principal = new ServiciosDestacadosFragment();
+                    ft.replace(R.id.fragment_container,principal);
+                    ft.commit();
+                }
             }
         });
     }

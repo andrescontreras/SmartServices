@@ -137,6 +137,7 @@ public class NotificacionesFragment extends Fragment {
                 List<Servicio> Servicios=  new ArrayList<Servicio>();
                 List<Usuario> Usuarios =  new ArrayList<Usuario>();
                 List<Reserva> MisReservas = new ArrayList<Reserva>();
+                Usuario myUser = null;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if (snapshot != null) {
                         Reserva res = snapshot.getValue(Reserva.class);
@@ -146,25 +147,42 @@ public class NotificacionesFragment extends Fragment {
                     }
                 }
                 for (Reserva item:lstReservas){
-                    if (item.getEstado().equals(EstadoReserva.PENDIENTE)){
-                        Servicio servicio1=null;
-                        Usuario user1=null;
-                        for(Servicio services:lstServiciosPropios){
-                            if (item.getIdServicio().equals(services.getId())){
-                                servicio1=services;
+                    Servicio servicio1 = null;
+                    if (item.getEstado().equals(EstadoReserva.PENDIENTE)) {
+                        Usuario user1 = null;
+                        for (Servicio services : lstServiciosPropios) {
+                            if (item.getIdServicio().equals(services.getId())) {
+                                servicio1 = services;
                                 break;
                             }
                         }
-                        for (Usuario u:lstUsuarios){
-                            if(u.getId().equals(item.getIdUsuSolicitante())){
+                        for (Usuario u : lstUsuarios) {
+                            if (u.getId().equals(item.getIdUsuSolicitante())) {
                                 user1 = u;
                                 break;
                             }
+                            if(u.getId().equals(mAuth.getCurrentUser().getUid()) && myUser == null){
+                                myUser = u;
+                            }
                         }
-                        if (servicio1!=null && user1!=null) {
+                        if (servicio1 != null && user1 != null) {
                             Servicios.add(servicio1);
                             Usuarios.add(user1);
                             MisReservas.add(item);
+                        }
+                    }else if(item.getEstado().equals(EstadoReserva.ACEPTADO)||item.getEstado().equals(EstadoReserva.RECHAZADO)){
+                        if (item.getIdUsuSolicitante().equals(mAuth.getCurrentUser().getUid())) {
+                            for (Servicio services : lstServicio) {
+                                if (item.getIdServicio().equals(services.getId())) {
+                                    servicio1 = services;
+                                    break;
+                                }
+                            }
+                            if (servicio1 != null && myUser != null) {
+                                Servicios.add(servicio1);
+                                Usuarios.add(myUser);
+                                MisReservas.add(item);
+                            }
                         }
                     }
                 }
