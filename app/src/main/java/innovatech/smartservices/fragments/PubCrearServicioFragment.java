@@ -71,7 +71,8 @@ public class PubCrearServicioFragment extends Fragment {
 
                     //Tal vez tenga que guardar en otras variables locales lo que me llega de fragmentos anteriores para mandarlos al siguiente
                     Bundle bundle = new Bundle();
-                    bundle.putString("categorias",nivel1+nivel2+nivel3+nivel4);
+                    bundle.putString("categorias",nivel1+"="+nivel2+"="+nivel3+"="+nivel4+"=");
+                    System.out.println("de la siguiente manera "+bundle.getString("categorias"));
                     infoBasica.setArguments(bundle);
                     ft.commit();
                 }else{

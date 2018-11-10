@@ -231,6 +231,32 @@ public class PubPosicionamientoEditandoFragment extends Fragment {
             }
 
         });
+
+
+
+        FirebaseDatabase.getInstance().getReference("servicios").child(idServicio).setValue(servicio).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                //progressbar.setVisibility(View.GONE);
+                if(task.isSuccessful()){
+                    Toast.makeText(getActivity(), "Se ha publicado el servicio", Toast.LENGTH_SHORT).show();
+                    infoActualUsuario(idServicio);
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ServiciosDestacadosFragment servDest= new ServiciosDestacadosFragment();
+                    ft.replace(R.id.fragment_container, servDest);
+                    nProgressDialog.dismiss();
+                    ft.commit();
+
+                    //updateUI(user);
+
+                }
+                else{
+                    Toast.makeText( getActivity(),"Hubo un error al crear un servicio", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+        });
     }
 
     @Override

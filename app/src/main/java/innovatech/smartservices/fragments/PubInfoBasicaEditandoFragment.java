@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -36,7 +35,6 @@ import innovatech.smartservices.R;
 import innovatech.smartservices.adapters.ImageAdapter;
 import innovatech.smartservices.adapters.RecyclerViewEditandoImagenesAdapter;
 import innovatech.smartservices.models.Servicio;
-import innovatech.smartservices.models.Ubicacion;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -66,7 +64,7 @@ public class PubInfoBasicaEditandoFragment extends Fragment {
         nombre = (EditText)view.findViewById(R.id.txtNombre);
         precio = (EditText)view.findViewById(R.id.txtPrecio);
         selecImagen = (Button)view.findViewById(R.id.btn_agregarImagenes);
-        sig = (Button)view.findViewById(R.id.btn_sig_detalles);
+        sig = (Button)view.findViewById(R.id.btn_contactarUsuario);
         myrv = view.findViewById(R.id.recycler_view);
         myrv.setHasFixedSize(true);
         myrv.setLayoutManager(new LinearLayoutManager(getActivity()));

@@ -1,11 +1,10 @@
 package innovatech.smartservices.fragments;
 
 import android.os.Bundle;
-import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,43 +27,63 @@ import java.util.ArrayList;
 import java.util.List;
 
 import innovatech.smartservices.R;
-import innovatech.smartservices.adapters.RecyclerViewAdministrarServiciosAdapter;
 import innovatech.smartservices.models.Servicio;
 
 public class PubDetallesEditandoFragment extends Fragment {
-    private EditText incluye;
-    private EditText noIncluye;
+    private EditText incluyeEditando;
+    private EditText noIncluyeEditando;
     private EditText adicional;
     Button boton;
     List<Servicio> lstServicio =  new ArrayList<Servicio>();
     private FirebaseAuth mAuth;
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_pub_detalles_servicio_editando, container, false);
         mAuth = FirebaseAuth.getInstance();
         boton = (Button)view.findViewById(R.id.boton_detalles);
-        incluye = (EditText)view.findViewById(R.id.texto_incluye);
-        noIncluye= (EditText)view.findViewById(R.id.texto_no_incluye);
+        incluyeEditando = (EditText)view.findViewById(R.id.t_Incluye);
+        noIncluyeEditando = (EditText)view.findViewById(R.id.t_noIncluye);
         adicional= (EditText)view.findViewById(R.id.texto_adicional);
         cargarInfoAnterior(savedInstanceState,view,mAuth);
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(TextUtils.isEmpty(incluye.getText()) || TextUtils.isEmpty(noIncluye.getText()) || TextUtils.isEmpty(adicional.getText())){
-                    Toast.makeText(getActivity(), "Debe ingresar que incluye, que no incluye, y los datos adicionales del servicio", Toast.LENGTH_SHORT).show();
+                if(TextUtils.isEmpty(incluyeEditando.getText()) || TextUtils.isEmpty(noIncluyeEditando.getText()) || TextUtils.isEmpty(adicional.getText())){
+                    Toast.makeText(getActivity(), "Debe ingresar que incluyeEditando, que no incluyeEditando, y los datos adicionales del servicio", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    PubUbicacionFragment ubicacionfragm = new PubUbicacionFragment();
-                    ft.replace(R.id.fragment_container, ubicacionfragm);
-                    ft.addToBackStack(null);
                     Bundle bundle = getArguments();
-                    bundle.putString("incluye", incluye.getText().toString());
-                    bundle.putString("noIncluye", noIncluye.getText().toString());
-                    bundle.putString("adicional", adicional.getText().toString());
-                    ubicacionfragm.setArguments(bundle);
-                    ft.commit();
+                    System.out.println("lo actual  incluyeEditando es "+ incluyeEditando.getText().toString());
+                    System.out.println("la info del bundle es "+bundle.getString("idServicio"));
+                    FirebaseDatabase.getInstance().getReference("servicios").child(bundle.getString("idServicio")).child("incluye").setValue(incluyeEditando.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            //progressbar.setVisibility(View.GONE);
+                            if(task.isSuccessful()){
+                                Toast.makeText(getActivity(), "Servicio actualizado", Toast.LENGTH_SHORT).show();
+
+                            }
+                            else{
+                                Toast.makeText( getActivity(),"Hubo un error al editar el servicio", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    });
+                    FirebaseDatabase.getInstance().getReference("servicios").child(bundle.getString("idServicio")).child("noIncluye").setValue(noIncluyeEditando.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            //progressbar.setVisibility(View.GONE);
+                            if(task.isSuccessful()){
+                                Toast.makeText(getActivity(), "Servicio actualizado", Toast.LENGTH_SHORT).show();
+
+                            }
+                            else{
+                                Toast.makeText( getActivity(),"Hubo un error al editar el servicio", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    });
                 }
             }
         });
@@ -77,7 +98,7 @@ public class PubDetallesEditandoFragment extends Fragment {
 
         FirebaseUser user = mAuth.getCurrentUser();
         DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("servicios");
-        db.addValueEventListener(new ValueEventListener() {
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             boolean seguir = false;
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -95,8 +116,8 @@ public class PubDetallesEditandoFragment extends Fragment {
                         if(lstServicio.get(i).getId()!=null && idServ!=null){
                             System.out.println("si entra al if de que no son nulos");
                             if(lstServicio.get(i).getId().equals(idServ)){
-                                incluye.setText(lstServicio.get(i).getIncluye().toString());
-                                noIncluye.setText(lstServicio.get(i).getNoIncluye().toString());
+                                incluyeEditando.setText(lstServicio.get(i).getIncluye().toString());
+                                noIncluyeEditando.setText(lstServicio.get(i).getNoIncluye().toString());
                                 adicional.setText(lstServicio.get(i).getAdicional().toString());
                             }
                         }
