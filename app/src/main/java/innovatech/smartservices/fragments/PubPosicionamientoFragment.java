@@ -244,17 +244,14 @@ public class PubPosicionamientoFragment extends Fragment {
         FirebaseUser user = mAuth.getCurrentUser();
         final String idServicio = user.getUid()+String.valueOf(System.currentTimeMillis());
         servicio.setId(idServicio);
-        final UsuarioxServicio ususerv= new UsuarioxServicio(user.getUid(),idServicio, RelacionEnum.PUBLICADOR);
-        final List<UsuarioxServicio>listRelacion = new ArrayList<UsuarioxServicio>();
-        listRelacion.add(ususerv);
-        servicio.setRelacionUsuario(listRelacion);
+        servicio.setEstado(true);
         FirebaseDatabase.getInstance().getReference("servicios").child(idServicio).setValue(servicio).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 //progressbar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
                     Toast.makeText(getActivity(), "Se ha publicado el servicio", Toast.LENGTH_SHORT).show();
-                    infoActualUsuario(idServicio,ususerv);
+                    infoActualUsuario(idServicio);
                     //updateUI(user);
 
                 }
@@ -278,7 +275,7 @@ public class PubPosicionamientoFragment extends Fragment {
             ft.commit();
         }
     }
-    private void infoActualUsuario(final String idServicio, final UsuarioxServicio ususerv){
+    private void infoActualUsuario(final String idServicio){
         FirebaseUser user = mAuth.getCurrentUser();
         String uid = user.getUid();
         DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("users").child(uid);
@@ -287,7 +284,6 @@ public class PubPosicionamientoFragment extends Fragment {
                 if(dataSnapshot!=null){
                     usr = dataSnapshot.getValue(Usuario.class);
                     usr.setServicio(idServicio);
-                    usr.addRelacion(ususerv);
                     mDataBase.child(mAuth.getCurrentUser().getUid()).setValue(usr);
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     ServiciosDestacadosFragment servDest= new ServiciosDestacadosFragment();
