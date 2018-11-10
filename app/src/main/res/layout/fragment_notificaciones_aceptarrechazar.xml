@@ -161,7 +161,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewCorreoUsuario" />
 
     <Button
-        android:id="@+id/btn_sig_detalles"
+        android:id="@+id/btn_contactarUsuario"
         android:layout_width="142dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -176,7 +176,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn_sig_detalles2"
+        android:id="@+id/btn_aceptarServicio"
         android:layout_width="142dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
@@ -189,7 +189,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView38" />
 
     <Button
-        android:id="@+id/btn_sig_detalles3"
+        android:id="@+id/btn_rechazarServicio"
         android:layout_width="142dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -201,7 +201,7 @@
         android:textColor="@color/cardview_light_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/btn_sig_detalles2"
+        app:layout_constraintStart_toEndOf="@+id/btn_aceptarServicio"
         app:layout_constraintTop_toBottomOf="@+id/textViewHora" />
 
 </android.support.constraint.ConstraintLayout>

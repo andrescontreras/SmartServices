@@ -2,18 +2,23 @@ package innovatech.smartservices.fragments;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -44,6 +49,8 @@ public class SolicitudServicioFragment extends Fragment {
     private TextView NombreServicio;
     private TextView DiaServicio;
     private TextView HoraServicio;
+    Button aceptarServicio;
+    Button rechazarServicio;
 
     List<Servicio> lstServicio =  new ArrayList<Servicio>();
     List<Servicio> lstServiciosPropios=  new ArrayList<Servicio>();
@@ -67,6 +74,29 @@ public class SolicitudServicioFragment extends Fragment {
         DiaServicio=(TextView)view.findViewById(R.id.textViewDia);
         HoraServicio=(TextView)view.findViewById(R.id.textViewHora);
         cargarInformacion(savedInstanceState,view,mAuth);
+        aceptarServicio = (Button)view.findViewById(R.id.btn_aceptarServicio);
+       /* aceptarServicio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Bundle bundle = getArguments();
+                final String idRes=bundle.getString("reserva");
+                FirebaseDatabase.getInstance().getReference("servicios").child(bundle.getString("idServicio")).child("incluyeEditando").setValue(servAux.getIncluye().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(getActivity(), "Servicio actualizado", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                                Toast.makeText( getActivity(),"Hubo un error al editar el servicio", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    });
+                }
+
+        });*/
+        rechazarServicio = (Button)view.findViewById(R.id.btn_rechazarServicio);
 
 //        NombreUsuario.setText(usr.getNombre());
 /*        CorreoUsuario.setText(usr.getEmail());
