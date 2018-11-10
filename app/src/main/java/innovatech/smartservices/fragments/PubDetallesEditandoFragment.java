@@ -31,40 +31,52 @@ import innovatech.smartservices.models.Servicio;
 
 public class PubDetallesEditandoFragment extends Fragment {
     private EditText incluyeEditando;
-    private EditText noIncluye;
+    private EditText noIncluyeEditando;
     private EditText adicional;
     Button boton;
     List<Servicio> lstServicio =  new ArrayList<Servicio>();
     private FirebaseAuth mAuth;
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_pub_detalles_servicio_editando, container, false);
         mAuth = FirebaseAuth.getInstance();
         boton = (Button)view.findViewById(R.id.boton_detalles);
         incluyeEditando = (EditText)view.findViewById(R.id.t_Incluye);
-        noIncluye= (EditText)view.findViewById(R.id.texto_no_incluye);
+        noIncluyeEditando = (EditText)view.findViewById(R.id.t_noIncluye);
         adicional= (EditText)view.findViewById(R.id.texto_adicional);
         cargarInfoAnterior(savedInstanceState,view,mAuth);
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(TextUtils.isEmpty(incluyeEditando.getText()) || TextUtils.isEmpty(noIncluye.getText()) || TextUtils.isEmpty(adicional.getText())){
+                if(TextUtils.isEmpty(incluyeEditando.getText()) || TextUtils.isEmpty(noIncluyeEditando.getText()) || TextUtils.isEmpty(adicional.getText())){
                     Toast.makeText(getActivity(), "Debe ingresar que incluyeEditando, que no incluyeEditando, y los datos adicionales del servicio", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Bundle bundle = getArguments();
-                    Servicio servAux=new Servicio();
-                    servAux.setIncluye(incluyeEditando.getText().toString());
-                    System.out.println("lo actual  incluyeEditando es "+ incluyeEditando.getText());
-                    servAux.setIncluye(noIncluye.getText().toString());
-                    servAux.setIncluye(adicional.getText().toString());
-                    System.out.println("lo imporntante es "+servAux.getIncluye().toString());
-                    FirebaseDatabase.getInstance().getReference("servicios").child(bundle.getString("idServicio")).child("incluyeEditando").setValue(servAux.getIncluye().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    System.out.println("lo actual  incluyeEditando es "+ incluyeEditando.getText().toString());
+                    System.out.println("la info del bundle es "+bundle.getString("idServicio"));
+                    FirebaseDatabase.getInstance().getReference("servicios").child(bundle.getString("idServicio")).child("incluye").setValue(incluyeEditando.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
+                            //progressbar.setVisibility(View.GONE);
                             if(task.isSuccessful()){
                                 Toast.makeText(getActivity(), "Servicio actualizado", Toast.LENGTH_SHORT).show();
+
+                            }
+                            else{
+                                Toast.makeText( getActivity(),"Hubo un error al editar el servicio", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    });
+                    FirebaseDatabase.getInstance().getReference("servicios").child(bundle.getString("idServicio")).child("noIncluye").setValue(noIncluyeEditando.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            //progressbar.setVisibility(View.GONE);
+                            if(task.isSuccessful()){
+                                Toast.makeText(getActivity(), "Servicio actualizado", Toast.LENGTH_SHORT).show();
+
                             }
                             else{
                                 Toast.makeText( getActivity(),"Hubo un error al editar el servicio", Toast.LENGTH_SHORT).show();
@@ -105,7 +117,7 @@ public class PubDetallesEditandoFragment extends Fragment {
                             System.out.println("si entra al if de que no son nulos");
                             if(lstServicio.get(i).getId().equals(idServ)){
                                 incluyeEditando.setText(lstServicio.get(i).getIncluye().toString());
-                                noIncluye.setText(lstServicio.get(i).getNoIncluye().toString());
+                                noIncluyeEditando.setText(lstServicio.get(i).getNoIncluye().toString());
                                 adicional.setText(lstServicio.get(i).getAdicional().toString());
                             }
                         }

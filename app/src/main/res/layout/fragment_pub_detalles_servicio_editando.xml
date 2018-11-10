@@ -62,7 +62,7 @@
             app:layout_constraintTop_toBottomOf="@+id/t_Incluye" />
 
         <EditText
-            android:id="@+id/texto_no_incluye"
+            android:id="@+id/t_noIncluye"
             android:layout_width="0dp"
             android:layout_height="72dp"
             android:layout_marginTop="16dp"
@@ -87,7 +87,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/textView18"
-            app:layout_constraintTop_toBottomOf="@+id/texto_no_incluye" />
+            app:layout_constraintTop_toBottomOf="@+id/t_noIncluye" />
 
         <EditText
             android:id="@+id/texto_adicional"

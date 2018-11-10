@@ -30,7 +30,7 @@ public class PubDetallesFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         boton = (Button)view.findViewById(R.id.boton_detalles);
         incluye = (EditText)view.findViewById(R.id.t_Incluye);
-        noIncluye= (EditText)view.findViewById(R.id.texto_no_incluye);
+        noIncluye= (EditText)view.findViewById(R.id.t_noIncluye);
         adicional= (EditText)view.findViewById(R.id.texto_adicional);
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
