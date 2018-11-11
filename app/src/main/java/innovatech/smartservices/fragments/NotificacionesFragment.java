@@ -2,6 +2,7 @@ package innovatech.smartservices.fragments;
 
 import android.app.ProgressDialog;
 import android.content.ClipData;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
 import android.net.Uri;
@@ -10,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -171,14 +173,26 @@ public class NotificacionesFragment extends Fragment {
                             MisReservas.add(item);
                         }
                     }else if(item.getEstado().equals(EstadoReserva.ACEPTADO)||item.getEstado().equals(EstadoReserva.RECHAZADO)){
+
                         if (item.getIdUsuSolicitante().equals(mAuth.getCurrentUser().getUid())) {
+                           // System.out.println("ACEPTADO");
                             for (Servicio services : lstServicio) {
                                 if (item.getIdServicio().equals(services.getId())) {
                                     servicio1 = services;
                                     break;
                                 }
                             }
+                            if(myUser==null){
+                                for (Usuario u : lstUsuarios) {
+                                    if(u.getId().equals(mAuth.getCurrentUser().getUid()) && myUser == null){
+                                        myUser = u;
+                                        break;
+                                    }
+                                }
+
+                            }
                             if (servicio1 != null && myUser != null) {
+                                //System.out.println("GUARDADO");
                                 Servicios.add(servicio1);
                                 Usuarios.add(myUser);
                                 MisReservas.add(item);
@@ -194,6 +208,7 @@ public class NotificacionesFragment extends Fragment {
 
 
             }
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {

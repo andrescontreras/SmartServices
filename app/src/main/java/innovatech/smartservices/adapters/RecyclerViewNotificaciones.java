@@ -1,6 +1,9 @@
 package innovatech.smartservices.adapters;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -58,10 +61,10 @@ public class RecyclerViewNotificaciones extends RecyclerView.Adapter<RecyclerVie
             String notficiacion ="ACEPTADO Servicio " + mData.get(position).getNombre() + " para el día " + reserva.get(position).getFecha() + " a las " + reserva.get(position).getHora()+":00";
             holder.tv_notificacion.setText(notficiacion);
         }else if(reserva.get(position).getEstado().equals(EstadoReserva.RECHAZADO)){
-            String notficiacion ="ACEPTADO Servicio " + mData.get(position).getNombre() + " para el día " + reserva.get(position).getFecha() + " a las " + reserva.get(position).getHora()+":00";
+            String notficiacion ="RECHAZADO Servicio " + mData.get(position).getNombre() + " para el día " + reserva.get(position).getFecha() + " a las " + reserva.get(position).getHora()+":00";
             holder.tv_notificacion.setText(notficiacion);
         }else {
-            holder.tv_notificacion.setText("Usuario " + usuarios.get(position).getNombre() + " pidio el servicio " + mData.get(position).getNombre());
+            holder.tv_notificacion.setText(usuarios.get(position).getNombre() + " pidio el servicio " + mData.get(position).getNombre());
         }
 
         holder.setItemClickListener(new OnItemClickListenerInterface() {
@@ -82,6 +85,8 @@ public class RecyclerViewNotificaciones extends RecyclerView.Adapter<RecyclerVie
                     solicitudFragment.setArguments(bundle);
                     ft.commit();
                 }else{
+                    android.support.v7.app.AlertDialog builder = createSimpleDialog(myActivity);
+                    builder.show();
                     FragmentTransaction ft = myActivity.getSupportFragmentManager().beginTransaction();
                     ServiciosDestacadosFragment principal = new ServiciosDestacadosFragment();
                     ft.replace(R.id.fragment_container,principal);
@@ -89,6 +94,28 @@ public class RecyclerViewNotificaciones extends RecyclerView.Adapter<RecyclerVie
                 }
             }
         });
+    }
+    public android.support.v7.app.AlertDialog createSimpleDialog(MainActivity myActivity) {
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(myActivity);
+
+        builder.setTitle("Titulo")
+                .setMessage("El Mensaje para el usuario")
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //   listener.onPossitiveButtonClick();
+                            }
+                        })
+                .setNegativeButton("CANCELAR",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //listener.onNegativeButtonClick();
+                            }
+                        });
+
+        return builder.create();
     }
 
     @Override

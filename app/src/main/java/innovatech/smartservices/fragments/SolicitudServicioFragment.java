@@ -75,6 +75,7 @@ public class SolicitudServicioFragment extends Fragment {
         HoraServicio=(TextView)view.findViewById(R.id.textViewHora);
         cargarInformacion(savedInstanceState,view,mAuth);
         aceptarServicio = (Button)view.findViewById(R.id.btn_aceptarServicio);
+        rechazarServicio = (Button)view.findViewById(R.id.btn_rechazarServicio);
         aceptarServicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,11 +89,12 @@ public class SolicitudServicioFragment extends Fragment {
                             Toast.makeText(getActivity(), "Servicio aceptado", Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            Toast.makeText( getActivity(),"error al aceptar el servicio", Toast.LENGTH_SHORT).show();
+                            Toast.makeText( getActivity(),"Error al aceptar el servicio", Toast.LENGTH_SHORT).show();
                         }
                         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                         ServiciosDestacadosFragment principal = new ServiciosDestacadosFragment();
                         ft.replace(R.id.fragment_container,principal);
+                        ft.addToBackStack(null);
                         ft.commit();
                     }
 
