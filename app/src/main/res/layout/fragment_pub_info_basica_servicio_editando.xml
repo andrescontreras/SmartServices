@@ -89,7 +89,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_sig_detalles"
+            app:layout_constraintBottom_toTopOf="@+id/btn_contactarUsuario"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_agregarImagenes">
@@ -97,7 +97,7 @@
         </android.support.v7.widget.RecyclerView>
 
         <Button
-            android:id="@+id/btn_sig_detalles"
+            android:id="@+id/btn_contactarUsuario"
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_marginStart="60dp"

@@ -22,7 +22,7 @@ public class Servicio implements Serializable {
     List<Ubicacion> ubicacion=new ArrayList<Ubicacion>();
     List<Integer> disponibilidadDias=new ArrayList<>();
     List<Integer> disponibilidadHoras=new ArrayList<>();
-    List<UsuarioxServicio> relacionUsuario=new ArrayList<UsuarioxServicio>();
+    boolean estado ;
 
     public Servicio (){
 
@@ -43,6 +43,7 @@ public class Servicio implements Serializable {
         this.ubicacion = ubicacion;
         this.disponibilidadDias = disponibilidadDias;
         this.disponibilidadHoras = disponibilidadHoras;
+        this.estado = true;
     }
 
     public String getIncluye() {
@@ -173,12 +174,12 @@ public class Servicio implements Serializable {
         fotos.add(imagen);
     }
 
-    public List<UsuarioxServicio> getRelacionUsuario() {
-        return relacionUsuario;
+    public boolean isEstado() {
+        return estado;
     }
 
-    public void setRelacionUsuario(List<UsuarioxServicio> relacionUsuario) {
-        this.relacionUsuario = relacionUsuario;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 }
 

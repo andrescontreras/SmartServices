@@ -10,16 +10,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="370dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/email"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView16"
+        app:layout_constraintEnd_toEndOf="@+id/textView15"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="420dp"
+        android:layout_marginTop="424dp"
         android:text="@string/password"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="@+id/textView11"
@@ -35,7 +36,6 @@
         android:hint="@string/email"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/barrioRegister"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
@@ -147,16 +147,6 @@
         app:layout_constraintEnd_toEndOf="@+id/textView14"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="320dp"
-        android:text="@string/barrio"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView15"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <EditText
         android:id="@+id/telefonoRegister"
         android:layout_width="0dp"
@@ -196,19 +186,6 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/direccionRegister"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/barrioRegister"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="310dp"
-        android:layout_marginEnd="30dp"
-        android:ems="10"
-        android:hint="@string/barrio"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/ciudadRegister"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

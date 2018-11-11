@@ -9,6 +9,8 @@ public class Reserva {
     int hora;
     String fecha;
     EstadoReserva estado;
+    boolean visto ;
+    String razon;
 
     public Reserva(){
 
@@ -20,6 +22,8 @@ public class Reserva {
         this.hora = hora;
         this.fecha = fecha;
         this.estado = estado;
+        this.visto = false;
+        this.razon = "";
     }
 
     public String getId() {
@@ -68,5 +72,13 @@ public class Reserva {
 
     public void setEstado(EstadoReserva estado) {
         this.estado = estado;
+    }
+
+    public boolean isVisto() {
+        return visto;
+    }
+
+    public void setVisto(boolean visto) {
+        this.visto = visto;
     }
 }

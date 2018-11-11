@@ -28,7 +28,6 @@ public class EditarUsuarioFragment extends Fragment {
     EditText telefono;
     EditText direccion;
     EditText ciudad;
-    EditText barrio;
     Button cambiar_usu;
     FirebaseAuth mAuth ;
     DatabaseReference mDataBase;
@@ -45,7 +44,6 @@ public class EditarUsuarioFragment extends Fragment {
         telefono = (EditText)view.findViewById(R.id.telefonoEdit);
         direccion = (EditText)view.findViewById(R.id.direccionEdit);
         ciudad = (EditText)view.findViewById(R.id.ciudadEdit);
-        barrio = (EditText)view.findViewById(R.id.barrioEdit);
         cambiar_usu = (Button)view.findViewById(R.id.cambiar_usuario);
         capturarInfoActual();
 
@@ -76,7 +74,6 @@ public class EditarUsuarioFragment extends Fragment {
                     telefono.setText(String.valueOf(usr.getTelefono()));
                     direccion.setText(usr.getDireccion());
                     ciudad.setText(usr.getCiudad());
-                    barrio.setText(usr.getBarrio());
                 }
                 else{
                     Toast.makeText(getActivity(), "Hubo un problema encontrando el uid", Toast.LENGTH_SHORT).show();
@@ -110,7 +107,6 @@ public class EditarUsuarioFragment extends Fragment {
                         usr.setCedula(Integer.parseInt(cedula.getText().toString().trim()));
                         usr.setCiudad(ciudad.getText().toString().trim());
                         usr.setDireccion(direccion.getText().toString().trim());
-                        usr.setBarrio(barrio.getText().toString().trim());
                         usr.setTelefono(Integer.parseInt(telefono.getText().toString().trim()));
                         mDataBase.child(mAuth.getCurrentUser().getUid()).setValue(usr);
                     }
@@ -137,7 +133,7 @@ public class EditarUsuarioFragment extends Fragment {
     private boolean verificarInformacionVacia(){
         if(nombre.getText().toString().trim().equals("") || cedula.getText().toString().trim().equals("") ||
                 ciudad.getText().toString().trim().equals("") || direccion.getText().toString().trim().equals("") ||
-                barrio.getText().toString().trim().equals("") || telefono.getText().toString().trim().equals("") ||
+                telefono.getText().toString().trim().equals("") ||
                 email.getText().toString().trim().equals("")){
             return true;
         }

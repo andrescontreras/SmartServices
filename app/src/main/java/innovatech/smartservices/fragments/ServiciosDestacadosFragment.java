@@ -66,7 +66,7 @@ public class ServiciosDestacadosFragment extends Fragment{
         listaSinPrioridad = new ArrayList<Servicio>();
         FirebaseUser user = mAuth.getCurrentUser();
         DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("servicios");
-        db.addValueEventListener(new ValueEventListener() {
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if(snapshot!=null){
@@ -118,4 +118,16 @@ public class ServiciosDestacadosFragment extends Fragment{
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemClicked = item.getItemId();
+        if(itemClicked == R.id.action_filter){
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            FiltroBusquedaFragment busqueda_avanzada = new FiltroBusquedaFragment();
+            ft.replace(R.id.fragment_container, busqueda_avanzada);
+            ft.addToBackStack(null);
+            ft.commit();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

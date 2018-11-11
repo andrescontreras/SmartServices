@@ -55,7 +55,7 @@ public class PubInfoBasicaFragment extends Fragment {
         nombre = (EditText)view.findViewById(R.id.txtNombre);
         precio = (EditText)view.findViewById(R.id.txtPrecio);
         selecImagen = (Button)view.findViewById(R.id.btn_agregarImagenes);
-        sig = (Button)view.findViewById(R.id.btn_sig_detalles);
+        sig = (Button)view.findViewById(R.id.btn_contactarUsuario);
         mRecyclerView= view.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

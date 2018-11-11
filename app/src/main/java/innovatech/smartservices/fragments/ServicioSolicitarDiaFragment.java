@@ -45,6 +45,7 @@ import innovatech.smartservices.R;
 import innovatech.smartservices.helpers.EstadoReserva;
 import innovatech.smartservices.models.Reserva;
 import innovatech.smartservices.models.Servicio;
+import innovatech.smartservices.models.Usuario;
 import sun.bob.mcalendarview.MCalendarView;
 import sun.bob.mcalendarview.MarkStyle;
 import sun.bob.mcalendarview.listeners.OnDateClickListener;
@@ -62,6 +63,7 @@ public class ServicioSolicitarDiaFragment extends Fragment {
     Spinner horas;
     Spinner pagos;
     private FirebaseAuth mAuth;
+    DatabaseReference mDataBase;
     List<DateData> marcados = new ArrayList<DateData>(); //Se encuentran todos los elementos dentro del MCalendarView que estan marcados por el punto verde
     List<DateData> disponibles = new ArrayList<DateData>(); //Se encuentran los dias disponibles del servicio
     List<Reserva> fechasReservadas = new ArrayList<Reserva>();  // Se encuentran todas las fechas reservados del servicio
@@ -83,6 +85,7 @@ public class ServicioSolicitarDiaFragment extends Fragment {
         horas = (Spinner)view.findViewById(R.id.spinSolicHoras);
         pagos = (Spinner)view.findViewById(R.id.spinSolicPagos);
         mAuth = FirebaseAuth.getInstance();
+        mDataBase = FirebaseDatabase.getInstance().getReference("users");
         marcados = new ArrayList<DateData>();
         disponibles= new ArrayList<DateData>();
         fechasReservadas = new ArrayList<Reserva>();
@@ -109,10 +112,11 @@ public class ServicioSolicitarDiaFragment extends Fragment {
         anio = Calendar.getInstance().get(Calendar.YEAR); // Variable que contiene el año actual
         mes = Calendar.getInstance().get(Calendar.MONTH); // Variable que contiene el mes actual
         dia = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        System.out.println("El dia en el que estamos hoy ----------------------------------->>> "+dia);
         Calendar mycal = new GregorianCalendar(anio,mes,1);
         int diasMes = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
         System.out.println("AÑO->>>>>>>>>>>>>> "+anio+" MES----------->>>>>>>>> "+mes+" DIAS QUE TIENE EL MES ->>>>>>>>>>>>> "+diasMes);
-        System.out.println("El dia que estoy buscando es el ----------------------------->"+serv.getDisponibilidadDias().get(0));
+        //System.out.println("El dia que estoy buscando es el ----------------------------->"+serv.getDisponibilidadDias().get(0));
         Calendar cal = Calendar.getInstance();
         DateData dateData;
         for(int i = 1 ;i<=diasMes;i++){
@@ -120,7 +124,8 @@ public class ServicioSolicitarDiaFragment extends Fragment {
             int dayweek =(cal.get(Calendar.DAY_OF_WEEK)-1);
             if(verificarDias(dayweek)){
                 dateData = new DateData(anio,mes+1,i);
-                if(!estaReservado(dateData)){
+                if(i>dia){
+                    System.out.println("Esta es la fecha que meto --------------------------> "+dateData.toString());
                     disponibles.add(dateData);
                     calendario.unMarkDate(dateData);
                     calendario.markDate(dateData.setMarkStyle(new MarkStyle(MarkStyle.BACKGROUND,Color.BLUE)));
@@ -153,8 +158,9 @@ public class ServicioSolicitarDiaFragment extends Fragment {
                 horasDisponibles.clear();
                 horasDisponibles.add("Seleccionar hora");
                 System.out.println("Tamaño de horasDisponibles en setOnDateClick 111111 ----------------------->>>>>>>>>> "+horasDisponibles.size());
-                if(esDiaDisponible(date) && !estaReservado(date)){
+                if(esDiaDisponible(date) ){
                     if(!verificarMarcados(date) ) {
+                        horasDisponibles.addAll(horasString);
                         ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,horasDisponibles);
                         System.out.println("Tamaño de horasDisponibles en setOnDateClick 222222222 ----------------------->>>>>>>>>> "+horasDisponibles.size());
                         horas.setAdapter(adapterElem);
@@ -189,10 +195,8 @@ public class ServicioSolicitarDiaFragment extends Fragment {
                         int diaSemanaCambio =  (calendar.get(Calendar.DAY_OF_WEEK)-1);
                         if(verificarDias(diaSemanaCambio)){
                             changeMonth = new DateData(year,month,j);
-                            if(!estaReservado(changeMonth)){
                                 calendario.markDate(changeMonth.setMarkStyle(new MarkStyle(MarkStyle.BACKGROUND,Color.BLUE)));
                                 disponibles.add(changeMonth);
-                            }
                         }
                     }
                 }
@@ -216,7 +220,9 @@ public class ServicioSolicitarDiaFragment extends Fragment {
     }
     //Verifica si el dia de la semana(Lunes(0), martes(1), ...) que llega como parametro, esta dentro de los dias que establecio el usuario como disponible
     public boolean verificarDias(int dayweek){
+        System.out.println("Dia de la semana que evaluo ----------------------------------->>> "+dayweek);
         for(int i = 0 ;i<serv.getDisponibilidadDias().size();i++){
+            System.out.println("Dia disponible ----------------------------------->>> "+serv.getDisponibilidadDias().get(i));
             if(serv.getDisponibilidadDias().get(i)==dayweek)
                 return true;
         }
@@ -346,7 +352,7 @@ public class ServicioSolicitarDiaFragment extends Fragment {
             return false;
     }
     public void subirReserva(Servicio servicio){
-        String idReserva=servicio.getId()+String.valueOf(System.currentTimeMillis());
+        final String idReserva=servicio.getId()+String.valueOf(System.currentTimeMillis());
         FirebaseUser user = mAuth.getCurrentUser();
         String fecha = String.valueOf(marcados.get(0).getYear())+"-"+marcados.get(0).getMonthString()+"-"+marcados.get(0).getDayString();
         Reserva reserva = new Reserva();
@@ -356,18 +362,19 @@ public class ServicioSolicitarDiaFragment extends Fragment {
         reserva.setIdServicio(servicio.getId());
         reserva.setFecha(fecha);
         reserva.setHora(horaSeleccionada);
+        reserva.setVisto(false);
         FirebaseDatabase.getInstance().getReference("reservas").child(idReserva).setValue(reserva).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 //progressbar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
-                    Toast.makeText(getActivity(), "Se ha mandado la solicitud de la reserva", Toast.LENGTH_SHORT).show();
+                    infoActualUsuario(idReserva);
+                    /*
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     ServiciosDestacadosFragment servDestacados = new ServiciosDestacadosFragment();
                     ft.replace(R.id.fragment_container, servDestacados);
                     ft.addToBackStack(null);
-                    servDestacados.setArguments(bundle);
-                    ft.commit();
+                    ft.commit();*/
                 }
                 else{
                     Toast.makeText( getActivity(),"Hubo un error al crear la reserva", Toast.LENGTH_SHORT).show();
@@ -375,6 +382,38 @@ public class ServicioSolicitarDiaFragment extends Fragment {
 
             }
 
+        });
+    }
+    private void infoActualUsuario(final String idReserva){
+        FirebaseUser user = mAuth.getCurrentUser();
+        String uid = user.getUid();
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("users").child(uid);
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    Usuario usr = dataSnapshot.getValue(Usuario.class);
+                    usr.setServicioSolicitado(idReserva);
+                    mDataBase.child(mAuth.getCurrentUser().getUid()).setValue(usr);
+                    Toast.makeText(getActivity(), "Se ha mandado la solicitud de la reserva", Toast.LENGTH_SHORT).show();
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ServiciosDestacadosFragment servDest= new ServiciosDestacadosFragment();
+                    ft.replace(R.id.fragment_container, servDest);
+                    ft.commit();
+                    //Toast.makeText(getActivity(), "Se realizaron los cambios", Toast.LENGTH_SHORT).show();
+                    //int cedula = dataSnapshot.child("cedula").getValue(Integer.class);
+                    //String nombre = dataSnapshot.child("nombre").getValue(String.class);
+                    System.out.println("ESTO ES EL NOMBREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE  en PUB POSICIONAMIENT"+ usr.getNombre());
+                    System.out.println("ESTO ES EL EMAILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL  EN PUB POSICIONAMIENTO"+ usr.getEmail());
+                }
+                else{
+                    Toast.makeText(getActivity(), "Hubo un problema encontrando el uid", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
         });
     }
     @Override
