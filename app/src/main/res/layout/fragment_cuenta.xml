@@ -16,7 +16,7 @@
         android:layout_marginStart="16dp"
         android:background="@color/cardview_light_background"
         android:drawableLeft="@drawable/ic_assignment_black_24dp"
-        android:text="   Administrar servicios"
+        android:text="   Servicios Publicados"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textColor="@color/cardview_dark_background"

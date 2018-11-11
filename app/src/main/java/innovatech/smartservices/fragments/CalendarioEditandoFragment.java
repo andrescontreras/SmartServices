@@ -1,9 +1,9 @@
 package innovatech.smartservices.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -43,12 +45,12 @@ public class CalendarioEditandoFragment extends Fragment {
     private CheckBox sabado;
     private CheckBox domingo;
 
-    private CheckBox Csietenueveam;
-    private CheckBox Cnueveonceam;
-    private CheckBox Conceunapm;
-    private CheckBox Cdoscuatropm;
-    private CheckBox Ccuatroseispm;
-    private CheckBox Cseisochopm;
+    private CheckBox CsietenueveamEdit;
+    private CheckBox CnueveonceamEdit;
+    private CheckBox ConceunapmEdit;
+    private CheckBox CdoscuatropmEdit;
+    private CheckBox CcuatroseispmEdit;
+    private CheckBox CseisochopmEdit;
 
     List<Servicio> lstServicio =  new ArrayList<Servicio>();
     private List lstHoras=new ArrayList();
@@ -69,12 +71,12 @@ public class CalendarioEditandoFragment extends Fragment {
         sabado= (CheckBox) view.findViewById(R.id.checkBox_c_sabado);
         domingo= (CheckBox) view.findViewById(R.id.checkBox_c_domingo);
 
-        Csietenueveam = (CheckBox) view.findViewById(R.id.checkBox_c_7a9);
-        Cnueveonceam = view.findViewById(R.id.checkBox_c_9a11);
-        Conceunapm = view.findViewById(R.id.checkBox_c_11a1);
-        Cdoscuatropm = view.findViewById(R.id.checkBox_c_2a4);
-        Ccuatroseispm = view.findViewById(R.id.checkBox_c_4a6);
-        Cseisochopm = view.findViewById(R.id.checkBox_c_6a8);
+        CsietenueveamEdit = (CheckBox) view.findViewById(R.id.checkBox_c_7a9);
+        CnueveonceamEdit = view.findViewById(R.id.checkBox_c_9a11);
+        ConceunapmEdit = view.findViewById(R.id.checkBox_c_11a1);
+        CdoscuatropmEdit = view.findViewById(R.id.checkBox_c_2a4);
+        CcuatroseispmEdit = view.findViewById(R.id.checkBox_c_4a6);
+        CseisochopmEdit = view.findViewById(R.id.checkBox_c_6a8);
         cargarInfoAnterior(savedInstanceState,view,mAuth);
         botoncito.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -82,32 +84,88 @@ public class CalendarioEditandoFragment extends Fragment {
                 if(!lunes.isChecked() && !martes.isChecked() && !miercoles.isChecked() && !jueves.isChecked() && !viernes.isChecked() && !sabado.isChecked() && !domingo.isChecked()){
                     Toast.makeText(getActivity(), "Debe seleccionar almenos un dia de disponibilidad", Toast.LENGTH_SHORT).show();
                 }
-                else if(!Csietenueveam.isChecked() && !Cnueveonceam.isChecked() && !Conceunapm.isChecked() && !Cdoscuatropm.isChecked() && !Ccuatroseispm.isChecked() && !Cseisochopm.isChecked() ){
+                else if(!CsietenueveamEdit.isChecked() && !CnueveonceamEdit.isChecked() && !ConceunapmEdit.isChecked() && !CdoscuatropmEdit.isChecked() && !CcuatroseispmEdit.isChecked() && !CseisochopmEdit.isChecked() ){
                     Toast.makeText(getActivity(), "Debe seleccionar almenos una franja horaria de disponibilidad", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    PubPosicionamientoFragment pubPosicionamiento = new PubPosicionamientoFragment();
-                    ft.replace(R.id.fragment_container, pubPosicionamiento);
-                    ft.addToBackStack(null);
                     Bundle bundle = getArguments();
-                    bundle.putBoolean("lunes",lunes.isChecked());
-                    bundle.putBoolean("martes",martes.isChecked());
-                    bundle.putBoolean("miercoles",miercoles.isChecked());
-                    bundle.putBoolean("jueves",jueves.isChecked());
-                    bundle.putBoolean("viernes",viernes.isChecked());
-                    bundle.putBoolean("sabado",sabado.isChecked());
-                    bundle.putBoolean("domingo",domingo.isChecked());
+                    Servicio servAux=new Servicio();
+                    if(lunes.isChecked()){
+                        servAux.addDias(1);
+                    }
+                    if(martes.isChecked()){
+                        servAux.addDias(2);
+                    }
+                    if(miercoles.isChecked()){
+                        servAux.addDias(3);
+                    }
+                    if(jueves.isChecked()){
+                        servAux.addDias(4);
+                    }
+                    if(viernes.isChecked()){
+                        servAux.addDias(5);
+                    }
+                    if(sabado.isChecked()){
+                        servAux.addDias(6);
+                    }
+                    if(domingo.isChecked()){
+                        servAux.addDias(7);
+                    }
+//--------------------------------------------------------------------------------------------------
 
-                    bundle.putBoolean("7a9", Csietenueveam.isChecked());
-                    bundle.putBoolean("9a11", Cnueveonceam.isChecked());
-                    bundle.putBoolean("11a1", Conceunapm.isChecked());
-                    bundle.putBoolean("2a4", Cdoscuatropm.isChecked());
-                    bundle.putBoolean("4a6", Ccuatroseispm.isChecked());
-                    bundle.putBoolean("6a8", Cseisochopm.isChecked());
+                    if(CsietenueveamEdit.isChecked()){
+                        servAux.addHoras(7);
+                        servAux.addHoras(8);
+                    }
+                    if(CnueveonceamEdit.isChecked()){
+                        servAux.addHoras(9);
+                        servAux.addHoras(10);
+                    }
+                    if(ConceunapmEdit.isChecked()){
+                        servAux.addHoras(11);
+                        servAux.addHoras(12);
+                    }
+                    if(CdoscuatropmEdit.isChecked()){
+                        servAux.addHoras(14);
+                        servAux.addHoras(15);
+                    }
+                    if(CcuatroseispmEdit.isChecked()){
+                        servAux.addHoras(16);
+                        servAux.addHoras(17);
+                    }
+                    if(CseisochopmEdit.isChecked()){
+                        servAux.addHoras(18);
+                        servAux.addHoras(19);
+                    }
 
-                    pubPosicionamiento.setArguments(bundle);
-                    ft.commit();
+                    FirebaseDatabase.getInstance().getReference("servicios").child(bundle.getString("idServicio")).child("disponibilidadDias").setValue(servAux.getDisponibilidadDias()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            //progressbar.setVisibility(View.GONE);
+                            if(task.isSuccessful()){
+                                Toast.makeText(getActivity(), "Servicio actualizado", Toast.LENGTH_SHORT).show();
+
+                            }
+                            else{
+                                Toast.makeText( getActivity(),"Hubo un error al editar el servicio", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    });
+                    FirebaseDatabase.getInstance().getReference("servicios").child(bundle.getString("idServicio")).child("disponibilidadHoras").setValue(servAux.getDisponibilidadHoras()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            //progressbar.setVisibility(View.GONE);
+                            if(task.isSuccessful()){
+                                Toast.makeText(getActivity(), "Servicio actualizado", Toast.LENGTH_SHORT).show();
+
+                            }
+                            else{
+                                Toast.makeText( getActivity(),"Hubo un error al editar el servicio", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    });
                 }
             }
         });
@@ -123,7 +181,7 @@ public class CalendarioEditandoFragment extends Fragment {
 
         FirebaseUser user = mAuth.getCurrentUser();
         DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("servicios");
-        db.addValueEventListener(new ValueEventListener() {
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             boolean seguir = false;
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -144,22 +202,22 @@ public class CalendarioEditandoFragment extends Fragment {
                                 lstHoras=lstServicio.get(i).getDisponibilidadHoras();
                                 for(int j=0;j<lstHoras.size();j++){
                                     if(String.valueOf(lstHoras.get(j)).equals("7")){
-                                        Csietenueveam.setChecked(true);
+                                        CsietenueveamEdit.setChecked(true);
                                     }
                                     if(String.valueOf(lstHoras.get(j)).equals("9")){
-                                        Cnueveonceam.setChecked(true);
+                                        CnueveonceamEdit.setChecked(true);
                                     }
                                     if(String.valueOf(lstHoras.get(j)).equals("11")){
-                                        Conceunapm.setChecked(true);
+                                        ConceunapmEdit.setChecked(true);
                                     }
                                     if(String.valueOf(lstHoras.get(j)).equals("14")){
-                                        Cdoscuatropm.setChecked(true);
+                                        CdoscuatropmEdit.setChecked(true);
                                     }
                                     if(String.valueOf(lstHoras.get(j)).equals("16")){
-                                        Ccuatroseispm.setChecked(true);
+                                        CcuatroseispmEdit.setChecked(true);
                                     }
                                     if(String.valueOf(lstHoras.get(j)).equals("18")){
-                                        Cseisochopm.setChecked(true);
+                                        CseisochopmEdit.setChecked(true);
                                     }
                                 }
                                 lstDias=lstServicio.get(i).getDisponibilidadDias();

@@ -5,6 +5,7 @@ import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -19,6 +20,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -42,7 +45,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class PubInfoBasicaEditandoFragment extends Fragment {
     Button selecImagen ;
-    Button sig;
+    Button guardarCambios;
     private EditText nombre;
     private EditText precio;
     private FirebaseAuth mAuth;
@@ -54,7 +57,8 @@ public class PubInfoBasicaEditandoFragment extends Fragment {
     private RecyclerView myrv;
     private List<Uri> listaImagenes = new ArrayList<Uri>();
     List<Servicio> lstServicio =  new ArrayList<Servicio>();
-    RecyclerViewEditandoImagenesAdapter myAdapter;
+    List<String>imgServ = new ArrayList<String>();
+    ImageAdapter myAdapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,7 +70,7 @@ public class PubInfoBasicaEditandoFragment extends Fragment {
         nombre = (EditText)view.findViewById(R.id.txtNombre);
         precio = (EditText)view.findViewById(R.id.txtPrecio);
         selecImagen = (Button)view.findViewById(R.id.btn_agregarImagenes);
-        sig = (Button)view.findViewById(R.id.btn_sig_detalles);
+        guardarCambios = (Button)view.findViewById(R.id.btn_sig_detalles);
         myrv = view.findViewById(R.id.recycler_view);
         myrv.setHasFixedSize(true);
         myrv.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -113,29 +117,67 @@ public class PubInfoBasicaEditandoFragment extends Fragment {
                 //startActivityForResult(intent,RESULT_LOAD_IMAGE);
             }
         });
-        sig.setOnClickListener(new View.OnClickListener() {
+        guardarCambios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(TextUtils.isEmpty(nombre.getText()) || TextUtils.isEmpty(precio.getText()) || listaImagenes.size()==0){
+//                System.out.println("el tam es "+mAdapter.);
+
+
+                if(TextUtils.isEmpty(nombre.getText()) || TextUtils.isEmpty(precio.getText()) || listaImagenes.isEmpty()){
                     Toast.makeText(getActivity(), "Rellene los campos: Nombre, Precio. Además, agregue por lo menos una imagen", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     try{
-                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                        PubDetallesFragment detallesServ = new PubDetallesFragment();
-                        ft.replace(R.id.fragment_container, detallesServ);
-                        ft.addToBackStack(null);
+
                         Bundle bundle= getArguments();
                         ArrayList<String>listaImagenesStr= new ArrayList<String>();
                         for(int i=0;i<listaImagenes.size();i++){
                             listaImagenesStr.add(listaImagenes.get(i).toString());
                         }
-                        bundle.putString("nombre",nombre.getText().toString());
                         int precioInt = Integer.parseInt(precio.getText().toString());
-                        bundle.putInt("precio",precioInt);
-                        bundle.putStringArrayList("imagenes",listaImagenesStr);
-                        detallesServ.setArguments(bundle);
-                        ft.commit();
+
+                        FirebaseDatabase.getInstance().getReference("servicios").child(bundle.getString("idServicio")).child("nombre").setValue(nombre.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                //progressbar.setVisibility(View.GONE);
+                                if(task.isSuccessful()){
+                                    Toast.makeText(getActivity(), "Servicio actualizado", Toast.LENGTH_SHORT).show();
+
+                                }
+                                else{
+                                    Toast.makeText( getActivity(),"Hubo un error al editar el servicio", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                        });
+                        FirebaseDatabase.getInstance().getReference("servicios").child(bundle.getString("idServicio")).child("precio").setValue(Integer.valueOf(precio.getText().toString())).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                //progressbar.setVisibility(View.GONE);
+                                if(task.isSuccessful()){
+                                    Toast.makeText(getActivity(), "Servicio actualizado", Toast.LENGTH_SHORT).show();
+
+                                }
+                                else{
+                                    Toast.makeText( getActivity(),"Hubo un error al editar el servicio", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                        });
+                        FirebaseDatabase.getInstance().getReference("servicios").child(bundle.getString("idServicio")).child("fotos").setValue(listaImagenesStr).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                //progressbar.setVisibility(View.GONE);
+                                if(task.isSuccessful()){
+                                    Toast.makeText(getActivity(), "Servicio actualizado", Toast.LENGTH_SHORT).show();
+
+                                }
+                                else{
+                                    Toast.makeText( getActivity(),"Hubo un error al editar el servicio", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                        });
                     }catch(NumberFormatException excepcion){
                         Toast.makeText(getActivity(), "Debe ingresar un numero en la casilla de precio", Toast.LENGTH_SHORT).show();
                     }
@@ -153,7 +195,7 @@ public class PubInfoBasicaEditandoFragment extends Fragment {
 
         FirebaseUser user = mAuth.getCurrentUser();
         DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("servicios");
-        db.addValueEventListener(new ValueEventListener() {
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             boolean seguir = false;
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -175,7 +217,10 @@ public class PubInfoBasicaEditandoFragment extends Fragment {
                                 nombre.setText(lstServicio.get(i).getNombre().toString());
                                 precio.setText(String.valueOf(lstServicio.get(i).getPrecio()));
                                 aux.add(lstServicio.get(i));
-                                myAdapter=new RecyclerViewEditandoImagenesAdapter(getActivity(),aux);
+                                for(int j=0;j<aux.get(0).getFotos().size();j++){
+                                    listaImagenes.add(Uri.parse(aux.get(0).getFotos().get(j)));
+                                }
+                                myAdapter=new ImageAdapter(getActivity(),listaImagenes);
                                 myrv.setHasFixedSize(true);
                                 myrv.setLayoutManager(new LinearLayoutManager(getActivity()));
                                 myrv.setAdapter(myAdapter);

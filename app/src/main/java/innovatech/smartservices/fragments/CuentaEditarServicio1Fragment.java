@@ -196,13 +196,14 @@ public class CuentaEditarServicio1Fragment extends Fragment {
 
 
         posicionamiento.setOnClickListener(new View.OnClickListener() {
+            Bundle bundle=getArguments();
             @Override
             public void onClick(View view) {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 PubPosicionamientoEditandoFragment bas = new PubPosicionamientoEditandoFragment();
                 ft.replace(R.id.fragment_container,bas);
                 ft.addToBackStack(null);
-                //notificacion.setArguments(bundle);
+                bas.setArguments(bundle);
                 ft.commit();
             }
         });
