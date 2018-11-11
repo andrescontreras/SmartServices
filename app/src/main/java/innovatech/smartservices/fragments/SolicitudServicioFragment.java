@@ -1,10 +1,12 @@
 package innovatech.smartservices.fragments;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import innovatech.smartservices.R;
+import innovatech.smartservices.activities.MainActivity;
 import innovatech.smartservices.adapters.RecyclerViewNotificaciones;
 import innovatech.smartservices.helpers.EstadoReserva;
 import innovatech.smartservices.models.Reserva;
@@ -82,6 +86,7 @@ public class SolicitudServicioFragment extends Fragment {
 
                 Bundle bundle = getArguments();
                 final String idRes=bundle.getString("reserva");
+
                 FirebaseDatabase.getInstance().getReference("reservas").child(bundle.getString("reserva")).child("estado").setValue(EstadoReserva.ACEPTADO).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -103,7 +108,19 @@ public class SolicitudServicioFragment extends Fragment {
             }
 
         });
-        rechazarServicio = (Button)view.findViewById(R.id.btn_rechazarServicio);
+        rechazarServicio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Bundle bundle = getArguments();
+                final String idRes=bundle.getString("reserva");
+                android.support.v7.app.AlertDialog builder = createSimpleDialog(getActivity(),idRes);
+                builder.show();
+
+            }
+
+        });
+
 
 //        NombreUsuario.setText(usr.getNombre());
 /*        CorreoUsuario.setText(usr.getEmail());
@@ -115,6 +132,64 @@ public class SolicitudServicioFragment extends Fragment {
 
         //agregarNotificaciones(view,mAuth);
         return view;
+    }
+    public android.support.v7.app.AlertDialog createSimpleDialog(FragmentActivity myActivity, final String idRes) {
+        final android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(myActivity);
+
+       /* builder.setTitle("Titulo")
+                .setMessage("El Mensaje para el usuario")
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //   listener.onPossitiveButtonClick();
+                            }
+                        });*/
+        LayoutInflater inflater = myActivity.getLayoutInflater();
+
+        View v = inflater.inflate(R.layout.dialog_rechazar, null);
+        final EditText texto = (EditText) v.findViewById(R.id.editText_motivo) ;
+        builder.setView(v);
+        builder.setPositiveButton("ACEPTAR",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                            // Crear Cuenta...
+                            if(TextUtils.isEmpty(texto.getText())){
+                                Toast.makeText(getActivity(), "Debe ingresar el motivo del rechazo de servicio", Toast.LENGTH_SHORT).show();
+                            }else{
+                                FirebaseDatabase.getInstance().getReference("reservas").child(idRes).child("estado").setValue(EstadoReserva.RECHAZADO);
+                                FirebaseDatabase.getInstance().getReference("reservas").child(idRes).child("razon").setValue(texto.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            Toast.makeText(getActivity(), "Servicio rechazado", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else{
+                                            Toast.makeText( getActivity(),"Error al rechazar el servicio", Toast.LENGTH_SHORT).show();
+                                        }
+                                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                                        ServiciosDestacadosFragment principal = new ServiciosDestacadosFragment();
+                                        ft.replace(R.id.fragment_container,principal);
+                                        ft.addToBackStack(null);
+                                        ft.commit();
+
+                                        //finish();
+
+                                    }
+
+                                });
+                                //dismiss();
+
+                            }
+
+
+                            //dismiss();
+                    }
+                });
+
+
+        return builder.create();
     }
     public void cargarInformacion(Bundle savedInstanceState, View view, FirebaseAuth mAuth){
         Bundle bundle=getArguments();

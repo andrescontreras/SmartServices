@@ -174,7 +174,7 @@ public class NotificacionesFragment extends Fragment {
                         }
                     }else if(item.getEstado().equals(EstadoReserva.ACEPTADO)||item.getEstado().equals(EstadoReserva.RECHAZADO)){
 
-                        if (item.getIdUsuSolicitante().equals(mAuth.getCurrentUser().getUid())) {
+                        if (item.getIdUsuSolicitante().equals(mAuth.getCurrentUser().getUid()) && !item.isVisto()) {
                            // System.out.println("ACEPTADO");
                             for (Servicio services : lstServicio) {
                                 if (item.getIdServicio().equals(services.getId())) {
