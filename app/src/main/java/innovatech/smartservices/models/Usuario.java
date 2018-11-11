@@ -10,23 +10,21 @@ public class Usuario {
     private int cedula;
     private String ciudad;
     private String direccion;
-    private String barrio;
     private int telefono;
     private String email;
-    private List<String>idServicios = new ArrayList<String>();
-    List<UsuarioxServicio> relacionServicio=new ArrayList<UsuarioxServicio>();
+    private List<String>srvPublicados = new ArrayList<String>();
+    private List<String>srvSolicitados = new ArrayList<String>();
 
     public Usuario(){
 
     }
 
-    public Usuario(String id,String nombre, int cedula, String ciudad, String direccion, String barrio, int telefono, String email) {
+    public Usuario(String id,String nombre, int cedula, String ciudad, String direccion, int telefono, String email) {
         this.id=id;
         this.nombre = nombre;
         this.cedula = cedula;
         this.ciudad = ciudad;
         this.direccion = direccion;
-        this.barrio = barrio;
         this.telefono = telefono;
         this.email = email;
     }
@@ -63,14 +61,6 @@ public class Usuario {
         this.direccion = direccion;
     }
 
-    public String getBarrio() {
-        return barrio;
-    }
-
-    public void setBarrio(String barrio) {
-        this.barrio = barrio;
-    }
-
     public int getTelefono() {
         return telefono;
     }
@@ -96,27 +86,25 @@ public class Usuario {
         return this.id;
     }
     public void setServicio(String idServicio){
-        this.idServicios.add(idServicio);
+        this.srvPublicados.add(idServicio);
     }
 
-    public List<String> getIdServicios() {
-        return idServicios;
+    public void setServicioSolicitado(String reservado){this.srvSolicitados.add(reservado);}
+
+    public List<String> getSrvPublicados() {
+        return srvPublicados;
     }
 
-    public void setIdServicios(List<String> idServicios) {
-        this.idServicios = idServicios;
+    public void setSrvPublicados(List<String> srvPublicados) {
+        this.srvPublicados = srvPublicados;
     }
 
-    public List<UsuarioxServicio> getRelacionServicio() {
-        return relacionServicio;
+    public List<String> getSrvSolicitados() {
+        return srvSolicitados;
     }
 
-    public void setRelacionServicio(List<UsuarioxServicio> relacionServicio) {
-        this.relacionServicio = relacionServicio;
+    public void setSrvSolicitados(List<String> srvSolicitados) {
+        this.srvSolicitados = srvSolicitados;
     }
-    public void addRelacion(UsuarioxServicio ususerv){
-        this.relacionServicio.add(ususerv);
-    }
-
 }
 

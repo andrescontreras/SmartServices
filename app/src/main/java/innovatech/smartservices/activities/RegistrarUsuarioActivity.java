@@ -30,7 +30,6 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
     EditText telefono;
     EditText direccion;
     EditText ciudad;
-    EditText barrio;
     Button registrar;
     private ProgressDialog nProgressDialog;
     @Override
@@ -46,7 +45,6 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
         telefono = (EditText)findViewById(R.id.telefonoRegister);
         direccion = (EditText)findViewById(R.id.direccionRegister);
         ciudad = (EditText)findViewById(R.id.ciudadRegister);
-        barrio = (EditText)findViewById(R.id.barrioRegister);
         registrar=(Button)findViewById(R.id.reg_usuario);
         registrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,9 +61,8 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
         final String telefonoTxt = telefono.getText().toString().trim();
         final String direccionTxt = direccion.getText().toString().trim();
         final String ciudadTxt = ciudad.getText().toString().trim();
-        final String barrioTxt = barrio.getText().toString().trim();
         if(TextUtils.isEmpty(emailTxt) || TextUtils.isEmpty(passwordTxt) || TextUtils.isEmpty(nombreTxt) || TextUtils.isEmpty(cedulaTxt)
-                || TextUtils.isEmpty(telefonoTxt) || TextUtils.isEmpty(direccionTxt) || TextUtils.isEmpty(ciudadTxt) || TextUtils.isEmpty(barrioTxt)){
+                || TextUtils.isEmpty(telefonoTxt) || TextUtils.isEmpty(direccionTxt) || TextUtils.isEmpty(ciudadTxt)){
             Toast.makeText(this, "Tiene que ingresar todos los datos para registrarse !", Toast.LENGTH_SHORT).show();
         }
         else{
@@ -81,7 +78,7 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
                                 int telefonoInt =Integer.parseInt(telefonoTxt);
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 String idUsu = user.getUid();
-                                Usuario usuario = new Usuario(idUsu,nombreTxt,cedulaInt,ciudadTxt,direccionTxt,barrioTxt,telefonoInt,emailTxt);
+                                Usuario usuario = new Usuario(idUsu,nombreTxt,cedulaInt,ciudadTxt,direccionTxt,telefonoInt,emailTxt);
                                 FirebaseDatabase.getInstance().getReference("users").child(idUsu).setValue(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {

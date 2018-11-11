@@ -9,48 +9,51 @@
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="44dp"
         android:text="@string/email"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView16"
-        app:layout_constraintTop_toBottomOf="@+id/barrioEdit" />
+        app:layout_constraintEnd_toStartOf="@+id/emailEdit"
+        app:layout_constraintTop_toBottomOf="@+id/ciudadEdit" />
 
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         android:text="@string/password"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView11"
+        app:layout_constraintEnd_toStartOf="@+id/passwordEdit"
         app:layout_constraintTop_toBottomOf="@+id/emailEdit" />
 
     <EditText
         android:id="@+id/emailEdit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="30dp"
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/barrioEdit"
-        app:layout_constraintTop_toTopOf="@+id/textView11" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ciudadEdit" />
 
     <EditText
         android:id="@+id/passwordEdit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="30dp"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/emailEdit"
-        app:layout_constraintTop_toTopOf="@+id/textView12" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailEdit" />
 
     <TextView
         android:id="@+id/textView9"
@@ -140,20 +143,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/ciudad"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="@+id/textView14"
         app:layout_constraintTop_toBottomOf="@+id/direccionEdit" />
-
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/barrio"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView15"
-        app:layout_constraintTop_toBottomOf="@+id/ciudadEdit" />
 
     <EditText
         android:id="@+id/telefonoEdit"
@@ -193,19 +187,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/direccionEdit"
         app:layout_constraintTop_toTopOf="@+id/textView15" />
-
-    <EditText
-        android:id="@+id/barrioEdit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:ems="10"
-        android:hint="@string/barrio"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/ciudadEdit"
-        app:layout_constraintTop_toTopOf="@+id/textView16" />
 
     <TextView
         android:id="@+id/textView23"

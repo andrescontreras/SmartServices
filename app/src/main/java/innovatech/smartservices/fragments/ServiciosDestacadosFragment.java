@@ -66,7 +66,7 @@ public class ServiciosDestacadosFragment extends Fragment{
         listaSinPrioridad = new ArrayList<Servicio>();
         FirebaseUser user = mAuth.getCurrentUser();
         DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("servicios");
-        db.addValueEventListener(new ValueEventListener() {
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if(snapshot!=null){
