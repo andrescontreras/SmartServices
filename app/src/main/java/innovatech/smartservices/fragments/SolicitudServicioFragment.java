@@ -75,27 +75,34 @@ public class SolicitudServicioFragment extends Fragment {
         HoraServicio=(TextView)view.findViewById(R.id.textViewHora);
         cargarInformacion(savedInstanceState,view,mAuth);
         aceptarServicio = (Button)view.findViewById(R.id.btn_aceptarServicio);
-       /* aceptarServicio.setOnClickListener(new View.OnClickListener() {
+        rechazarServicio = (Button)view.findViewById(R.id.btn_rechazarServicio);
+        aceptarServicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Bundle bundle = getArguments();
                 final String idRes=bundle.getString("reserva");
-                FirebaseDatabase.getInstance().getReference("servicios").child(bundle.getString("idServicio")).child("incluyeEditando").setValue(servAux.getIncluye().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                FirebaseDatabase.getInstance().getReference("reservas").child(bundle.getString("reserva")).child("estado").setValue(EstadoReserva.ACEPTADO).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(getActivity(), "Servicio actualizado", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Servicio aceptado", Toast.LENGTH_SHORT).show();
                         }
                         else{
-                                Toast.makeText( getActivity(),"Hubo un error al editar el servicio", Toast.LENGTH_SHORT).show();
+                            Toast.makeText( getActivity(),"Error al aceptar el servicio", Toast.LENGTH_SHORT).show();
                         }
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ServiciosDestacadosFragment principal = new ServiciosDestacadosFragment();
+                        ft.replace(R.id.fragment_container,principal);
+                        ft.addToBackStack(null);
+                        ft.commit();
                     }
 
                     });
-                }
 
-        });*/
+            }
+
+        });
         rechazarServicio = (Button)view.findViewById(R.id.btn_rechazarServicio);
 
 //        NombreUsuario.setText(usr.getNombre());

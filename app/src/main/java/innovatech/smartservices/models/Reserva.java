@@ -10,6 +10,7 @@ public class Reserva {
     String fecha;
     EstadoReserva estado;
     boolean visto ;
+    String razon;
 
     public Reserva(){
 
@@ -22,6 +23,7 @@ public class Reserva {
         this.fecha = fecha;
         this.estado = estado;
         this.visto = false;
+        this.razon = "";
     }
 
     public String getId() {
