@@ -51,6 +51,7 @@
     <string name="cerca_mio">¿Qué tan lejos?</string>
     <string name="buscar">Buscar</string>
     <string name="km">Km</string>
+    <string name="resultados_busqueda">Resultados de la busqueda</string>
 
     <string-array name="tipoServicio_nv1">
         <item>Seleccionar categoria</item>

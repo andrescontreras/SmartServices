@@ -72,6 +72,7 @@ public class ServicioSolicitarDiaFragment extends Fragment {
     int mes;
     int anio;
     int dia;
+    int hora;
     int horaSeleccionada;
     @Nullable
     @Override
@@ -112,7 +113,9 @@ public class ServicioSolicitarDiaFragment extends Fragment {
         anio = Calendar.getInstance().get(Calendar.YEAR); // Variable que contiene el año actual
         mes = Calendar.getInstance().get(Calendar.MONTH); // Variable que contiene el mes actual
         dia = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        hora = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         System.out.println("El dia en el que estamos hoy ----------------------------------->>> "+dia);
+        System.out.println("La hora en la que estamos actualmente  ----------------------------------->>> "+hora);
         Calendar mycal = new GregorianCalendar(anio,mes,1);
         int diasMes = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
         System.out.println("AÑO->>>>>>>>>>>>>> "+anio+" MES----------->>>>>>>>> "+mes+" DIAS QUE TIENE EL MES ->>>>>>>>>>>>> "+diasMes);
@@ -124,6 +127,13 @@ public class ServicioSolicitarDiaFragment extends Fragment {
             int dayweek =(cal.get(Calendar.DAY_OF_WEEK)-1);
             if(verificarDias(dayweek)){
                 dateData = new DateData(anio,mes+1,i);
+                if(i==dia){
+                    if(hora<Integer.parseInt(horasString.get(horasString.size()-1))){
+                        disponibles.add(dateData);
+                        calendario.unMarkDate(dateData);
+                        calendario.markDate(dateData.setMarkStyle(new MarkStyle(MarkStyle.BACKGROUND,Color.BLUE)));
+                    }
+                }
                 if(i>dia){
                     System.out.println("Esta es la fecha que meto --------------------------> "+dateData.toString());
                     disponibles.add(dateData);
@@ -159,14 +169,18 @@ public class ServicioSolicitarDiaFragment extends Fragment {
                 horasDisponibles.add("Seleccionar hora");
                 System.out.println("Tamaño de horasDisponibles en setOnDateClick 111111 ----------------------->>>>>>>>>> "+horasDisponibles.size());
                 if(esDiaDisponible(date) ){
-                    if(!verificarMarcados(date) ) {
-                        horasDisponibles.addAll(horasString);
-                        ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,horasDisponibles);
-                        System.out.println("Tamaño de horasDisponibles en setOnDateClick 222222222 ----------------------->>>>>>>>>> "+horasDisponibles.size());
-                        horas.setAdapter(adapterElem);
-                        calendario.unMarkDate(date);
-                        calendario.markDate(date.setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.GREEN)));
-                        marcados.add(date);
+                    if(!verificarMarcados(date)) {
+                        if(marcados.size()==0){
+                            horasDisponibles.addAll(horasString);
+                            ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,horasDisponibles);
+                            System.out.println("Tamaño de horasDisponibles en setOnDateClick 222222222 ----------------------->>>>>>>>>> "+horasDisponibles.size());
+                            horas.setAdapter(adapterElem);
+                            calendario.unMarkDate(date);
+                            calendario.markDate(date.setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.GREEN)));
+                            marcados.add(date);
+                        }else{
+                            Toast.makeText(getActivity(), "Solo puede marcar un dia", Toast.LENGTH_SHORT).show();
+                        }
 
                     }else{
                         horasDisponibles.clear();
@@ -218,11 +232,11 @@ public class ServicioSolicitarDiaFragment extends Fragment {
             }
         });
     }
-    //Verifica si el dia de la semana(Lunes(0), martes(1), ...) que llega como parametro, esta dentro de los dias que establecio el usuario como disponible
+    //Verifica si el dia de la semana(Domingo(0), Lunes(1), Martes(1), ...) que llega como parametro, esta dentro de los dias que establecio el usuario como disponible
     public boolean verificarDias(int dayweek){
-        System.out.println("Dia de la semana que evaluo ----------------------------------->>> "+dayweek);
+        if(dayweek==0)
+            dayweek= 7;
         for(int i = 0 ;i<serv.getDisponibilidadDias().size();i++){
-            System.out.println("Dia disponible ----------------------------------->>> "+serv.getDisponibilidadDias().get(i));
             if(serv.getDisponibilidadDias().get(i)==dayweek)
                 return true;
         }
