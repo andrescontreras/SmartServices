@@ -74,11 +74,11 @@
         android:id="@+id/textView21"
         android:layout_width="305dp"
         android:layout_height="30dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:drawableLeft="@drawable/ic_my_location_black_24dp"
         android:text="@string/ubicaci_n_del_servicio"
-        android:textColor="@color/cardview_dark_background"
+        android:textColor="@color/colorPrimary"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

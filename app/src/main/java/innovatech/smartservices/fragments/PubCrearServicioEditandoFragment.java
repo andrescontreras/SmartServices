@@ -1,6 +1,7 @@
 package innovatech.smartservices.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -44,103 +47,9 @@ public class PubCrearServicioEditandoFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_pub_categoria_servicio_editando, container, false);
         mAuth = FirebaseAuth.getInstance();
         inicializar(view);
-        //cargarInfoAnterior(savedInstanceState,view,mAuth);
         accionBotones(view);
         return view;
     }
-/*
-    public void cargarInfoAnterior(Bundle savedInstanceState, View view, FirebaseAuth mAuth){
-        lstServicio = new ArrayList<>();
-        System.out.println("si llega");
-        Bundle bundle=getArguments();
-        final String idServ=bundle.getString("idServicio");
-
-        FirebaseUser user = mAuth.getCurrentUser();
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("servicios");
-        db.addValueEventListener(new ValueEventListener() {
-            boolean seguir = false;
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    if (snapshot != null) {
-                        Servicio serv = snapshot.getValue(Servicio.class);
-                        lstServicio.add(serv);
-                        seguir = true;
-                    } else {
-                        Toast.makeText(getActivity(), "Hubo un problema encontrando los servicios", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                if(seguir){
-                    System.out.println("si entra a seguir");
-                    for(int i=0;i<lstServicio.size();i++){
-                        if(lstServicio.get(i).getId()!=null && idServ!=null){
-                            System.out.println("si entra al if de que no son nulos");
-                            if(lstServicio.get(i).getId().equals(idServ)){
-                                System.out.println("el tipo es "+lstServicio.get(i).getTipo().toString());
-                                String str = lstServicio.get(i).getTipo().toString();
-                                String[] parts=str.split("=");
-                                System.out.println("parts en 0 es "+parts[0]);
-                                spinner_nv1.setSelection(1);
-                                if(parts[0]!=null){
-                                    System.out.println("dejar en ");
-                                    if(parts[0]=="Belleza"){
-                                        spinner_nv1.setId(1);
-                                    }
-                                    if(parts[0]=="Higiene personal"){
-                                        spinner_nv1.setId(2);
-                                    }
-                                    if(parts[0].toString()=="Clases"){
-                                        spinner_nv1.setSelection(3);
-                                    }
-                                    if(parts[0]=="Fiestas y eventos"){
-                                        spinner_nv1.setId(4);
-                                    }
-                                    if(parts[0]=="Hogar"){
-                                        spinner_nv1.setId(5);
-                                    }
-                                    if(parts[0]=="Mantenimiento"){
-                                        spinner_nv1.setId(6);
-                                    }
-                                    if(parts[0]=="Salud"){
-                                        spinner_nv1.setId(7);
-                                    }
-                                    if(parts[0]=="Profesionales"){
-                                        spinner_nv1.setId(8);
-                                    }
-                                    if(parts[0]=="Reparaciones e instalaciones"){
-                                        spinner_nv1.setId(9);
-                                    }
-                                    if(parts[0]=="Ropa"){
-                                        spinner_nv1.setId(10);
-                                    }
-                                    if(parts[0]=="Mascotas"){
-                                        spinner_nv1.setId(11);
-                                    }
-                                    if(parts[0]=="Transporte"){
-                                        spinner_nv1.setId(12);
-                                    }
-                                    if(parts[0]=="Viajes"){
-                                        spinner_nv1.setId(13);
-                                    }
-                                    if(parts[0]=="Otros"){
-                                        spinner_nv1.setId(14);
-                                    }
-                                }
-                            }
-                        }
-
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                throw databaseError.toException();
-            }
-        });
-
-
-    }
-*/
-
     private void inicializar(View view){
         sig = (Button)view.findViewById(R.id.btn_sig_infoBasica);
         spinner_nv1 = (Spinner)view.findViewById(R.id.spin_servicio_nivel1);
@@ -149,6 +58,8 @@ public class PubCrearServicioEditandoFragment extends Fragment {
         spinner_nv4 = view.findViewById(R.id.spin_servicio_nivel4);
         c_layout = view.findViewById(R.id.constraint_categoria);
     }
+
+
     private void accionBotones(View view){
         sig.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,16 +72,19 @@ public class PubCrearServicioEditandoFragment extends Fragment {
 
                 if((nivel2.equals("") || nivel3.equals("") || nivel4.equals("")) ||
                         (spinnerCompleto && !nivel4.equals("Seleccionar categoria"))){
-                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    PubInfoBasicaFragment infoBasica = new PubInfoBasicaFragment();
-                    ft.replace(R.id.fragment_container, infoBasica);
-                    ft.addToBackStack(null);
-
-                    //Tal vez tenga que guardar en otras variables locales lo que me llega de fragmentos anteriores para mandarlos al siguiente
-                    Bundle bundle = new Bundle();
-                    bundle.putString("categorias",nivel1+nivel2+nivel3+nivel4);
-                    infoBasica.setArguments(bundle);
-                    ft.commit();
+                    Bundle bundle=getArguments();
+                    nivel1=nivel1+"="+nivel2+"="+nivel3+"="+nivel4+"=";
+                    FirebaseDatabase.getInstance().getReference("servicios").child(bundle.getString("idServicio")).child("tipo").setValue(nivel1).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(getActivity(), "Servicio actualizado", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                Toast.makeText( getActivity(),"Hubo un error al editar el servicio", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }else{
                     Toast.makeText(getActivity(), "Tiene que seleccionar hasta la ultima subcategoria", Toast.LENGTH_SHORT).show();
                 }

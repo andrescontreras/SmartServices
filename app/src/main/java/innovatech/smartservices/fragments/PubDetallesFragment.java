@@ -31,7 +31,7 @@ public class PubDetallesFragment extends Fragment {
         boton = (Button)view.findViewById(R.id.boton_detalles);
         incluye = (EditText)view.findViewById(R.id.t_Incluye);
         noIncluye= (EditText)view.findViewById(R.id.t_noIncluye);
-        adicional= (EditText)view.findViewById(R.id.texto_adicional);
+        adicional= (EditText)view.findViewById(R.id.t_Adicional);
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

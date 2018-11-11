@@ -33,12 +33,12 @@
             android:layout_width="74dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="36dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="324dp"
             android:background="@null"
             android:text="@string/detalles_serv"
             android:textAlignment="center"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/serv_btn_solicitar" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/serv_btn_preguntas"
@@ -77,20 +77,39 @@
             app:layout_constraintTop_toBottomOf="@+id/serv_txt_precio" />
 
         <Button
-            android:id="@+id/serv_btn_solicitar"
-            android:layout_width="134dp"
+            android:id="@+id/serv_btn_eliminar"
+            android:layout_width="136dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="113dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="113dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="15dp"
             android:background="@drawable/rounded_button"
-            android:text="Solicitar Servicio"
+            android:text="Eliminar Servicio"
             android:textAllCaps="false"
             android:textColor="@color/cardview_light_background"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/serv_btn_editar"
+            app:layout_constraintHorizontal_bias="0.01"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ratingBarServ" />
+            app:layout_constraintTop_toBottomOf="@+id/serv_btn_favoritos"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/serv_btn_editar"
+            android:layout_width="136dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/rounded_button"
+            android:text="Editar Servicio"
+            android:textAllCaps="false"
+            android:textColor="@color/cardview_light_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/serv_btn_favoritos"
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
             android:id="@+id/serv_btn_favoritos"
@@ -127,4 +146,4 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/serv_txt_titulo" />
     </android.support.constraint.ConstraintLayout>
-</ScrollView>
+    </ScrollView>

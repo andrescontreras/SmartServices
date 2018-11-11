@@ -10,9 +10,11 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:drawableLeft="@drawable/ic_info_black"
             android:text="@string/info_basica"
+            android:textColor="@color/colorPrimary"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -97,7 +99,7 @@
         </android.support.v7.widget.RecyclerView>
 
         <Button
-            android:id="@+id/btn_contactarUsuario"
+            android:id="@+id/btn_guardarCambios"
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_marginStart="60dp"
@@ -112,14 +114,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="13dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_info_black" />
-    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>
 

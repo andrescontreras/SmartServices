@@ -32,7 +32,7 @@ import innovatech.smartservices.models.Servicio;
 public class PubDetallesEditandoFragment extends Fragment {
     private EditText incluyeEditando;
     private EditText noIncluyeEditando;
-    private EditText adicional;
+    private EditText adicionalEditando;
     Button boton;
     List<Servicio> lstServicio =  new ArrayList<Servicio>();
     private FirebaseAuth mAuth;
@@ -44,12 +44,12 @@ public class PubDetallesEditandoFragment extends Fragment {
         boton = (Button)view.findViewById(R.id.boton_detalles);
         incluyeEditando = (EditText)view.findViewById(R.id.t_Incluye);
         noIncluyeEditando = (EditText)view.findViewById(R.id.t_noIncluye);
-        adicional= (EditText)view.findViewById(R.id.texto_adicional);
+        adicionalEditando = (EditText)view.findViewById(R.id.t_Adicional);
         cargarInfoAnterior(savedInstanceState,view,mAuth);
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(TextUtils.isEmpty(incluyeEditando.getText()) || TextUtils.isEmpty(noIncluyeEditando.getText()) || TextUtils.isEmpty(adicional.getText())){
+                if(TextUtils.isEmpty(incluyeEditando.getText()) || TextUtils.isEmpty(noIncluyeEditando.getText()) || TextUtils.isEmpty(adicionalEditando.getText())){
                     Toast.makeText(getActivity(), "Debe ingresar que incluyeEditando, que no incluyeEditando, y los datos adicionales del servicio", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -71,6 +71,20 @@ public class PubDetallesEditandoFragment extends Fragment {
 
                     });
                     FirebaseDatabase.getInstance().getReference("servicios").child(bundle.getString("idServicio")).child("noIncluye").setValue(noIncluyeEditando.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            //progressbar.setVisibility(View.GONE);
+                            if(task.isSuccessful()){
+                                Toast.makeText(getActivity(), "Servicio actualizado", Toast.LENGTH_SHORT).show();
+
+                            }
+                            else{
+                                Toast.makeText( getActivity(),"Hubo un error al editar el servicio", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    });
+                    FirebaseDatabase.getInstance().getReference("servicios").child(bundle.getString("idServicio")).child("adicional").setValue(adicionalEditando.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             //progressbar.setVisibility(View.GONE);
@@ -118,7 +132,7 @@ public class PubDetallesEditandoFragment extends Fragment {
                             if(lstServicio.get(i).getId().equals(idServ)){
                                 incluyeEditando.setText(lstServicio.get(i).getIncluye().toString());
                                 noIncluyeEditando.setText(lstServicio.get(i).getNoIncluye().toString());
-                                adicional.setText(lstServicio.get(i).getAdicional().toString());
+                                adicionalEditando.setText(lstServicio.get(i).getAdicional().toString());
                             }
                         }
 
