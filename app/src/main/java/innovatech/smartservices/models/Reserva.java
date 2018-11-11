@@ -81,4 +81,9 @@ public class Reserva {
     public void setVisto(boolean visto) {
         this.visto = visto;
     }
+    public void setRazon(String razon){ this.razon=razon;}
+    public String getRazon() {
+        return this.razon;
+    }
+
 }

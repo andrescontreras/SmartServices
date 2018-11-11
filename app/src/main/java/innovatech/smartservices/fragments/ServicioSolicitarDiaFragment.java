@@ -363,6 +363,7 @@ public class ServicioSolicitarDiaFragment extends Fragment {
         reserva.setFecha(fecha);
         reserva.setHora(horaSeleccionada);
         reserva.setVisto(false);
+        reserva.setRazon("");
         FirebaseDatabase.getInstance().getReference("reservas").child(idReserva).setValue(reserva).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
