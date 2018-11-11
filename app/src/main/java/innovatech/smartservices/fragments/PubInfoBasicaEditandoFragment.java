@@ -68,7 +68,7 @@ public class PubInfoBasicaEditandoFragment extends Fragment {
         nombre = (EditText)view.findViewById(R.id.txtNombre);
         precio = (EditText)view.findViewById(R.id.txtPrecio);
         selecImagen = (Button)view.findViewById(R.id.btn_agregarImagenes);
-        guardarCambios = (Button)view.findViewById(R.id.btn_sig_detalles);
+        guardarCambios = (Button)view.findViewById(R.id.btn_guardarCambios);
         myrv = view.findViewById(R.id.recycler_view);
         myrv.setHasFixedSize(true);
         myrv.setLayoutManager(new LinearLayoutManager(getActivity()));

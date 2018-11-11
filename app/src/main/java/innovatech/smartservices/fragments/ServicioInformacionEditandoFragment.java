@@ -1,6 +1,7 @@
 package innovatech.smartservices.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -13,6 +14,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -132,18 +135,24 @@ public class ServicioInformacionEditandoFragment extends Fragment {
             public void onClick(View view) {
                 if(verificarSesion()){
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    ServicioSolicitarDiaFragment solicitarServ = new ServicioSolicitarDiaFragment();
-                    ft.replace(R.id.fragment_container, solicitarServ);
+                    ServiciosDestacadosFragment servDest= new ServiciosDestacadosFragment();
+                    ft.replace(R.id.fragment_container, servDest);
                     ft.addToBackStack(null);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("nombreServ",titulo_serv.getText().toString());
-                    bundle.putString("precioServ",precio_serv.getText().toString());
-                    bundle.putString("imagenIni",imagenInicial);
-                    bundle.putSerializable("servicio",serv);
-                    solicitarServ.setArguments(bundle);
+                    FirebaseDatabase.getInstance().getReference("servicios").child(idServ).child("estado").setValue(false).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                System.out.println("se jugó y se gano");
+//                                Toast.makeText( getActivity(), "Servicio eliminado", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                Toast.makeText( getActivity(),"Hubo un error al eliminar el servicio", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                     ft.commit();
                 }else{
-                    Toast.makeText(getActivity(), "Para realizar la reserva de un servicio debe haber iniciado sesión", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Para eliminar un servicio debe haber iniciado sesión", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -161,7 +170,7 @@ public class ServicioInformacionEditandoFragment extends Fragment {
                     editServ1.setArguments(bundle);
                     ft.commit();
                 }else{
-                    Toast.makeText(getActivity(), "Para realizar la reserva de un servicio debe haber iniciado sesión", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Para editar un servicio debe haber iniciado sesión", Toast.LENGTH_SHORT).show();
                 }
 
             }

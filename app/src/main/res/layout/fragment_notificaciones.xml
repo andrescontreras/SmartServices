@@ -11,13 +11,14 @@
         android:id="@+id/TextView_Notificaciones"
         android:layout_width="224dp"
         android:layout_height="33dp"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="40dp"
         android:drawableLeft="@drawable/ic_notifications"
         android:text="@string/textView_Notificaciones"
+        android:textColor="@color/colorPrimary"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview_id"

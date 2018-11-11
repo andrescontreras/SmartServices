@@ -192,10 +192,11 @@
         android:id="@+id/textView_c_Posición"
         android:layout_width="266dp"
         android:layout_height="32dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="25dp"
         android:drawableLeft="@drawable/ic_public_black_24dp"
         android:text="Disponibilidad"
+        android:textColor="@color/colorPrimary"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
