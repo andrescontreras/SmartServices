@@ -41,9 +41,16 @@ public class FiltroBusquedaFragment extends Fragment {
                 String hora = (String)spin_hora.getSelectedItem();
                 String precioStr = precio.getText().toString();
                 String distanciaStr = distancia_km.getText().toString();
-                int precioInt = Integer.parseInt(precio.getText().toString());
-                int distancia = Integer.parseInt(distancia_km.getText().toString());
-
+                int precioInt;
+                int distancia;
+                if(precioStr.equals(""))
+                    precioInt=-1;
+                else
+                    precioInt = Integer.parseInt(precio.getText().toString());
+                if(distanciaStr.equals(""))
+                    distancia=-1;
+                else
+                    distancia = Integer.parseInt(distancia_km.getText().toString());
                 bundle = new Bundle();
                 bundle.putString("categoria",categoria);
                 bundle.putString("dia",dia);

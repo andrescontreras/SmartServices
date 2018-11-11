@@ -179,6 +179,9 @@ public class ServicioSolicitarDiaFragment extends Fragment {
                             calendario.markDate(date.setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.GREEN)));
                             marcados.add(date);
                         }else{
+                            horasDisponibles.addAll(horasString);
+                            ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,horasDisponibles);
+                            horas.setAdapter(adapterElem);
                             Toast.makeText(getActivity(), "Solo puede marcar un dia", Toast.LENGTH_SHORT).show();
                         }
 
@@ -416,7 +419,7 @@ public class ServicioSolicitarDiaFragment extends Fragment {
                     //Toast.makeText(getActivity(), "Se realizaron los cambios", Toast.LENGTH_SHORT).show();
                     //int cedula = dataSnapshot.child("cedula").getValue(Integer.class);
                     //String nombre = dataSnapshot.child("nombre").getValue(String.class);
-                    System.out.println("ESTO ES EL NOMBREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE  en PUB POSICIONAMIENT"+ usr.getNombre());
+                    System.out.println("ESTO ES EL NOMBREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE  en PUB POSICIONAMIENTO"+ usr.getNombre());
                     System.out.println("ESTO ES EL EMAILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL  EN PUB POSICIONAMIENTO"+ usr.getEmail());
                 }
                 else{

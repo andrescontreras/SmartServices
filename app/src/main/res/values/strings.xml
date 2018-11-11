@@ -47,11 +47,12 @@
     <string name="horas_disponibles">Horas disponibles</string>
     <string name="metodo_pago">Metodo de pago</string>
     <string name="filtro">Filtro</string>
-    <string name="busqueda_avanzada">Busqueda avanzada</string>
+    <string name="busqueda_avanzada"><u>Busqueda avanzada</u></string>
     <string name="cerca_mio">¿Qué tan lejos?</string>
     <string name="buscar">Buscar</string>
+    <string name="precio_maximo">Precio máximo</string>
     <string name="km">Km</string>
-    <string name="resultados_busqueda">Resultados de la busqueda</string>
+    <string name="resultados_busqueda"><u>Resultados de la busqueda</u></string>
 
     <string-array name="tipoServicio_nv1">
         <item>Seleccionar categoria</item>
