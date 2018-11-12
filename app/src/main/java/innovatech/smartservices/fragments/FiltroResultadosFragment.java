@@ -1,8 +1,14 @@
 package innovatech.smartservices.fragments;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +21,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +39,7 @@ import java.util.ListIterator;
 import innovatech.smartservices.R;
 import innovatech.smartservices.adapters.RecyclerViewAdapter;
 import innovatech.smartservices.models.Servicio;
+import innovatech.smartservices.models.Ubicacion;
 
 public class FiltroResultadosFragment extends Fragment {
     ArrayList<Servicio> lstServicio =  new ArrayList<Servicio>(); //Se guardaran primero los servicios con posicionamiento para mostrarlos de primero
@@ -38,6 +48,11 @@ public class FiltroResultadosFragment extends Fragment {
     FirebaseAuth mAuth ;
     RecyclerViewAdapter myAdapter;
     Bundle bundle ;
+    double latitud=-1;
+    double longitud=-1;
+    private FusedLocationProviderClient mFusedLocationClient;
+    final static int RADIUS_OF_EARTH_KM = 6371;
+    final static int MY_PERMISSIONS_REQUEST_LOCATION = 1;
 
     @Nullable
     @Override
@@ -45,6 +60,7 @@ public class FiltroResultadosFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_filtro_resultados, container, false);
 
         mAuth = FirebaseAuth.getInstance();
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         myrv = (RecyclerView) view.findViewById(R.id.rv_resultados_busqueda);
         myrv.setHasFixedSize(true);
         myrv.setLayoutManager ( new GridLayoutManager( getActivity(),2 ) );
@@ -67,6 +83,21 @@ public class FiltroResultadosFragment extends Fragment {
                 boolean cumpleDia ;
                 boolean cumpleHora ;
                 boolean cumple ;
+                double radio =-1;
+                if(bundle.getInt("distancia")!=-1){
+                    radio = Double.parseDouble(bundle.get("distancia").toString())*1000;
+                    requestPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION,
+                            "Se necesita acceder a los ubicacion", MY_PERMISSIONS_REQUEST_LOCATION);
+                    if(ContextCompat.checkSelfPermission(getActivity(),Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED){
+                        mFusedLocationClient.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                latitud = location.getLatitude();
+                                longitud = location.getLongitude();
+                            }
+                        });
+                    }
+                }
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if(snapshot!=null){
                         filtroPrecio=Double.POSITIVE_INFINITY;
@@ -86,6 +117,11 @@ public class FiltroResultadosFragment extends Fragment {
                         if(!bundle.get("hora").equals("Seleccionar hora"))
                             filtroHora=true;
                         Servicio serv = snapshot.getValue(Servicio.class);
+                        if(radio!=-1){
+                            if(!estaCerca(serv.getUbicacion(),radio)){
+                                cumple=false;
+                            }
+                        }
                         if(filtroCategoria){
                             String categ = bundle.getString("categoria");
                             if (serv.getTipo().contains(bundle.getString("categoria"))){
@@ -255,5 +291,38 @@ public class FiltroResultadosFragment extends Fragment {
             }
         }
         return false;
+    }
+    public static double distance(double lat1, double long1, double lat2, double long2) {
+        double latDistance = Math.toRadians(lat1 - lat2);
+        double lngDistance = Math.toRadians(long1 - long2);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lngDistance / 2) * Math.sin(lngDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double result = RADIUS_OF_EARTH_KM * c;
+        return Math.round(result*100.0)/100.0;
+}
+    public boolean estaCerca(List<Ubicacion> ubicaciones,double km){
+        for(int i=0;i<ubicaciones.size();i++){
+            Ubicacion ubicacion = ubicaciones.get(i);
+            if(ubicacion!=null){
+                double distance = distance(latitud,longitud,ubicacion.getLatitud(),ubicacion.getLongitud());
+                System.out.println("Los km son --------------------------------->>>>> "+km);
+                System.out.println("La distancia es -------------------------------------------->>>>>>> "+distance);
+                if(distance<=km){
+                    return true;
+                }
+            }
+        }
+        return  false;
+    }
+    private void requestPermission(Activity context, String permission, String explanation, int requestId ){
+        if (ContextCompat.checkSelfPermission(context,permission)!= PackageManager.PERMISSION_GRANTED) {
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(context,permission)) {
+                Toast.makeText(context, explanation, Toast.LENGTH_LONG).show();
+            }
+            ActivityCompat.requestPermissions(context, new String[]{permission}, requestId);
+        }
     }
 }

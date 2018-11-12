@@ -13,8 +13,9 @@
             android:id="@+id/textView27"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:drawableLeft="@drawable/ic_info_blue"
             android:text="@string/detalles"
             android:textColor="@color/colorPrimary"
             android:textSize="20sp"
@@ -25,19 +26,21 @@
             android:id="@+id/textView28"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="92dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="260dp"
             android:text="@string/info_basica2"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/txtDetDireccion" />
 
         <TextView
             android:id="@+id/txtDetBasica"
             android:layout_width="354dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="14dp"
+            android:layout_marginEnd="20dp"
             android:inputType="textMultiLine"
             android:text="TextView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,19 +51,21 @@
             android:id="@+id/textView30"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="188dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="330dp"
             android:text="@string/incluye"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/txtDetBasica" />
 
         <TextView
             android:id="@+id/txtDetIncl"
             android:layout_width="354dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="14dp"
+            android:layout_marginEnd="20dp"
             android:inputType="textMultiLine"
             android:text="TextView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -71,19 +76,21 @@
             android:id="@+id/textView32"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="284dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="310dp"
             android:text="@string/no_incluye"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/txtDetIncl" />
 
         <TextView
             android:id="@+id/txtDetNoIncl"
             android:layout_width="354dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="14dp"
+            android:layout_marginEnd="20dp"
             android:inputType="textMultiLine"
             android:text="TextView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -94,34 +101,50 @@
             android:id="@+id/textView34"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="380dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="238dp"
             android:text="@string/informacion_adicional"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/txtDetNoIncl" />
 
         <TextView
             android:id="@+id/txtDetAdic"
             android:layout_width="354dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="14dp"
+            android:layout_marginEnd="20dp"
             android:text="TextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView34" />
 
-        <ImageView
-            android:id="@+id/imageView"
+        <TextView
+            android:id="@+id/textView16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="26dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="6dp"
-            app:layout_constraintEnd_toStartOf="@+id/textView27"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="310dp"
+            android:text="@string/direcciones"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_info_black" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtDetDireccion"
+            android:layout_width="354dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            android:inputType="textMultiLine"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

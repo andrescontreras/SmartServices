@@ -30,11 +30,12 @@
 
         <Button
             android:id="@+id/serv_btn_detalles"
-            android:layout_width="74dp"
+            android:layout_width="103dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="8dp"
             android:background="@null"
+            android:drawableLeft="@drawable/ic_info_blue"
             android:text="@string/detalles_serv"
             android:textAlignment="center"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,23 +43,25 @@
 
         <Button
             android:id="@+id/serv_btn_preguntas"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="8dp"
             android:background="@null"
             android:text="@string/preguntas"
+            android:drawableLeft="@drawable/ic_question"
             android:textAlignment="center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/serv_btn_detalles" />
 
         <Button
             android:id="@+id/serv_btn_comentarios"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="25dp"
             android:background="@null"
             android:text="@string/comentarios"
+            android:drawableLeft="@drawable/ic_comment"
             android:textAlignment="center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/serv_btn_preguntas" />
@@ -96,10 +99,11 @@
             android:id="@+id/serv_btn_favoritos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="4dp"
             android:background="@null"
             android:text="@string/agregar_favoritos"
+            android:drawableLeft="@drawable/ic_favorite"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/serv_btn_comentarios" />
 

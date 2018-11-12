@@ -29,7 +29,8 @@ public class ServicioDetallesFragment extends Fragment {
     TextView incluye;
     TextView no_incluye;
     TextView adicional;
-
+    TextView direcciones;
+    String direccion = "";
     FirebaseAuth mAuth ;
     DatabaseReference mDataBase;
     @Nullable
@@ -42,6 +43,7 @@ public class ServicioDetallesFragment extends Fragment {
         incluye = (TextView)view.findViewById(R.id.txtDetIncl);
         no_incluye = (TextView)view.findViewById(R.id.txtDetNoIncl);
         adicional = (TextView)view.findViewById(R.id.txtDetAdic);
+        direcciones = (TextView)view.findViewById(R.id.txtDetDireccion);
         Bundle bundle = getArguments();
         String idServ = bundle.getString("idServicio");
         capturarInfoActual(idServ);
@@ -59,6 +61,10 @@ public class ServicioDetallesFragment extends Fragment {
                         incluye.setText(serv.getIncluye());
                         no_incluye.setText(serv.getNoIncluye());
                         adicional.setText(serv.getAdicional());
+                        for(int i=0;i<serv.getUbicacion().size();i++){
+                            direccion = direccion+" "+serv.getUbicacion().get(i).getDireccion()+", ";
+                        }
+                        direcciones.setText(direccion);
                     }
                 }
                 else{

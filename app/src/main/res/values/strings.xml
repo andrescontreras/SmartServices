@@ -53,6 +53,7 @@
     <string name="precio_maximo">Precio máximo</string>
     <string name="km">Km</string>
     <string name="resultados_busqueda"><u>Resultados de la busqueda</u></string>
+    <string name="direcciones">Direcciones</string>
 
     <string-array name="tipoServicio_nv1">
         <item>Seleccionar categoria</item>

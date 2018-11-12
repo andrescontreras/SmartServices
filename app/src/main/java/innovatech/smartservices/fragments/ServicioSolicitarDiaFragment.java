@@ -55,7 +55,6 @@ import sun.bob.mcalendarview.vo.DateData;
 public class ServicioSolicitarDiaFragment extends Fragment {
     TextView titulo;
     TextView precio;
-    ImageView imagen ;
     MCalendarView calendario;
     Button reservar;
     Servicio serv ;
@@ -80,7 +79,6 @@ public class ServicioSolicitarDiaFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_servicio_solicitar_dia, container, false);
         titulo = (TextView)view.findViewById(R.id.txtSolicDiaTitulo);
         precio = (TextView) view.findViewById(R.id.txtSolicDiaPrecio);
-        imagen = (ImageView) view.findViewById(R.id.txtSolicDiaImagen);
         calendario = (MCalendarView)view.findViewById(R.id.calendarSolicDia);
         reservar = (Button) view.findViewById(R.id.btnSolicDiaReserva);
         horas = (Spinner)view.findViewById(R.id.spinSolicHoras);
@@ -95,7 +93,6 @@ public class ServicioSolicitarDiaFragment extends Fragment {
         bundle = getArguments();
         titulo.setText(bundle.getString("nombreServ"));
         precio.setText("$"+bundle.getString("precioServ"));
-                Picasso.with(getContext()).load(Uri.parse(bundle.getString("imagenIni"))).into(imagen);
         serv = (Servicio) bundle.getSerializable("servicio");
         llenarReservas(serv.getId());
         accionBotones();
