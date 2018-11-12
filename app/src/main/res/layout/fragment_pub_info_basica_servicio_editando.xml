@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:drawableLeft="@drawable/ic_info_black"
+            android:drawableLeft="@drawable/ic_info_blue"
             android:text="@string/info_basica"
             android:textColor="@color/colorPrimary"
             android:textSize="20sp"

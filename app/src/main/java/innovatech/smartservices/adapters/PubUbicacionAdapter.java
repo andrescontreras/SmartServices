@@ -27,8 +27,15 @@ public class PubUbicacionAdapter  extends RecyclerView.Adapter<PubUbicacionAdapt
     }
 
     @Override
-    public void onBindViewHolder(PubUbicacionAdapter.ViewHolderDatos holder, int position) {
+    public void onBindViewHolder(PubUbicacionAdapter.ViewHolderDatos holder, final int position) {
         holder.asignarDatos(listDatos.get(position));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listDatos.remove(position);
+                notifyItemRemoved(position);
+            }
+        });
     }
 
     @Override

@@ -144,6 +144,10 @@
     <string name="textView_Notificaciones"> Tus notificaciones</string>
     <string name="informaci_n_del_usuario"><u>Información del usuario</u></string>
     <string name="informaci_n_del_servicio"><u>Información del servicio</u></string>
+    <string name="editar_datos_de_usuario"><u>Editar datos de usuario</u></string>
+    <string name="categor_as"><u>Categorías</u></string>
+    <string name="disponibilidad"><u>Disponibilidad</u></string>
+    <string name="tus_servicios"><u>Tus Servicios</u></string>
 
 
 </resources>

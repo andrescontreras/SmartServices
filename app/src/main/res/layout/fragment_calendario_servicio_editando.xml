@@ -194,7 +194,7 @@
         android:layout_height="32dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="25dp"
-        android:drawableLeft="@drawable/ic_public_black_24dp"
+        android:drawableLeft="@drawable/ic_public_blue_24dp"
         android:text="Disponibilidad"
         android:textColor="@color/colorPrimary"
         android:textSize="20dp"

@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:drawableLeft="@drawable/ic_list_black_24dp"
+            android:drawableLeft="@drawable/ic_list_blue_24dp"
             android:text="@string/detalles"
             android:textColor="@color/colorPrimary"
             android:textSize="20dp"
