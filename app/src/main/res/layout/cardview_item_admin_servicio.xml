@@ -13,20 +13,20 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/servicio_precio_id"
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:gravity="center"
-            android:text="Servicio Precio"
-            android:textColor="#2d2d2d"
-            android:textSize="13sp" />
-
-        <TextView
             android:id="@+id/servicio_title_id"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:gravity="center"
             android:text="Servicio Titulo"
+            android:textColor="#2d2d2d"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/servicio_precio_id"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:gravity="center"
+            android:text="Servicio Precio"
             android:textColor="#2d2d2d"
             android:textSize="13sp" />
 

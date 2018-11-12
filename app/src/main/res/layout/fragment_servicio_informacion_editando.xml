@@ -30,36 +30,39 @@
 
         <Button
             android:id="@+id/serv_btn_detalles"
-            android:layout_width="74dp"
+            android:layout_width="115dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="324dp"
             android:background="@null"
+            android:drawableLeft="@drawable/ic_info_blue"
             android:text="@string/detalles_serv"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/serv_btn_preguntas"
-            android:layout_width="wrap_content"
+            android:layout_width="172dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="8dp"
             android:background="@null"
+            android:drawableLeft="@drawable/ic_question"
             android:text="@string/preguntas"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/serv_btn_detalles" />
 
         <Button
             android:id="@+id/serv_btn_comentarios"
-            android:layout_width="wrap_content"
+            android:layout_width="166dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:background="@null"
+            android:drawableLeft="@drawable/ic_comment"
             android:text="@string/comentarios"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/serv_btn_preguntas" />
 
@@ -113,12 +116,14 @@
 
         <Button
             android:id="@+id/serv_btn_favoritos"
-            android:layout_width="wrap_content"
+            android:layout_width="234dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="4dp"
             android:background="@null"
+            android:drawableLeft="@drawable/ic_favorite"
             android:text="@string/agregar_favoritos"
+            android:textAlignment="textStart"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/serv_btn_comentarios" />
 

@@ -48,8 +48,8 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="8dp"
             android:background="@null"
-            android:text="@string/preguntas"
             android:drawableLeft="@drawable/ic_question"
+            android:text="@string/preguntas"
             android:textAlignment="center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/serv_btn_detalles" />
@@ -60,8 +60,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:background="@null"
-            android:text="@string/comentarios"
             android:drawableLeft="@drawable/ic_comment"
+            android:text="@string/comentarios"
             android:textAlignment="center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/serv_btn_preguntas" />
@@ -102,8 +102,8 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="4dp"
             android:background="@null"
-            android:text="@string/agregar_favoritos"
             android:drawableLeft="@drawable/ic_favorite"
+            android:text="@string/agregar_favoritos"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/serv_btn_comentarios" />
 
