@@ -1,5 +1,6 @@
 package innovatech.smartservices.activities;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -92,13 +93,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //Metodo se activa cuando se selecciona un item del drawer
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
         switch(item.getItemId()){
             case R.id.nav_inicio:
+                for(int i=0;i<fm.getBackStackEntryCount();i++){
+                    fm.popBackStack();
+                }
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new ServiciosDestacadosFragment()).commit();
                 break;
             case R.id.nav_account:
                 if(verificarSesion()){
+                    for(int i=0;i<fm.getBackStackEntryCount();i++){
+                        fm.popBackStack();
+                    }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             new CuentaFragment()).commit();
                 }else{
@@ -107,6 +116,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_notificaciones:
                 if(verificarSesion()){
+                    for(int i=0;i<fm.getBackStackEntryCount();i++){
+                        fm.popBackStack();
+                    }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             new NotificacionesFragment()).commit();
                 }else{
@@ -115,6 +127,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_favoritos:
                 if(verificarSesion()){
+                    for(int i=0;i<fm.getBackStackEntryCount();i++){
+                        fm.popBackStack();
+                    }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             new PublicacionesFavoritasFragment()).commit();
                 }else{
@@ -122,6 +137,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 break;
             case R.id.nav_exit:
+                for(int i=0;i<fm.getBackStackEntryCount();i++){
+                    fm.popBackStack();
+                }
                 FirebaseAuth.getInstance().signOut();
                 nombreHeader.setText("Usuario visitante");
                 emailHeader.setText("");

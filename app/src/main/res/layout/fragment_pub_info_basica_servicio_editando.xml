@@ -43,7 +43,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/txtPrecio"
+            android:id="@+id/txtPrecio_edit"
             android:layout_width="272dp"
             android:layout_height="43dp"
             android:layout_marginTop="100dp"
@@ -52,11 +52,11 @@
             android:inputType="number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/txtNombre"
+            app:layout_constraintStart_toStartOf="@+id/txtNombre_edit"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/txtNombre"
+            android:id="@+id/txtNombre_edit"
             android:layout_width="272dp"
             android:layout_height="42dp"
             android:layout_marginStart="24dp"
@@ -69,7 +69,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/btn_agregarImagenes"
+            android:id="@+id/btn_agregarImagenes_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
@@ -81,25 +81,25 @@
             android:textColor="@color/cardview_light_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtPrecio" />
+            app:layout_constraintTop_toBottomOf="@+id/txtPrecio_edit" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
+            android:id="@+id/rv_edit_infobasica"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_contactarUsuario"
+            app:layout_constraintBottom_toTopOf="@+id/btn_guardarCambios_edit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_agregarImagenes">
+            app:layout_constraintTop_toBottomOf="@+id/btn_agregarImagenes_edit">
 
         </android.support.v7.widget.RecyclerView>
 
         <Button
-            android:id="@+id/btn_guardarCambios"
+            android:id="@+id/btn_guardarCambios_edit"
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_marginStart="60dp"
