@@ -65,11 +65,11 @@ public class PubInfoBasicaEditandoFragment extends Fragment {
         nProgressDialog = new ProgressDialog(getActivity());
         mStorage = FirebaseStorage.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
-        nombre = (EditText)view.findViewById(R.id.txtNombre);
-        precio = (EditText)view.findViewById(R.id.txtPrecio);
-        selecImagen = (Button)view.findViewById(R.id.btn_agregarImagenes);
-        guardarCambios = (Button)view.findViewById(R.id.btn_guardarCambios);
-        myrv = view.findViewById(R.id.recycler_view);
+        nombre = (EditText)view.findViewById(R.id.txtNombre_edit);
+        precio = (EditText)view.findViewById(R.id.txtPrecio_edit);
+        selecImagen = (Button)view.findViewById(R.id.btn_agregarImagenes_edit);
+        guardarCambios = (Button)view.findViewById(R.id.btn_guardarCambios_edit);
+        myrv = view.findViewById(R.id.rv_edit_infobasica);
         myrv.setHasFixedSize(true);
         myrv.setLayoutManager(new LinearLayoutManager(getActivity()));
         cargarInfoAnterior(savedInstanceState,view,mAuth);
