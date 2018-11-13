@@ -70,7 +70,7 @@ public class CuentaEditarServicio1Fragment extends Fragment {
         Bundle bundle=getArguments();
         final String idServ=bundle.getString("idServicio");
         editando=(TextView)view.findViewById(R.id.textEditando);
-        eliminar= (Button)view.findViewById(R.id.btn_eliminar);
+        //eliminar= (Button)view.findViewById(R.id.btn_eliminar);
         categorias= (Button)view.findViewById(R.id.btn_categorias);
         nombre= (Button)view.findViewById(R.id.btn_nombre);
         incluye= (Button)view.findViewById(R.id.btn_incluye);
@@ -112,7 +112,7 @@ public class CuentaEditarServicio1Fragment extends Fragment {
     }
 
     private  void accionBotones(View view){
-
+/*
         eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,7 +124,7 @@ public class CuentaEditarServicio1Fragment extends Fragment {
                 ft.commit();
             }
         });
-
+*/
         categorias.setOnClickListener(new View.OnClickListener() {
             Bundle bundle=getArguments();
             @Override
