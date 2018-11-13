@@ -50,6 +50,7 @@ public class FiltroResultadosFragment extends Fragment {
     Bundle bundle ;
     double latitud=-1;
     double longitud=-1;
+    double radio =-1;
     private FusedLocationProviderClient mFusedLocationClient;
     final static int RADIUS_OF_EARTH_KM = 6371;
     final static int MY_PERMISSIONS_REQUEST_LOCATION = 1;
@@ -65,7 +66,23 @@ public class FiltroResultadosFragment extends Fragment {
         myrv.setHasFixedSize(true);
         myrv.setLayoutManager ( new GridLayoutManager( getActivity(),2 ) );
         bundle = getArguments();
-        agregarServicios();
+        if(bundle.getInt("distancia")!=-1){
+            radio = Double.parseDouble(bundle.get("distancia").toString())*1000;
+            requestPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION,
+                    "Se necesita acceder a los ubicacion", MY_PERMISSIONS_REQUEST_LOCATION);
+            if(ContextCompat.checkSelfPermission(getActivity(),Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED){
+                mFusedLocationClient.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        latitud = location.getLatitude();
+                        longitud = location.getLongitude();
+                        agregarServicios();
+                    }
+                });
+            }
+        }else{
+            agregarServicios();
+        }
         return view;
     }
     public void agregarServicios(){
@@ -83,21 +100,6 @@ public class FiltroResultadosFragment extends Fragment {
                 boolean cumpleDia ;
                 boolean cumpleHora ;
                 boolean cumple ;
-                double radio =-1;
-                if(bundle.getInt("distancia")!=-1){
-                    radio = Double.parseDouble(bundle.get("distancia").toString())*1000;
-                    requestPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION,
-                            "Se necesita acceder a los ubicacion", MY_PERMISSIONS_REQUEST_LOCATION);
-                    if(ContextCompat.checkSelfPermission(getActivity(),Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED){
-                        mFusedLocationClient.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
-                            @Override
-                            public void onSuccess(Location location) {
-                                latitud = location.getLatitude();
-                                longitud = location.getLongitude();
-                            }
-                        });
-                    }
-                }
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if(snapshot!=null){
                         filtroPrecio=Double.POSITIVE_INFINITY;
@@ -118,7 +120,7 @@ public class FiltroResultadosFragment extends Fragment {
                             filtroHora=true;
                         Servicio serv = snapshot.getValue(Servicio.class);
                         if(radio!=-1){
-                            if(!estaCerca(serv.getUbicacion(),radio)){
+                            if(!estaCerca(serv.getUbicacion(),radio/1000)){
                                 cumple=false;
                             }
                         }
@@ -305,6 +307,8 @@ public class FiltroResultadosFragment extends Fragment {
     public boolean estaCerca(List<Ubicacion> ubicaciones,double km){
         for(int i=0;i<ubicaciones.size();i++){
             Ubicacion ubicacion = ubicaciones.get(i);
+            System.out.println("Esta es mi latitud en estaCercaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ------------------> "+latitud);
+            System.out.println("Esta es mi longitudddddddd en estaCercaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ------------------> "+longitud);
             if(ubicacion!=null){
                 double distance = distance(latitud,longitud,ubicacion.getLatitud(),ubicacion.getLongitud());
                 System.out.println("Los km son --------------------------------->>>>> "+km);
