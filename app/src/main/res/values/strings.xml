@@ -149,6 +149,8 @@
     <string name="disponibilidad"><u>Disponibilidad</u></string>
     <string name="tus_servicios"><u>Tus Servicios</u></string>
     <string name="registro_de_usuario"><u>Registro de usuario</u></string>
+    <string name="servicios_solicitados"><u>Servicios solicitados</u></string>
+    <string name="infomaci_n_del_prestador">Información del prestador</string>>
 
 
 </resources>
