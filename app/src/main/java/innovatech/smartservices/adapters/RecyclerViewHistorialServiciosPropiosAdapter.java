@@ -68,7 +68,7 @@ public class RecyclerViewHistorialServiciosPropiosAdapter extends RecyclerView.A
             fecha = (TextView) itemView.findViewById ( R.id.textViewFecha);
             estado = (TextView)itemView.findViewById(R.id.textViewEstado);
             usuario = (TextView) itemView.findViewById ( R.id.textViewUsuario);
-            itemView.setOnClickListener(this);
+            //itemView.setOnClickListener(this);
         }
         public void setItemClickListener(OnItemClickListenerInterface itemClickListener){
             this.itemClickListener = itemClickListener;

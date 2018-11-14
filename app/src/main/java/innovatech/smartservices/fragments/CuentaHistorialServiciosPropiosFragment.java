@@ -115,6 +115,11 @@ public class CuentaHistorialServiciosPropiosFragment extends Fragment {
                         }
 
                     }
+                    RecyclerViewHistorialServiciosPropiosAdapter adapter = new RecyclerViewHistorialServiciosPropiosAdapter(getActivity(),lstReservas,users);
+                    myrv.setHasFixedSize(true);
+                    myrv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+                    myrv.setAdapter(adapter);
+
                 }
             }
             @Override
@@ -123,10 +128,6 @@ public class CuentaHistorialServiciosPropiosFragment extends Fragment {
             }
         });
         System.out.println("SIZE " + lstReservas.size()+ " " +users.size());
-        RecyclerViewHistorialServiciosPropiosAdapter adapter = new RecyclerViewHistorialServiciosPropiosAdapter(getActivity(),lstReservas,users);
-        myrv.setHasFixedSize(true);
-        myrv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-        myrv.setAdapter(adapter);
 
 
     }
