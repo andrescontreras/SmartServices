@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -45,7 +46,7 @@ public class ServicioInformacionEditandoFragment extends Fragment {
     ImagenInformacionServicioAdapter imgAnfAdapter;
     String imagenInicial ="";
     CircleIndicator indicator;
-
+    String idServ;
     FirebaseAuth mAuth ;
     DatabaseReference mDataBase;
 
@@ -68,7 +69,7 @@ public class ServicioInformacionEditandoFragment extends Fragment {
         viewPager = (ViewPager)view.findViewById(R.id.viewPagerServ);
         indicator = (CircleIndicator)view.findViewById(R.id.ciImagenesAlojAPA);
         Bundle bundle = getArguments();
-        String idServ = bundle.getString("idServicio");
+        idServ = bundle.getString("idServicio");
         capturarInfoActual(idServ);
         accionBotones(idServ);
         return view;
@@ -136,23 +137,26 @@ public class ServicioInformacionEditandoFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(verificarSesion()){
-                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    ServiciosDestacadosFragment servDest= new ServiciosDestacadosFragment();
-                    ft.replace(R.id.fragment_container, servDest);
-                    ft.addToBackStack(null);
                     FirebaseDatabase.getInstance().getReference("servicios").child(idServ).child("estado").setValue(false).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
                                 System.out.println("se jugó y se gano");
-//                                Toast.makeText( getActivity(), "Servicio eliminado", Toast.LENGTH_SHORT).show();
+                                Toast.makeText( getActivity(), "Servicio eliminado", Toast.LENGTH_SHORT).show();
+                                FragmentManager fm = getActivity().getSupportFragmentManager();
+                                if(fm.getBackStackEntryCount()>0){
+                                    fm.popBackStack();
+                                }
+                                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                                CuentaAdministrarServiciosFragment adminCuenta= new CuentaAdministrarServiciosFragment();
+                                ft.replace(R.id.fragment_container, adminCuenta);
+                                ft.commit();
                             }
                             else{
                                 Toast.makeText( getActivity(),"Hubo un error al eliminar el servicio", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
-                    ft.commit();
                 }else{
                     Toast.makeText(getActivity(), "Para eliminar un servicio debe haber iniciado sesión", Toast.LENGTH_SHORT).show();
                 }
@@ -198,6 +202,32 @@ public class ServicioInformacionEditandoFragment extends Fragment {
        }else{
            return true;
        }
+    }
+    public void cambiarEstadoServicio(){
+
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("servicios").child(idServ);
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    Servicio servicio = dataSnapshot.getValue(Servicio.class);
+                    servicio.setEstado(false);
+                    FirebaseDatabase.getInstance().getReference().child("servicios").child(idServ).setValue(servicio);
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ServiciosDestacadosFragment servDest= new ServiciosDestacadosFragment();
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    ft.replace(R.id.fragment_container, servDest);
+                    ft.commit();
+                }
+                else{
+                    Toast.makeText(getActivity(), "Hubo un problema encontrando el uid", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
     }
 }
 

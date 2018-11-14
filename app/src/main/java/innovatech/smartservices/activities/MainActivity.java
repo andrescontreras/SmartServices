@@ -75,11 +75,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         nombreHeader = (TextView) hView.findViewById(R.id.header_nombre);
         emailHeader = (TextView) hView.findViewById(R.id.header_email);
         imgUsuario = (ImageButton)hView.findViewById(R.id.header_imagen);
+        final FirebaseUser userActual = mAuth.getCurrentUser();
         imgUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,InicioSesionActivity.class);
-                startActivity(intent);
+                if(userActual==null){ //Cuando el usuario ya esta logeado, mandarlo a la actividad principal
+                    Intent intent = new Intent(MainActivity.this,InicioSesionActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,

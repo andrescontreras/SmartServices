@@ -67,8 +67,10 @@ public class CuentaAdministrarServiciosFragment extends Fragment {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if(snapshot!=null){
                         Servicio serv = snapshot.getValue(Servicio.class);
-                        lstServicio.add(serv);
-                        seguir=true;
+                        if(serv.getEstado()){
+                            lstServicio.add(serv);
+                            seguir=true;
+                        }
                     }
                     else{
                         Toast.makeText(getActivity(), "Hubo un problema encontrando los servicios", Toast.LENGTH_SHORT).show();
