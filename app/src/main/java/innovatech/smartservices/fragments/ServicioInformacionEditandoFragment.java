@@ -32,6 +32,7 @@ import me.relex.circleindicator.CircleIndicator;
 public class ServicioInformacionEditandoFragment extends Fragment {
     Button btn_elim_serv;
     Button btn_edit_serv;
+    Button btn_hist_prop;
     Button btn_detalles;
     Button btn_preguntas;
     Button btn_comentarios;
@@ -56,6 +57,7 @@ public class ServicioInformacionEditandoFragment extends Fragment {
         mDataBase = FirebaseDatabase.getInstance().getReference("servicios");
         btn_elim_serv = (Button)view.findViewById(R.id.serv_btn_eliminar);
         btn_edit_serv= (Button)view.findViewById(R.id.serv_btn_editar);
+        btn_hist_prop= (Button)view.findViewById(R.id.serv_btn_historial);
         btn_detalles = (Button)view.findViewById(R.id.serv_btn_detalles);
         btn_preguntas = (Button)view.findViewById(R.id.serv_btn_preguntas);
         btn_comentarios = (Button)view.findViewById(R.id.serv_btn_comentarios);
@@ -173,6 +175,19 @@ public class ServicioInformacionEditandoFragment extends Fragment {
                     Toast.makeText(getActivity(), "Para editar un servicio debe haber iniciado sesión", Toast.LENGTH_SHORT).show();
                 }
 
+            }
+        });
+        btn_hist_prop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                CuentaHistorialServiciosPropiosFragment servProp= new CuentaHistorialServiciosPropiosFragment();
+                ft.replace(R.id.fragment_container, servProp);
+                ft.addToBackStack(null);
+                Bundle bundle = getArguments();
+                bundle.putString("idServicio",idServ);
+                servProp.setArguments(bundle);
+                ft.commit();
             }
         });
     }
