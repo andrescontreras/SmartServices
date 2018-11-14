@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Intent;
+import android.net.Uri;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,6 +41,7 @@ import innovatech.smartservices.models.Reserva;
 import innovatech.smartservices.models.Servicio;
 import innovatech.smartservices.models.Usuario;
 
+
 public class InformacionServicioFragment extends Fragment {
     private static final int RESULT_LOAD_IMAGE = 1;
     private ProgressDialog nProgressDialog;
@@ -53,7 +56,7 @@ public class InformacionServicioFragment extends Fragment {
     private TextView Estado;
     private TextView Motivo;
     private TextView Razon;
-
+    private Button contactar;
 
     List<Servicio> lstServicio =  new ArrayList<Servicio>();
     List<Servicio> lstServiciosPropios=  new ArrayList<Servicio>();
@@ -79,8 +82,21 @@ public class InformacionServicioFragment extends Fragment {
         Estado = (TextView)view.findViewById(R.id.textView_estado);
         Motivo = (TextView)view.findViewById(R.id.textView_motivo);
         Razon = (TextView)view.findViewById(R.id.textView_razon);
+        contactar = (Button)view.findViewById(R.id.btn_contactarUsuario);
 
-       cargarInformacion(savedInstanceState,view,mAuth);
+        cargarInformacion(savedInstanceState,view,mAuth);
+        contactar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String tel = "tel:"+CelUsuario.getText();
+                Intent intent = new Intent(android.content.Intent.ACTION_DIAL,Uri.parse(tel));
+
+                startActivity(intent);
+
+
+            }
+
+        });
 
 
 //        NombreUsuario.setText(usr.getNombre());

@@ -2,6 +2,8 @@ package innovatech.smartservices.fragments;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -55,6 +57,7 @@ public class SolicitudServicioFragment extends Fragment {
     private TextView HoraServicio;
     Button aceptarServicio;
     Button rechazarServicio;
+    Button contactar;
 
     List<Servicio> lstServicio =  new ArrayList<Servicio>();
     List<Servicio> lstServiciosPropios=  new ArrayList<Servicio>();
@@ -80,6 +83,7 @@ public class SolicitudServicioFragment extends Fragment {
         cargarInformacion(savedInstanceState,view,mAuth);
         aceptarServicio = (Button)view.findViewById(R.id.btn_aceptarServicio);
         rechazarServicio = (Button)view.findViewById(R.id.btn_rechazarServicio);
+        contactar = (Button) view.findViewById(R.id.btn_contactarUsuario);
         aceptarServicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,6 +120,17 @@ public class SolicitudServicioFragment extends Fragment {
                 final String idRes=bundle.getString("reserva");
                 android.support.v7.app.AlertDialog builder = createSimpleDialog(getActivity(),idRes);
                 builder.show();
+
+            }
+
+        });
+        contactar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String tel = "tel:"+CelUsuario.getText();
+                Intent intent = new Intent(android.content.Intent.ACTION_DIAL,Uri.parse(tel));
+                startActivity(intent);
+
 
             }
 
