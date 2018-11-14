@@ -44,7 +44,7 @@ public class RecyclerViewEditandoImagenesAdapter extends RecyclerView.Adapter<Re
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder , int position) {
+    public void onBindViewHolder(MyViewHolder holder , final int position) {
 
         if((mData.get(position).getFotos().size()>0)){
             Picasso.with(mContext).load(Uri.parse(mData.get(position).getFotos().get(0))).into(holder.img_servicio);
@@ -63,6 +63,21 @@ public class RecyclerViewEditandoImagenesAdapter extends RecyclerView.Adapter<Re
                 infoServFragm.setArguments(bundle);
                 //notificacion.setArguments(bundle);
                 ft.commit();
+            }
+        });
+        holder.img_servicio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("tocando la "+position);
+                mData.remove(position);
+                notifyItemRemoved(position);
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
+                System.out.println("current es "+position);
+                mData.remove(position);
+                notifyItemRemoved(position);
             }
         });
 

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import innovatech.smartservices.models.Ubicacion;
 public class PubUbicacionAdapter  extends RecyclerView.Adapter<PubUbicacionAdapter.ViewHolderDatos> {
 
     List<Ubicacion> listDatos;
+    private int pos;
 
     public PubUbicacionAdapter(List<Ubicacion> listDatos) {
         this.listDatos = listDatos;
@@ -27,15 +29,27 @@ public class PubUbicacionAdapter  extends RecyclerView.Adapter<PubUbicacionAdapt
     }
 
     @Override
-    public void onBindViewHolder(PubUbicacionAdapter.ViewHolderDatos holder, final int position) {
-        holder.asignarDatos(listDatos.get(position));
+    public void onBindViewHolder(PubUbicacionAdapter.ViewHolderDatos holder, int position) {
+
+        pos=position;
+        holder.asignarDatos(listDatos.get(pos));
+        System.out.println("El current antes del onClick ----> "+pos);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                System.out.println("current es "+pos);
+                listDatos.remove(pos);
+                notifyItemRemoved(pos);
+            }
+        });
+        /*
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("position es "+position);
                 listDatos.remove(position);
                 notifyItemRemoved(position);
             }
-        });
+        });*/
     }
 
     @Override
