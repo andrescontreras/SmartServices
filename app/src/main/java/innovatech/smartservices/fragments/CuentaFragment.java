@@ -138,7 +138,11 @@ public class CuentaFragment extends Fragment {
         serv_solic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ServiciosSolicitadosFragment serv = new ServiciosSolicitadosFragment();
+                ft.replace(R.id.fragment_container, serv);
+                ft.addToBackStack(null);
+                ft.commit();
             }
         });
         buzon_p.setOnClickListener(new View.OnClickListener() {

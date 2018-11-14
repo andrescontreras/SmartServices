@@ -2,8 +2,6 @@ package innovatech.smartservices.fragments;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -21,6 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Intent;
+import android.net.Uri;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -37,14 +36,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import innovatech.smartservices.R;
-import innovatech.smartservices.activities.MainActivity;
-import innovatech.smartservices.adapters.RecyclerViewNotificaciones;
 import innovatech.smartservices.helpers.EstadoReserva;
 import innovatech.smartservices.models.Reserva;
 import innovatech.smartservices.models.Servicio;
 import innovatech.smartservices.models.Usuario;
 
-public class SolicitudServicioFragment extends Fragment {
+
+public class InformacionServicioFragment extends Fragment {
     private static final int RESULT_LOAD_IMAGE = 1;
     private ProgressDialog nProgressDialog;
     private StorageReference mStorage;
@@ -55,9 +53,10 @@ public class SolicitudServicioFragment extends Fragment {
     private TextView NombreServicio;
     private TextView DiaServicio;
     private TextView HoraServicio;
-    Button aceptarServicio;
-    Button rechazarServicio;
-    Button contactar;
+    private TextView Estado;
+    private TextView Motivo;
+    private TextView Razon;
+    private Button contactar;
 
     List<Servicio> lstServicio =  new ArrayList<Servicio>();
     List<Servicio> lstServiciosPropios=  new ArrayList<Servicio>();
@@ -71,7 +70,7 @@ public class SolicitudServicioFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_notificaciones_aceptarrechazar, container, false);
+        final View view = inflater.inflate(R.layout.fragment_informacion_servicio, container, false);
         mAuth = FirebaseAuth.getInstance();
         FragmentManager fm = getActivity().getSupportFragmentManager();
         NombreUsuario=(TextView)view.findViewById(R.id.textViewNombreUsuario);
@@ -80,55 +79,18 @@ public class SolicitudServicioFragment extends Fragment {
         NombreServicio=(TextView)view.findViewById(R.id.textViewNombreServicio);
         DiaServicio=(TextView)view.findViewById(R.id.textViewDia);
         HoraServicio=(TextView)view.findViewById(R.id.textViewHora);
+        Estado = (TextView)view.findViewById(R.id.textView_estado);
+        Motivo = (TextView)view.findViewById(R.id.textView_motivo);
+        Razon = (TextView)view.findViewById(R.id.textView_razon);
+        contactar = (Button)view.findViewById(R.id.btn_contactarUsuario);
+
         cargarInformacion(savedInstanceState,view,mAuth);
-        aceptarServicio = (Button)view.findViewById(R.id.btn_aceptarServicio);
-        rechazarServicio = (Button)view.findViewById(R.id.btn_rechazarServicio);
-        contactar = (Button) view.findViewById(R.id.btn_contactarUsuario);
-        aceptarServicio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Bundle bundle = getArguments();
-                final String idRes=bundle.getString("reserva");
-
-                FirebaseDatabase.getInstance().getReference("reservas").child(bundle.getString("reserva")).child("estado").setValue(EstadoReserva.ACEPTADO).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(getActivity(), "Servicio aceptado", Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            Toast.makeText( getActivity(),"Error al aceptar el servicio", Toast.LENGTH_SHORT).show();
-                        }
-                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                        ServiciosDestacadosFragment principal = new ServiciosDestacadosFragment();
-                        ft.replace(R.id.fragment_container,principal);
-                        ft.addToBackStack(null);
-                        ft.commit();
-                    }
-
-                    });
-
-            }
-
-        });
-        rechazarServicio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Bundle bundle = getArguments();
-                final String idRes=bundle.getString("reserva");
-                android.support.v7.app.AlertDialog builder = createSimpleDialog(getActivity(),idRes);
-                builder.show();
-
-            }
-
-        });
         contactar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String tel = "tel:"+CelUsuario.getText();
                 Intent intent = new Intent(android.content.Intent.ACTION_DIAL,Uri.parse(tel));
+
                 startActivity(intent);
 
 
@@ -148,64 +110,7 @@ public class SolicitudServicioFragment extends Fragment {
         //agregarNotificaciones(view,mAuth);
         return view;
     }
-    public android.support.v7.app.AlertDialog createSimpleDialog(FragmentActivity myActivity, final String idRes) {
-        final android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(myActivity);
 
-       /* builder.setTitle("Titulo")
-                .setMessage("El Mensaje para el usuario")
-                .setPositiveButton("OK",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //   listener.onPossitiveButtonClick();
-                            }
-                        });*/
-        LayoutInflater inflater = myActivity.getLayoutInflater();
-
-        View v = inflater.inflate(R.layout.dialog_rechazar, null);
-        final EditText texto = (EditText) v.findViewById(R.id.editText_motivo) ;
-        builder.setView(v);
-        builder.setPositiveButton("ACEPTAR",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                            // Crear Cuenta...
-                            if(TextUtils.isEmpty(texto.getText())){
-                                Toast.makeText(getActivity(), "Debe ingresar el motivo del rechazo de servicio", Toast.LENGTH_SHORT).show();
-                            }else{
-                                FirebaseDatabase.getInstance().getReference("reservas").child(idRes).child("estado").setValue(EstadoReserva.RECHAZADO);
-                                FirebaseDatabase.getInstance().getReference("reservas").child(idRes).child("razon").setValue(texto.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful()){
-                                            Toast.makeText(getActivity(), "Servicio rechazado", Toast.LENGTH_SHORT).show();
-                                        }
-                                        else{
-                                            Toast.makeText( getActivity(),"Error al rechazar el servicio", Toast.LENGTH_SHORT).show();
-                                        }
-                                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                                        ServiciosDestacadosFragment principal = new ServiciosDestacadosFragment();
-                                        ft.replace(R.id.fragment_container,principal);
-                                        ft.addToBackStack(null);
-                                        ft.commit();
-
-                                        //finish();
-
-                                    }
-
-                                });
-                                //dismiss();
-
-                            }
-
-
-                            //dismiss();
-                    }
-                });
-
-
-        return builder.create();
-    }
     public void cargarInformacion(Bundle savedInstanceState, View view, FirebaseAuth mAuth){
         Bundle bundle=getArguments();
         final String idServ=bundle.getString("idServicio");
@@ -217,6 +122,7 @@ public class SolicitudServicioFragment extends Fragment {
 
         FirebaseUser user = mAuth.getCurrentUser();
         DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("servicios").child(idServ);
+
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot!=null){
@@ -233,6 +139,7 @@ public class SolicitudServicioFragment extends Fragment {
                 throw databaseError.toException();
             }
         });
+
         DatabaseReference db2 = FirebaseDatabase.getInstance().getReference().child("users").child(idUsu);
         db2.addListenerForSingleValueEvent(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -261,6 +168,13 @@ public class SolicitudServicioFragment extends Fragment {
                     res = dataSnapshot.getValue(Reserva.class);
                     DiaServicio.setText(res.getFecha());
                     HoraServicio.setText(String.valueOf(res.getHora())+":00");
+                    Estado.setText(res.getEstado().toString());
+                    if (res.getEstado().equals(EstadoReserva.RECHAZADO)){
+                        Motivo.setText("Motivo del rechazo");
+                        Razon.setText(res.getRazon());
+                    }
+
+
 
                 }
                 else{
