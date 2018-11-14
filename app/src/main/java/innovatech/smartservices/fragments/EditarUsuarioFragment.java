@@ -24,7 +24,6 @@ import innovatech.smartservices.models.Usuario;
 public class EditarUsuarioFragment extends Fragment {
     EditText nombre;
     EditText cedula;
-    EditText email;
     EditText telefono;
     EditText direccion;
     EditText ciudad;
@@ -40,7 +39,6 @@ public class EditarUsuarioFragment extends Fragment {
         mDataBase = FirebaseDatabase.getInstance().getReference("users");
         nombre = (EditText)view.findViewById(R.id.nombreEdit);
         cedula = (EditText)view.findViewById(R.id.cedulaEdit);
-        email = (EditText)view.findViewById(R.id.emailEdit);
         telefono = (EditText)view.findViewById(R.id.telefonoEdit);
         direccion = (EditText)view.findViewById(R.id.direccionEdit);
         ciudad = (EditText)view.findViewById(R.id.ciudadEdit);
@@ -70,7 +68,6 @@ public class EditarUsuarioFragment extends Fragment {
                     System.out.println("ESTO ES EL EMAILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL  "+ usr.getEmail());
                     nombre.setText(usr.getNombre());
                     cedula.setText(String.valueOf(usr.getCedula()));
-                    email.setText(usr.getEmail());
                     telefono.setText(String.valueOf(usr.getTelefono()));
                     direccion.setText(usr.getDireccion());
                     ciudad.setText(usr.getCiudad());
@@ -104,10 +101,10 @@ public class EditarUsuarioFragment extends Fragment {
                         System.out.println("ESTO ES EL NOMBREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE  "+ usr.getNombre());
                         System.out.println("ESTO ES EL EMAILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL  "+ usr.getEmail());
                         usr.setNombre(nombre.getText().toString().trim());
-                        usr.setCedula(Integer.parseInt(cedula.getText().toString().trim()));
+                        usr.setCedula(cedula.getText().toString().trim());
                         usr.setCiudad(ciudad.getText().toString().trim());
                         usr.setDireccion(direccion.getText().toString().trim());
-                        usr.setTelefono(Integer.parseInt(telefono.getText().toString().trim()));
+                        usr.setTelefono(telefono.getText().toString().trim());
                         mDataBase.child(mAuth.getCurrentUser().getUid()).setValue(usr);
                     }
                     else{
@@ -133,8 +130,7 @@ public class EditarUsuarioFragment extends Fragment {
     private boolean verificarInformacionVacia(){
         if(nombre.getText().toString().trim().equals("") || cedula.getText().toString().trim().equals("") ||
                 ciudad.getText().toString().trim().equals("") || direccion.getText().toString().trim().equals("") ||
-                telefono.getText().toString().trim().equals("") ||
-                email.getText().toString().trim().equals("")){
+                telefono.getText().toString().trim().equals("")){
             return true;
         }
         return false;

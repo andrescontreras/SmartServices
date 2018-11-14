@@ -160,7 +160,7 @@ public class ServicioInformacionFragment extends Fragment {
         System.out.println("Busco el servicio con id -----------------------------------------------> "+idServ);
         FirebaseUser user = mAuth.getCurrentUser();
         DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid());
-        db.addValueEventListener(new ValueEventListener() {
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot!=null){
                     usu = dataSnapshot.getValue(Usuario.class);

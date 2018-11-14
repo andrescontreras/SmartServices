@@ -68,17 +68,17 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
         else{
             nProgressDialog.setMessage("Registrando usuario...");
             nProgressDialog.show();
+            System.out.println("Este es el email ------------------------------> "+emailTxt);
+            System.out.println("Esta es el password ---------------------------------> "+passwordTxt);
             mAuth.createUserWithEmailAndPassword(emailTxt, passwordTxt)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
-                                int cedulaInt = Integer.parseInt(cedulaTxt);
-                                int telefonoInt =Integer.parseInt(telefonoTxt);
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 String idUsu = user.getUid();
-                                Usuario usuario = new Usuario(idUsu,nombreTxt,cedulaInt,ciudadTxt,direccionTxt,telefonoInt,emailTxt);
+                                Usuario usuario = new Usuario(idUsu,nombreTxt,cedulaTxt,ciudadTxt,direccionTxt,telefonoTxt,emailTxt);
                                 FirebaseDatabase.getInstance().getReference("users").child(idUsu).setValue(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
