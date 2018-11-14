@@ -31,6 +31,7 @@ import innovatech.smartservices.R;
 import innovatech.smartservices.adapters.ImagenInformacionServicioAdapter;
 import innovatech.smartservices.models.Servicio;
 
+import innovatech.smartservices.models.Usuario;
 import me.relex.circleindicator.CircleIndicator;
 
 public class ServicioInformacionFragment extends Fragment {
@@ -43,7 +44,9 @@ public class ServicioInformacionFragment extends Fragment {
     TextView precio_serv;
     RatingBar ratingBar;
     Servicio serv ;
+    Usuario usu;
     ViewPager viewPager;
+    boolean encontro=false;
     ImagenInformacionServicioAdapter imgAnfAdapter;
     String imagenInicial ="";
     CircleIndicator indicator;
@@ -136,21 +139,11 @@ public class ServicioInformacionFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(verificarSesion()){
-                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    ServicioSolicitarDiaFragment solicitarServ = new ServicioSolicitarDiaFragment();
-                    ft.replace(R.id.fragment_container, solicitarServ);
-                    ft.addToBackStack(null);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("nombreServ",titulo_serv.getText().toString());
-                    bundle.putString("precioServ",precio_serv.getText().toString());
-                    bundle.putString("imagenIni",imagenInicial);
-                    bundle.putSerializable("servicio",serv);
-                    solicitarServ.setArguments(bundle);
-                    ft.commit();
-                }else{
+                    verificarPropietario(idServ);
+                }
+                else{
                     Toast.makeText(getActivity(), "Para realizar la reserva de un servicio debe haber iniciado sesión", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }
@@ -161,5 +154,49 @@ public class ServicioInformacionFragment extends Fragment {
        }else{
            return true;
        }
+    }
+    public void verificarPropietario(final String idServ){
+        encontro= false;
+        System.out.println("Busco el servicio con id -----------------------------------------------> "+idServ);
+        FirebaseUser user = mAuth.getCurrentUser();
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid());
+        db.addValueEventListener(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    usu = dataSnapshot.getValue(Usuario.class);
+                    for (int i=0;i<usu.getSrvPublicados().size();i++){
+                        System.out.println("Comparo el con servicio --------------------------------------------> "+usu.getSrvPublicados().get(i));
+                        if(usu.getSrvPublicados().get(i).equals(idServ)){
+                            encontro=true;
+                            System.out.println("Lo encontro");
+                            break;
+                        }
+                    }
+                    if (!encontro){
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ServicioSolicitarDiaFragment solicitarServ = new ServicioSolicitarDiaFragment();
+                        ft.replace(R.id.fragment_container, solicitarServ);
+                        ft.addToBackStack(null);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("nombreServ",titulo_serv.getText().toString());
+                        bundle.putString("precioServ",precio_serv.getText().toString());
+                        bundle.putString("imagenIni",imagenInicial);
+                        bundle.putSerializable("servicio",serv);
+                        solicitarServ.setArguments(bundle);
+                        ft.commit();
+                    }else{
+                        Toast.makeText(getActivity(), "No puede reservar un servicio que es de su propiedad", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getActivity(), "Hubo un problema encontrando el uid", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
     }
 }
