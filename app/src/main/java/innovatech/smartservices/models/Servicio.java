@@ -174,13 +174,14 @@ public class Servicio implements Serializable {
         fotos.add(imagen);
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+
 }
 
 

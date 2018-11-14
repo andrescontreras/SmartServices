@@ -71,12 +71,15 @@ public class ServiciosDestacadosFragment extends Fragment{
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if(snapshot!=null){
                         Servicio serv = snapshot.getValue(Servicio.class);
-                        if(serv.getPosicionamiento()){
-                            lstServicio.add(serv);
+                        if(serv.getEstado()){
+                            if(serv.getPosicionamiento()){
+                                lstServicio.add(serv);
+                            }
+                            else{
+                                listaSinPrioridad.add(serv);
+                            }
                         }
-                        else{
-                            listaSinPrioridad.add(serv);
-                        }
+
                     }
                     else{
                         Toast.makeText(getActivity(), "Hubo un problema encontrando los servicios", Toast.LENGTH_SHORT).show();

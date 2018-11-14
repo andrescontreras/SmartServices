@@ -154,11 +154,13 @@ public class FiltroResultadosFragment extends Fragment {
                                 cumple=false;
                             System.out.println("Esto es cumpleeeeeeeeeeeeeeeeeeeeeeeeeeeee 4444 -----------> "+cumple);
                             if(cumple){
-                                if(serv.getPosicionamiento()){
-                                    lstServicio.add(serv);
-                                }
-                                else{
-                                    listaSinPrioridad.add(serv);
+                                if(serv.getEstado()){
+                                    if(serv.getPosicionamiento()){
+                                        lstServicio.add(serv);
+                                    }
+                                    else{
+                                        listaSinPrioridad.add(serv);
+                                    }
                                 }
                             }
                         }
