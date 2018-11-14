@@ -28,14 +28,19 @@ import java.util.List;
 import innovatech.smartservices.R;
 import innovatech.smartservices.adapters.RecyclerViewAdministrarServiciosAdapter;
 import innovatech.smartservices.adapters.RecyclerViewHistorialServiciosPropiosAdapter;
+import innovatech.smartservices.adapters.RecyclerViewServiciosSolicitados;
+import innovatech.smartservices.models.Reserva;
 import innovatech.smartservices.models.Servicio;
+import innovatech.smartservices.models.Usuario;
 
 public class CuentaHistorialServiciosPropiosFragment extends Fragment {
     private FirebaseAuth mAuth;
     private StorageReference mStorage;
     private ProgressDialog nProgressDialog;
-    List<Servicio> lstServicio =  new ArrayList<Servicio>();
-    List<Servicio> lstServiciosPropios=  new ArrayList<Servicio>();
+    List<Reserva> lstServicio =  new ArrayList<Reserva>();
+    List<Reserva> lstReservas =  new ArrayList<Reserva>();
+    List<Usuario> lstUsuarios = new ArrayList<Usuario>();
+    List<Usuario> users = new ArrayList<Usuario>();
     RecyclerView myrv;
     @Nullable
     @Override
@@ -48,46 +53,33 @@ public class CuentaHistorialServiciosPropiosFragment extends Fragment {
         myrv = (RecyclerView) view.findViewById(R.id.recyclerview_id);
         myrv.setHasFixedSize(true);
         myrv.setLayoutManager ( new GridLayoutManager ( getActivity(),1 ) );
-        agregarServicios(mAuth);
+        agregarServicios(mAuth,getArguments());
         return view;
     }
 
 
 
-    public void agregarServicios(final FirebaseAuth mAuth){
-        lstServicio = new ArrayList<>();
-        lstServiciosPropios=new ArrayList<>();
-
+    public void agregarServicios(final FirebaseAuth mAuth,Bundle bundle){
         FirebaseUser user = mAuth.getCurrentUser();
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("servicios");
-        db.addValueEventListener(new ValueEventListener() {
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                boolean seguir=false;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    if(snapshot!=null){
-                        Servicio serv = snapshot.getValue(Servicio.class);
-                        lstServicio.add(serv);
-                        seguir=true;
-                    }
-                    else{
-                        Toast.makeText(getActivity(), "Hubo un problema encontrando los servicios", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                if(seguir){
-                    for(int i=0;i<lstServicio.size();i++){
-                        if(lstServicio.get(i).getIdUsuario()!=null && mAuth.getCurrentUser().getUid()!=null){
-                            if(lstServicio.get(i).getIdUsuario().equals(mAuth.getCurrentUser().getUid())){
-                                System.out.println("se hizo match "+lstServicio.get(i).getIdUsuario());
-                                lstServiciosPropios.add(lstServicio.get(i));
-                            }
-                        }
+        lstServicio =  new ArrayList<Reserva>();
+        lstReservas =  new ArrayList<Reserva>();
+        lstUsuarios = new ArrayList<Usuario>();
+        users = new ArrayList<Usuario>();
 
+
+        final String idServ =bundle.getString("idServicio");
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("reservas");
+        DatabaseReference db2 = FirebaseDatabase.getInstance().getReference().child("users");
+        db2.addValueEventListener(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot != null) {
+                        Usuario user = snapshot.getValue(Usuario.class);
+                        lstUsuarios.add(user);
+                    } else {
+                        Toast.makeText(getActivity(), "Hubo un problema encontrando usuarios", Toast.LENGTH_SHORT).show();
                     }
                 }
-                RecyclerViewHistorialServiciosPropiosAdapter myAdapter = new RecyclerViewHistorialServiciosPropiosAdapter(getActivity(),lstServiciosPropios);
-                myrv.setHasFixedSize(true);
-                myrv.setLayoutManager ( new GridLayoutManager ( getActivity(),1 ) );
-                myrv.setAdapter(myAdapter);
             }
 
             @Override
@@ -95,10 +87,49 @@ public class CuentaHistorialServiciosPropiosFragment extends Fragment {
                 throw databaseError.toException();
             }
         });
+        db.addValueEventListener(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean seguir=false;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if(snapshot!=null){
+                        Reserva serv = snapshot.getValue(Reserva.class);
+                        lstServicio.add(serv);
+                        seguir=true;
+                    }
+                    else{
+                        Toast.makeText(getActivity(), "Hubo un problema encontrando los servicios", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                if(seguir) {
+                    for (int i = 0; i < lstServicio.size(); i++) {
+                        if (lstServicio.get(i).getIdServicio().equals(idServ)) {
+                            lstReservas.add(lstServicio.get(i));
+                            //System.out.println(" Reserva" + lstReservas.size());
+                            for (Usuario item: lstUsuarios){
+                                if (lstServicio.get(i).getIdUsuSolicitante().equals(item.getId())){
+                                    users.add(item);
+                                    break;
+                                }
+                            }
+
+                        }
+
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
+        System.out.println("SIZE " + lstReservas.size()+ " " +users.size());
+        RecyclerViewHistorialServiciosPropiosAdapter adapter = new RecyclerViewHistorialServiciosPropiosAdapter(getActivity(),lstReservas,users);
+        myrv.setHasFixedSize(true);
+        myrv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+        myrv.setAdapter(adapter);
+
+
     }
-
-
-
 
 
     public void onStart() {
