@@ -16,16 +16,20 @@ import innovatech.smartservices.R;
 import innovatech.smartservices.activities.MainActivity;
 import innovatech.smartservices.fragments.ServicioInformacionEditandoFragment;
 import innovatech.smartservices.interfaces.OnItemClickListenerInterface;
+import innovatech.smartservices.models.Reserva;
 import innovatech.smartservices.models.Servicio;
+import innovatech.smartservices.models.Usuario;
 
 public class RecyclerViewHistorialServiciosPropiosAdapter extends RecyclerView.Adapter<RecyclerViewHistorialServiciosPropiosAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<Servicio> mData;
+    private List<Reserva> mData;
+    private List<Usuario> usuarios;
 
-    public RecyclerViewHistorialServiciosPropiosAdapter(Context mContext , List <Servicio> mData) {
+    public RecyclerViewHistorialServiciosPropiosAdapter(Context mContext , List <Reserva> mData, List<Usuario> user) {
         this.mContext = mContext;
         this.mData = mData;
+        this.usuarios=user;
     }
 
     @Override
@@ -37,23 +41,9 @@ public class RecyclerViewHistorialServiciosPropiosAdapter extends RecyclerView.A
     @Override
     public void onBindViewHolder(MyViewHolder holder , int position) {
 
-        holder.tv_servicio_title.setText(mData.get(position).getNombre());
-        holder.tv_servicio_precio.setText("$"+String.valueOf(mData.get(position).getPrecio()));
-        holder.setItemClickListener(new OnItemClickListenerInterface() {
-            @Override
-            public void onClick(View view, int position) {
-                MainActivity myActivity = (MainActivity)mContext;
-                Toast.makeText(mContext, "Elemento "+mData.get(position).getNombre(), Toast.LENGTH_SHORT).show();
-                FragmentTransaction ft = myActivity.getSupportFragmentManager().beginTransaction();
-                ServicioInformacionEditandoFragment servicioInfoEditando= new ServicioInformacionEditandoFragment();
-                ft.replace(R.id.fragment_container, servicioInfoEditando);
-                ft.addToBackStack(null);
-                Bundle bundle = new Bundle();
-                bundle.putString("idServicio", mData.get(position).getId());
-                servicioInfoEditando.setArguments(bundle);
-                ft.commit();
-            }
-        });
+        holder.fecha.setText(mData.get(position).getFecha());
+        holder.usuario.setText(usuarios.get(position).getNombre());
+        holder.estado.setText(mData.get(position).getEstado().toString());
 
     }
 
@@ -65,14 +55,19 @@ public class RecyclerViewHistorialServiciosPropiosAdapter extends RecyclerView.A
 
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView tv_servicio_title;
-        TextView tv_servicio_precio;
+
+        TextView fecha;
+        TextView usuario;
+        TextView estado;
+
+
         private OnItemClickListenerInterface itemClickListener;
 
         public MyViewHolder(View itemView) {
             super ( itemView );
-            tv_servicio_title = (TextView) itemView.findViewById ( R.id.servicio_title_id );
-            tv_servicio_precio = (TextView)itemView.findViewById(R.id.servicio_precio_id);
+            fecha = (TextView) itemView.findViewById ( R.id.textViewFecha);
+            estado = (TextView)itemView.findViewById(R.id.textViewEstado);
+            usuario = (TextView) itemView.findViewById ( R.id.textViewUsuario);
             itemView.setOnClickListener(this);
         }
         public void setItemClickListener(OnItemClickListenerInterface itemClickListener){

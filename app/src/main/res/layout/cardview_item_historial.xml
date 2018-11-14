@@ -16,21 +16,21 @@
         <TextView
             android:id="@+id/textViewFecha"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Fecha" />
 
         <TextView
             android:id="@+id/textViewEstado"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Estado" />
 
         <TextView
             android:id="@+id/textViewUsuario"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Usuario" />
     </LinearLayout>
