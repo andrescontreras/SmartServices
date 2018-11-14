@@ -7,7 +7,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPagerServ"
@@ -33,7 +33,7 @@
             android:layout_width="115dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="324dp"
+            android:layout_marginTop="280dp"
             android:background="@null"
             android:drawableLeft="@drawable/ic_info_blue"
             android:text="@string/detalles_serv"
@@ -46,7 +46,6 @@
             android:layout_width="172dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="8dp"
             android:background="@null"
             android:drawableLeft="@drawable/ic_question"
             android:text="@string/preguntas"
@@ -84,7 +83,7 @@
             android:layout_width="136dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="15dp"
             android:background="@drawable/rounded_button"
@@ -95,14 +94,13 @@
             app:layout_constraintEnd_toStartOf="@+id/serv_btn_editar"
             app:layout_constraintHorizontal_bias="0.01"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/serv_btn_favoritos"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/serv_btn_historial" />
 
         <Button
             android:id="@+id/serv_btn_editar"
             android:layout_width="136dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="15dp"
             android:background="@drawable/rounded_button"
@@ -111,15 +109,28 @@
             android:textColor="@color/cardview_light_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/serv_btn_favoritos"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/serv_btn_historial" />
+
+        <Button
+            android:id="@+id/serv_btn_historial"
+            android:layout_width="136dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="140dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="140dp"
+            android:background="@drawable/rounded_button"
+            android:text="Ver Historial"
+            android:textAllCaps="false"
+            android:textColor="@color/cardview_light_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/serv_btn_favoritos" />
 
         <Button
             android:id="@+id/serv_btn_favoritos"
             android:layout_width="234dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="4dp"
             android:background="@null"
             android:drawableLeft="@drawable/ic_favorite"
             android:text="@string/agregar_favoritos"
