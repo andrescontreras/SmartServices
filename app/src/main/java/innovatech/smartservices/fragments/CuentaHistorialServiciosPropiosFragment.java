@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,6 +42,7 @@ public class CuentaHistorialServiciosPropiosFragment extends Fragment {
     List<Reserva> lstReservas =  new ArrayList<Reserva>();
     List<Usuario> lstUsuarios = new ArrayList<Usuario>();
     List<Usuario> users = new ArrayList<Usuario>();
+    private TextView titulo;
     RecyclerView myrv;
     @Nullable
     @Override
@@ -53,18 +55,20 @@ public class CuentaHistorialServiciosPropiosFragment extends Fragment {
         myrv = (RecyclerView) view.findViewById(R.id.recyclerview_id);
         myrv.setHasFixedSize(true);
         myrv.setLayoutManager ( new GridLayoutManager ( getActivity(),1 ) );
+        titulo=(TextView)view.findViewById(R.id.textView4);
         agregarServicios(mAuth,getArguments());
         return view;
     }
 
 
 
-    public void agregarServicios(final FirebaseAuth mAuth,Bundle bundle){
+    public void agregarServicios(final FirebaseAuth mAuth, final Bundle bundle){
         FirebaseUser user = mAuth.getCurrentUser();
         lstServicio =  new ArrayList<Reserva>();
         lstReservas =  new ArrayList<Reserva>();
         lstUsuarios = new ArrayList<Usuario>();
         users = new ArrayList<Usuario>();
+        titulo.setText("Historial del servicio: "+ bundle.getString("nombreServicio").toString());
 
 
         final String idServ =bundle.getString("idServicio");

@@ -47,6 +47,7 @@ public class ServicioInformacionEditandoFragment extends Fragment {
     String imagenInicial ="";
     CircleIndicator indicator;
     String idServ;
+    String nombre;
     FirebaseAuth mAuth ;
     DatabaseReference mDataBase;
 
@@ -70,6 +71,7 @@ public class ServicioInformacionEditandoFragment extends Fragment {
         indicator = (CircleIndicator)view.findViewById(R.id.ciImagenesAlojAPA);
         Bundle bundle = getArguments();
         idServ = bundle.getString("idServicio");
+        nombre = bundle.getString("nombreServicio");
         capturarInfoActual(idServ);
         accionBotones(idServ);
         return view;
@@ -81,19 +83,13 @@ public class ServicioInformacionEditandoFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot!=null){
                     serv = dataSnapshot.getValue(Servicio.class);
-                    //int cedula = dataSnapshot.child("cedula").getValue(Integer.class);
-                    //String nombre = dataSnapshot.child("nombre").getValue(String.class);
                    titulo_serv.setText(serv.getNombre());
                    precio_serv.setText(String.valueOf(serv.getPrecio()));
                    imagenInicial = serv.getFotos().get(0);
-                   //imagenServ.setImageURI(null);
-                   //imagenServ.setImageURI(Uri.parse(serv.getFotos().get(0)));
                     imgAnfAdapter = new ImagenInformacionServicioAdapter(getActivity(),serv.getFotos());
                     viewPager.setAdapter(imgAnfAdapter);
                     
                     indicator.setViewPager(viewPager);
-
-                    //Picasso.with(getContext()).load(Uri.parse(serv.getFotos().get(0))).into(imagenServ);
                 }
                 else{
                     Toast.makeText(getActivity(), "Hubo un problema encontrando el uid", Toast.LENGTH_SHORT).show();
@@ -190,6 +186,7 @@ public class ServicioInformacionEditandoFragment extends Fragment {
                 ft.addToBackStack(null);
                 Bundle bundle = getArguments();
                 bundle.putString("idServicio",idServ);
+                bundle.putString("nombreServicio",nombre);
                 servProp.setArguments(bundle);
                 ft.commit();
             }

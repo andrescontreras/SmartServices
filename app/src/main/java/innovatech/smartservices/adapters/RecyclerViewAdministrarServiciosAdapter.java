@@ -57,6 +57,7 @@ public class RecyclerViewAdministrarServiciosAdapter extends RecyclerView.Adapte
                 ft.addToBackStack(null);
                 Bundle bundle = new Bundle();
                 bundle.putString("idServicio", mData.get(position).getId());
+                bundle.putString("nombreServicio",mData.get(position).getNombre());
                 servicioInfoEditando.setArguments(bundle);
                 ft.commit();
             }
