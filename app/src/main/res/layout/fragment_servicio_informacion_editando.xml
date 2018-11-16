@@ -116,25 +116,13 @@
             android:layout_width="136dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="140dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="140dp"
             android:background="@drawable/rounded_button"
             android:text="Ver Historial"
             android:textAllCaps="false"
             android:textColor="@color/cardview_light_background"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/serv_btn_favoritos" />
-
-        <Button
-            android:id="@+id/serv_btn_favoritos"
-            android:layout_width="234dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:background="@null"
-            android:drawableLeft="@drawable/ic_favorite"
-            android:text="@string/agregar_favoritos"
-            android:textAlignment="textStart"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/serv_btn_comentarios" />
 

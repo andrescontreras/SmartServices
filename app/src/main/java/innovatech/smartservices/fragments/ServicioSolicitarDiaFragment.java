@@ -194,6 +194,9 @@ public class ServicioSolicitarDiaFragment extends Fragment {
                         marcados.remove(date);
                     }
                 }else{
+                    horasDisponibles.addAll(horasString);
+                    ArrayAdapter<String> adapterElem = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,horasDisponibles);
+                    horas.setAdapter(adapterElem);
                     Toast.makeText(getActivity(), "Seleccione uno de los dias disponibles que estan marcados en azul", Toast.LENGTH_SHORT).show();
                 }
             }

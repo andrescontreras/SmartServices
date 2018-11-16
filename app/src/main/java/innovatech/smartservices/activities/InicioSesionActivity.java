@@ -57,6 +57,7 @@ public class InicioSesionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent (InicioSesionActivity.this,RegistrarUsuarioActivity.class);
+                intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
         });
