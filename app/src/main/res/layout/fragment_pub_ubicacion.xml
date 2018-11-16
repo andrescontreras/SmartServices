@@ -22,14 +22,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="60dp"
         android:background="@drawable/rounded_button"
         android:text="Agregar Ubicacion"
         android:textAllCaps="false"
         android:textColor="@color/cardview_light_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,9 +65,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="60dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="21dp"
         android:background="@drawable/rounded_button"
         android:text="Siguiente"
         android:textAllCaps="false"
@@ -76,8 +76,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.544" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerUbicaciones"
+        app:layout_constraintVertical_bias="0.068" />
 
     <TextView
         android:id="@+id/textView21"

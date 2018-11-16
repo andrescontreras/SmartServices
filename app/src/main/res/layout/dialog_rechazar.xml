@@ -14,7 +14,9 @@
         android:layout_marginStart="51dp"
         android:layout_marginTop="51dp"
         android:text="¿Motivo de rechazo?"
-        android:textSize="24sp" />
+        android:textColor="#2B2B2B"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editText_motivo"

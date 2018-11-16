@@ -30,7 +30,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="30dp"
             android:text="@string/info_basica2"
+            android:textColor="#2B2B2B"
             android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtDetDireccion" />
 
@@ -53,6 +55,8 @@
             android:layout_marginTop="30dp"
             android:text="@string/incluye"
             android:textSize="18sp"
+            android:textColor="#2B2B2B"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtDetBasica" />
 
@@ -75,6 +79,8 @@
             android:layout_marginTop="30dp"
             android:text="@string/no_incluye"
             android:textSize="18sp"
+            android:textColor="#2B2B2B"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtDetIncl" />
 
@@ -86,6 +92,7 @@
             android:layout_marginTop="20dp"
             android:inputType="textMultiLine"
             android:text="TextView"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView32" />
 
@@ -97,6 +104,8 @@
             android:layout_marginTop="30dp"
             android:text="@string/informacion_adicional"
             android:textSize="18sp"
+            android:textColor="#2B2B2B"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtDetNoIncl" />
 
@@ -117,7 +126,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/direcciones"
+            android:textColor="#2B2B2B"
             android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView27" />
 

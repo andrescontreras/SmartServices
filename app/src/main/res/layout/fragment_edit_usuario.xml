@@ -9,20 +9,23 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="@string/cedula"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/nombreEdit" />
+        android:textColor="#2B2B2B"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textView10"
+        tools:layout_editor_absoluteY="113dp" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="38dp"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="20dp"
         android:text="@string/nombre"
-        android:textSize="15sp"
+        android:textColor="#2B2B2B"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
@@ -75,8 +78,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/telefono"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView9"
+        android:textColor="#2B2B2B"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textView9"
         app:layout_constraintTop_toBottomOf="@+id/cedulaEdit" />
 
     <TextView
@@ -85,8 +90,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/direccion"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView13"
+        android:textColor="#2B2B2B"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textView13"
         app:layout_constraintTop_toBottomOf="@+id/telefonoEdit" />
 
     <TextView
@@ -94,10 +101,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:text="@string/ciudad"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView14"
+        android:textColor="#2B2B2B"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textView14"
         app:layout_constraintTop_toBottomOf="@+id/direccionEdit" />
 
     <EditText
