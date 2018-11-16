@@ -23,12 +23,12 @@
     <string name="servicios_solic">Servicios solicitados</string>
     <string name="buzon_preguntas">Buzón de preguntas</string>
     <string name="siguiente">Siguiente</string>
-    <string name="info_basica"><u>Información basica</u></string>
+    <string name="info_basica">Información basica</string>
     <string name="info_basica2">Información basica</string>
     <string name="precio">Precio</string>
     <string name="agregar_imagen">Agregar imagenes</string>
-    <string name="servicios_destacados"><u>Servicios Destacados</u></string>
-    <string name="detalles"><u>Detalles</u></string>
+    <string name="servicios_destacados">Servicios Destacados</string>
+    <string name="detalles">Detalles</string>
     <string name="detalles_serv">Detalles</string>
     <string name="que_incluye">¿Qué incluye?</string>
     <string name="que_no_incluye">¿Qué no incluye?</string>
@@ -47,12 +47,12 @@
     <string name="horas_disponibles">Horas disponibles</string>
     <string name="metodo_pago">Metodo de pago</string>
     <string name="filtro">Filtro</string>
-    <string name="busqueda_avanzada"><u>Busqueda avanzada</u></string>
+    <string name="busqueda_avanzada">Busqueda avanzada</string>
     <string name="cerca_mio">¿Qué tan lejos?</string>
     <string name="buscar">Buscar</string>
     <string name="precio_maximo">Precio máximo</string>
     <string name="km">Km</string>
-    <string name="resultados_busqueda"><u>Resultados de la busqueda</u></string>
+    <string name="resultados_busqueda">Resultados de la busqueda</string>
     <string name="direcciones">Direcciones</string>
 
     <string-array name="tipoServicio_nv1">
@@ -123,8 +123,8 @@
     <string name="checkBox_c_2a4">2:00 pm - 4:00 pm</string>
     <string name="checkBox_c_4a6">4:00 pm - 6:00 pm</string>
     <string name="checkBox_c_6a8">6:00 pm - 8:00 pm</string>
-    <string name="Text_c_disponibilidad"><u>Ubicación y disponibilidad</u></string>
-    <string name="posicionamiento"><u>Posicionamiento</u></string>
+    <string name="Text_c_disponibilidad">Ubicación y disponibilidad</string>
+    <string name="posicionamiento">Posicionamiento</string>
     <string name="ya_est_s_a_punto_de_acabar">Ya estás a punto de acabar!</string>
     <string name="con_la_opci_n_de_posicionamiento_puedes_hacer_que_tus_publicaciones_salgan_como_destacadas_cuando_es_buscado_un_servicio_como_el_tuyo_es_decir_tu_servicio_se_mostrar_entre_los_primeros_deseas_activarlo_este_servicio_se_cobrar_mensualmente_a_trav_s_de_tu_tarjeta_de_cr_dito_por_un_monto_de_2_d_lares">Con la opción de posicionamiento puedes hacer que tus publicaciones salgan como destacadas cuando es buscado un servicio como el tuyo, es decir, tu servicio se mostrará entre los primeros. Deseas activarlo?(Este servicio se cobrará mensualmente a través de tu tarjeta de crédito por un monto de $2 dólares)</string>
     <string name="si_deseo_activar_el_posicionamiento">Si, deseo activar el posicionamiento</string>
@@ -133,23 +133,23 @@
 
     <string name="textView_c_disponibilidad">Calendario de disponibilidad</string>
     <string name="correo">Correo</string>
-    <string name="ubicaci_n_del_servicio"><u>Ubicación del servicio</u></string>
-    <string name="tu_ranking"><u>Tu ranking</u></string>
+    <string name="ubicaci_n_del_servicio">Ubicación del servicio</string>
+    <string name="tu_ranking">Tu ranking</string>
     <string name="basado_en_la_opini_n_de_los_integrantes_de_nuestra_plataforma_tu_ranking_es">Basado en la opinión de los integrantes de nuestra plataforma tu ranking es:</string>
     <string name="como_prestador_de_servicios">Como prestador de servicios</string>
     <string name="como_contratador_de_servicios">Como contratador de servicios</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="textView_Notificaciones"><u>Tus notificaciones</u></string>
-    <string name="informaci_n_del_usuario"><u>Información del usuario</u></string>
-    <string name="informaci_n_del_servicio"><u>Información del servicio</u></string>
-    <string name="editar_datos_de_usuario"><u>Editar datos de usuario</u></string>
-    <string name="categor_as"><u>Categorías</u></string>
-    <string name="disponibilidad"><u>Disponibilidad</u></string>
-    <string name="tus_servicios"><u>Tus Servicios</u></string>
-    <string name="registro_de_usuario"><u>Registro de usuario</u></string>
-    <string name="servicios_solicitados"><u>Servicios solicitados</u></string>
+    <string name="textView_Notificaciones">Tus notificaciones</string>
+    <string name="informaci_n_del_usuario">Información del usuario</string>
+    <string name="informaci_n_del_servicio">Información del servicio</string>
+    <string name="editar_datos_de_usuario">Editar datos de usuario</string>
+    <string name="categor_as">Categorías</string>
+    <string name="disponibilidad">Disponibilidad</string>
+    <string name="tus_servicios">Tus Servicios</string>
+    <string name="registro_de_usuario">Registro de usuario</string>
+    <string name="servicios_solicitados">Servicios solicitados</string>
     <string name="infomaci_n_del_prestador">Información del prestador</string>>
 
 
