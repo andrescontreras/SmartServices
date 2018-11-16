@@ -75,12 +75,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         nombreHeader = (TextView) hView.findViewById(R.id.header_nombre);
         emailHeader = (TextView) hView.findViewById(R.id.header_email);
         imgUsuario = (ImageButton)hView.findViewById(R.id.header_imagen);
-        final FirebaseUser userActual = mAuth.getCurrentUser();
         imgUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FirebaseUser userActual = mAuth.getCurrentUser();
+                //System.out.println("User actual ------------------------> "+mAuth.getCurrentUser());
+                //System.out.println("Nombre de usuario actual -------------------------> "+userActual.getUid());
+
                 if(userActual==null){ //Cuando el usuario ya esta logeado, mandarlo a la actividad principal
                     Intent intent = new Intent(MainActivity.this,InicioSesionActivity.class);
+                    intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
                     startActivity(intent);
                 }
 

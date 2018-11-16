@@ -1,6 +1,7 @@
 package innovatech.smartservices.activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import innovatech.smartservices.R;
+import innovatech.smartservices.fragments.ServiciosDestacadosFragment;
 import innovatech.smartservices.models.Usuario;
 
 public class RegistrarUsuarioActivity extends AppCompatActivity {
@@ -86,6 +88,12 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
                                         if(task.isSuccessful()){
                                             nProgressDialog.dismiss();
                                             Toast.makeText(RegistrarUsuarioActivity.this, "Se ha registrado correctamente", Toast.LENGTH_SHORT).show();
+                                            android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+                                            for(int i=0;i<fm.getBackStackEntryCount();i++){
+                                                fm.popBackStack();
+                                            }
+                                            Intent intent = new Intent(RegistrarUsuarioActivity.this,MainActivity.class);
+                                            startActivity(intent);
                                             //updateUI(user);
 
                                         }

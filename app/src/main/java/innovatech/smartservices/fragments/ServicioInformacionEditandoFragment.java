@@ -37,7 +37,6 @@ public class ServicioInformacionEditandoFragment extends Fragment {
     Button btn_detalles;
     Button btn_preguntas;
     Button btn_comentarios;
-    Button btn_favoritos;
     TextView titulo_serv;
     TextView precio_serv;
     RatingBar ratingBar;
@@ -63,7 +62,6 @@ public class ServicioInformacionEditandoFragment extends Fragment {
         btn_detalles = (Button)view.findViewById(R.id.serv_btn_detalles);
         btn_preguntas = (Button)view.findViewById(R.id.serv_btn_preguntas);
         btn_comentarios = (Button)view.findViewById(R.id.serv_btn_comentarios);
-        btn_favoritos = (Button)view.findViewById(R.id.serv_btn_favoritos);
         titulo_serv = (TextView)view.findViewById(R.id.serv_txt_titulo);
         precio_serv = (TextView)view.findViewById(R.id.serv_txt_precio);
         ratingBar = (RatingBar)view.findViewById(R.id.ratingBarServ);
