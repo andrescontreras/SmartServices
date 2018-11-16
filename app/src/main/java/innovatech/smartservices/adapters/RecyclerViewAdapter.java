@@ -58,7 +58,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View view, int position) {
                 MainActivity myActivity = (MainActivity)mContext;
-                Toast.makeText(mContext, "Elemento "+mData.get(position).getNombre(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "Elemento "+mData.get(position).getNombre(), Toast.LENGTH_SHORT).show();
                 FragmentTransaction ft = myActivity.getSupportFragmentManager().beginTransaction();
                 ServicioInformacionFragment infoServFragm = new ServicioInformacionFragment();
                 ft.replace(R.id.fragment_container, infoServFragm);
